@@ -38,10 +38,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                 <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
                 <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" />
+                
+                <h:outputLabel id="lblSexo" value="Sexo" for="selOneSexo" />
+                <h:selectOneMenu id="selOneSexo" value="#{pessoaController.pessoa.sexo}">
+                    <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                    <f:selectItem itemLabel="Feminino" itemValue="F"/>    
+                </h:selectOneMenu>
 
                 <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
                 <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="5" style="width: 500px;" />           
-
+                
                 <h:outputLabel value="" />
                 <h:panelGroup>
                     <h:commandButton value="Salvar" action="#{pessoaController.salvar()}" />
