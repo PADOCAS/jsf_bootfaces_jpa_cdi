@@ -36,6 +36,10 @@ public class Pessoa implements Serializable {
 
     private String sexo;
 
+    private String[] esportesPraticados;
+
+    private Boolean ativo;
+
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
 
@@ -98,6 +102,22 @@ public class Pessoa implements Serializable {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public String[] getEsportesPraticados() {
+        return esportesPraticados;
+    }
+
+    public void setEsportesPraticados(String[] esportesPraticados) {
+        this.esportesPraticados = esportesPraticados;
     }
 
     public String getObservacao() {
