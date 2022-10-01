@@ -10,7 +10,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:f="http://java.sun.com/jsf/core">
     <!-- Sempre deve ter um cabeçario, onde voce poe um titulo, poe os scripts css, javascript.. etc.. (head) -->
     <h:head>
-        <title>Bem vindo ao JSF</title>
+        <title>Cadastro de Usuário</title>
     </h:head>
 
     <!-- Sempre tem o corpo da página (body) -->
@@ -18,12 +18,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
         <h:form id="formPessoa">
             <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
-            
+
             <h:panelGrid columns="2">                
                 <f:facet name="header">
-                    <h:outputText value="Cadastro de Pessoa em JSF" />
+                    <h:outputText value="Cadastro de Usuário em JSF" />
                 </f:facet>
-                
+
                 <h:outputLabel value="" />
                 <h:panelGroup>
                     <h:commandButton action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" />
@@ -41,19 +41,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
                 <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;"/>
 
-                <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
-                <h:inputText id="txtSenha" value="#{pessoaController.pessoa.senha}" />
-
                 <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
                 <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" />
-                
+
                 <h:outputLabel id="lblSexo" value="Sexo" for="selOneSexo" />
                 <h:selectOneMenu id="selOneSexo" value="#{pessoaController.pessoa.sexo}">
                     <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true"/>
                     <f:selectItem itemLabel="Masculino" itemValue="M"/>
                     <f:selectItem itemLabel="Feminino" itemValue="F"/>    
                 </h:selectOneMenu>
-                
+
                 <h:outputLabel id="lblEsportes" value="Esportes Praticados" for="selManyEsportes"/>
                 <h:selectManyMenu id="selManyEsportes" value="#{pessoaController.pessoa.esportesPraticados}" style="height: 130px; width: 140px;">
                     <f:selectItem itemLabel="Futebol" itemValue="F" />
@@ -63,7 +60,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Hugby" itemValue="H" />
                     <f:selectItem itemLabel="Peteca" itemValue="P" />
                 </h:selectManyMenu>
-                
+
+                <h:outputLabel id="lblLogin" value="Login" for="txtLogin"/>     
+                <h:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" />
+
+                <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
+                <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" ></h:inputSecret>
+
+                <h:outputLabel id="lblPerfil" value="Perfil Usuário" for="selOnePerfil" />
+                <h:selectOneMenu id="selOnePerfil" value="#{pessoaController.pessoa.perfil}">
+                    <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="Administrador" itemValue="A"/>
+                    <f:selectItem itemLabel="Secretário" itemValue="S"/>    
+                    <f:selectItem itemLabel="Recepcionista" itemValue="R"/>    
+                </h:selectOneMenu>
+
                 <h:outputLabel id="lblAtivo" value="Ativo" for="selBooCheckAtivo" />
                 <h:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
 
@@ -73,9 +84,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
             <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3">
                 <f:facet name="header" >
-                    <h:outputText value="Lista de Pessoas Cadastradas" />
+                    <h:outputText value="Lista de Usuário(s) Cadastrado(s)" />
                 </f:facet>
-                
+
                 <h:column>
                     <f:facet name="header">ID</f:facet>
                     <h:outputText value="#{pes.id}" />

@@ -30,7 +30,11 @@ public class Pessoa implements Serializable {
 
     private String sobrenome;
 
+    private String login;
+
     private String senha;
+
+    private String perfil;
 
     private Integer idade;
 
@@ -126,6 +130,22 @@ public class Pessoa implements Serializable {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
