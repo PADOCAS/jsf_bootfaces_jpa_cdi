@@ -23,6 +23,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <f:facet name="header">
                     <h:outputText value="Cadastro de Pessoa em JSF" />
                 </f:facet>
+                
+                <h:outputLabel value="" />
+                <h:panelGroup>
+                    <h:commandButton action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton action="#{pessoaController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
+                    <h:commandButton action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton type="reset" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" />
+                </h:panelGroup>
 
                 <h:outputLabel id="lblId" value="Id" for="txtId" />     
                 <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;"/>
@@ -60,15 +68,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
 
                 <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
-                <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="5" style="width: 500px;" />           
-                
-                <h:outputLabel value="" />
-                <h:panelGroup>
-                    <h:commandButton value="Salvar" action="#{pessoaController.salvar()}" />
-                    <h:commandButton value="Limpar" action="#{pessoaController.limpar()}" />
-                    <h:commandButton value="Excluir" action="#{pessoaController.deletar()}" />
-                    <h:commandButton value="Resetar Form" type="reset" />
-                </h:panelGroup>
+                <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="5" style="width: 500px;" />                          
             </h:panelGrid>
 
             <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3">
@@ -94,14 +94,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:column>
                 <h:column>
                     <f:facet name="header">Editar</f:facet>
-                    <h:commandLink value="Editar" >
+                    <h:commandLink style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
+                        <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
                     </h:commandLink>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Excluir</f:facet>
-                    <h:commandLink value="Excluir" action="#{pessoaController.deletar()}">
+                    <h:commandLink action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
+                        <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
                     </h:commandLink>
                 </h:column>
             </h:dataTable>
