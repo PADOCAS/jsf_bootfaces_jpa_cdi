@@ -17,76 +17,68 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
     <h:body>
         <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
         <h:form id="formPessoa">
-            <h1>Cadastro de Pessoa</h1>
-
-            <br/>
-            <h:outputLabel id="lblId" value="Id" for="txtId" />     
-            <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;"/>
-
-            <br/>
-            <h:outputLabel id="lblNome" value="Nome" for="txtNome" />     
-            <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;"/>
-
-            <br/>
-
-            <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
-            <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;"/>
-
-            <br/>
-
-            <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
-            <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" />
-
-            <br/>
-
-            <br/>
-
-            <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
-            <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" />
-
-            <br/>
-
-            <br/>
-
-            <!--   
-            <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento"/>     
-            <h:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" />
+            <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
             
-            <br/>
-            !-->
+            <h:panelGrid columns="2">                
+                <f:facet name="header">
+                    <h:outputText value="Cadastro de Pessoa em JSF" />
+                </f:facet>
 
-            <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
-            <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="5" style="width: 500px;" />           
+                <h:outputLabel id="lblId" value="Id" for="txtId" />     
+                <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;"/>
 
-            <br/>
-            <br/>
+                <h:outputLabel id="lblNome" value="Nome" for="txtNome" />     
+                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;"/>
 
-            <h:commandButton value="Salvar" action="#{pessoaController.salvar()}" />
-            <h:commandButton value="Limpar" action="#{pessoaController.limpar()}" />
-            <h:commandButton value="Excluir" action="#{pessoaController.deletar()}" />
+                <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
+                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;"/>
 
-            <br/>
-            <br/>
+                <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
+                <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" />
 
-            <h:dataTable value="#{pessoaController.listPessoa}" var="pes">
+                <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
+                <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" />
+
+                <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
+                <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="5" style="width: 500px;" />           
+
+                <h:outputLabel value="" />
+                <h:panelGroup>
+                    <h:commandButton value="Salvar" action="#{pessoaController.salvar()}" />
+                    <h:commandButton value="Limpar" action="#{pessoaController.limpar()}" />
+                    <h:commandButton value="Excluir" action="#{pessoaController.deletar()}" />
+                </h:panelGroup>
+            </h:panelGrid>
+
+            <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3">
+                <f:facet name="header" >
+                    <h:outputText value="Lista de Pessoas Cadastradas" />
+                </f:facet>
+                
                 <h:column>
+                    <f:facet name="header">ID</f:facet>
                     <h:outputText value="#{pes.id}" />
                 </h:column>
                 <h:column>
+                    <f:facet name="header">Nome</f:facet>
                     <h:outputText value="#{pes.nome}" />
                 </h:column>
                 <h:column>
+                    <f:facet name="header">Sobrenome</f:facet>
                     <h:outputText value="#{pes.sobrenome}" />
                 </h:column>
                 <h:column>
+                    <f:facet name="header">Idade</f:facet>
                     <h:outputText value="#{pes.idade}" />
                 </h:column>
                 <h:column>
+                    <f:facet name="header">Editar</f:facet>
                     <h:commandLink value="Editar" >
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
                     </h:commandLink>
                 </h:column>
                 <h:column>
+                    <f:facet name="header">Excluir</f:facet>
                     <h:commandLink value="Excluir" action="#{pessoaController.deletar()}">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
                     </h:commandLink>
