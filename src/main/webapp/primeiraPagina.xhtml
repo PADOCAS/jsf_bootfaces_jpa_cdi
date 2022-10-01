@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<!--xmlns é xml name space, onde você mapei com um comando para utilizar, nesse caso abaixo (h) -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <!-- Sempre deve ter um cabeçario, onde voce poe um titulo, poe os scripts css, javascript.. etc.. (head) -->
+    <h:head>
+        <title>Bem vindo ao JSF</title>
+    </h:head>
+
+    <!-- Sempre tem o corpo da página (body) -->
+    <h:body>
+        <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
+        <h:form id="formPessoa">
+            <h1>Cadastro de Pessoa</h1>
+
+            <br/>
+            <h:outputLabel id="lblId" value="Id" for="txtId" />     
+            <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;"/>
+
+            <br/>
+            <h:outputLabel id="lblNome" value="Nome" for="txtNome" />     
+            <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;"/>
+
+            <br/>
+
+            <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
+            <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;"/>
+
+            <br/>
+
+            <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
+            <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" />
+
+            <br/>
+
+            <br/>
+
+            <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
+            <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" />
+
+            <br/>
+
+            <br/>
+
+            <!--   
+            <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento"/>     
+            <h:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" />
+            
+            <br/>
+            !-->
+
+            <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
+            <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="5" style="width: 500px;" />           
+
+            <br/>
+            <br/>
+
+            <h:commandButton value="Salvar" action="#{pessoaController.salvar()}" />
+            <h:commandButton value="Limpar" action="#{pessoaController.limpar()}" />
+            <h:commandButton value="Excluir" action="#{pessoaController.deletar()}" />
+
+            <br/>
+            <br/>
+
+            <h:dataTable value="#{pessoaController.listPessoa}" var="pes">
+                <h:column>
+                    <h:outputText value="#{pes.id}" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{pes.nome}" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{pes.sobrenome}" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{pes.idade}" />
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Editar" >
+                        <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
+                    </h:commandLink>
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Excluir" action="#{pessoaController.deletar()}">
+                        <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
