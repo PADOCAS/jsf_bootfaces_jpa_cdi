@@ -15,8 +15,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
     <!-- Sempre tem o corpo da página (body) -->
     <h:body>
+        <!--Menu Auxiliar-->
+        <h:form id="formMenuAuxiliar">
+            <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
+            <h:commandLink value="Cadastro de Usuários" action="/principal/primeiraPagina" style="margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}"/>
+            <h:commandLink value="Trocar Usuário" action="/index" style="margin-right: 5px;"/>
+        </h:form>
+        
         <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
-        <h:form id="formPessoa">
+        <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
             <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
 
             <h:panelGrid columns="2">                
