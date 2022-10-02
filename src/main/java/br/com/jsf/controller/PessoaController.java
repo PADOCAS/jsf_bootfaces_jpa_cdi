@@ -6,9 +6,14 @@ package br.com.jsf.controller;
 
 import br.com.jsf.hibernate.dao.DAOGenerico;
 import br.com.jsf.model.Pessoa;
+import br.com.jsf.repository.IDaoPessoa;
+import br.com.jsf.repository.IDaoPessoaImpl;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,6 +22,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "pessoaController")
 @ViewScoped
 public class PessoaController {
+
+    private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 
     private Pessoa pessoa = new Pessoa();
 
@@ -66,6 +73,36 @@ public class PessoaController {
 
     public String limpar() {
         setPessoa(new Pessoa());
+        return "";
+    }
+
+    /**
+     * Método usado para Logar -- tela de login (index.xhtml)
+     *
+     * @return Direcionamento (Pagina principal ou volta para o Login)
+     */
+    public String logar() {
+        try {
+            if (getPessoa() != null
+                    && getPessoa().getLogin() != null
+                    && getPessoa().getSenha() != null) {
+                Pessoa pessoa = iDaoPessoa.consultarUsuario(getPessoa().getLogin(), getPessoa().getSenha());
+
+                if (pessoa != null) {
+                    //Adicionar o usuário na sessão:
+                    if (FacesContext.getCurrentInstance() != null
+                            && FacesContext.getCurrentInstance().getExternalContext() != null
+                            && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", pessoa);
+                        return "/principal/primeiraPagina.xhtml";
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();            
+        }
+
         return "";
     }
 

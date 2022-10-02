@@ -18,9 +18,6 @@ import javax.persistence.EntityTransaction;
  */
 public class DAOGenerico<E> {
 
-    //Sempre vai instanciar o entitymanager ao iniciar o DAO:
-    private EntityManager entityManager = JPAUtil.getEntityManager();
-
     /**
      * Método para retornar o entityManager para poder fazer queries especificas
      * para cada objeto chamando ele
@@ -28,10 +25,12 @@ public class DAOGenerico<E> {
      * @return
      */
     public EntityManager getEntityManager() {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         return entityManager;
     }
 
     public void salvar(E entity) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
 
         //Inicia Transação:
@@ -40,9 +39,11 @@ public class DAOGenerico<E> {
         entityManager.persist(entity);
         //Comita:
         entityTransaction.commit();
+        entityManager.close();
     }
 
     public E saveOrUpdate(E entity) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         //Inicia Transação
@@ -52,37 +53,48 @@ public class DAOGenerico<E> {
         E entitySave = entityManager.merge(entity);
         //Comita:
         transaction.commit();
+        entityManager.close();
 
         return entitySave;
     }
 
     public void deletar(E entity) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         Object primaryKey = JPAUtil.getPrimaryKey(entity);
 
-        if (primaryKey != null) {
-            //Inicia Transação
-            transaction.begin();
-            //Remove: Vai deletar o Objeto no banco
-            entityManager.remove(entity);
-            //Comita:
-            transaction.commit();
-        }
-
-//        //Caso for deletar direto pela PK manualmente:
+        //O delete dessa forma por REMOVE (o objeto tem que estár identico ao banco de dados... se não vai dar erro ao deletar!
+        //Por isso, ao inves de consultar o usuario pegar o objeto e remover! É melhor fazer direto pela PK dele.. (segunda forma abaixo)
+        //Caso aparecerem problemas com relação a chave composta etc.. implementamos aqui o remove com uma consulta no banco antes!
+        //Forma 1):
 //        if (primaryKey != null) {
+//            //Inicia Transação
 //            transaction.begin();
-//            //Fazendo o processo manualmente por SQL:
-//            entityManager.createNativeQuery("DELETE FROM " + entity.getClass().getSimpleName().toLowerCase() + " WHERE ID = " + primaryKey).executeUpdate();
+//            //Remove: Vai deletar o Objeto no banco
+//            entityManager.remove(entity);
+//            //Comita:
 //            transaction.commit();
+//            entityManager.close();
 //        }
+
+        //Forma 2):
+        //Caso for deletar direto pela PK manualmente:
+        if (primaryKey != null) {
+            transaction.begin();
+            //Fazendo o processo manualmente por SQL:
+            entityManager.createNativeQuery("DELETE FROM " + entity.getClass().getSimpleName().toLowerCase() + " WHERE ID = " + primaryKey).executeUpdate();
+            transaction.commit();
+            entityManager.close();
+        }
     }
 
     public List<E> listar(Class<E> entity) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         List<E> list = entityManager.createQuery("from " + entity.getName()).getResultList();
         transaction.commit();
+        entityManager.close();
 
         return list;
     }

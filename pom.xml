@@ -16,11 +16,11 @@
         <jakartaee>9.0.0</jakartaee>
     </properties>
     
-    <dependencies>
+    <dependencies>       
         <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>${jakartaee}</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0.1</version>
             <scope>provided</scope>
         </dependency>
         
