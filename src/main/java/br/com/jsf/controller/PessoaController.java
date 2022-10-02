@@ -86,24 +86,41 @@ public class PessoaController {
             if (getPessoa() != null
                     && getPessoa().getLogin() != null
                     && getPessoa().getSenha() != null) {
-                Pessoa pessoa = iDaoPessoa.consultarUsuario(getPessoa().getLogin(), getPessoa().getSenha());
+                Pessoa pessoaUser = iDaoPessoa.consultarUsuario(getPessoa().getLogin(), getPessoa().getSenha());
 
-                if (pessoa != null) {
+                if (pessoaUser != null) {
                     //Adicionar o usuário na sessão:
                     if (FacesContext.getCurrentInstance() != null
                             && FacesContext.getCurrentInstance().getExternalContext() != null
                             && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
-                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", pessoa);
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", pessoaUser);
                         return "/principal/primeiraPagina.xhtml";
                     }
                 }
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();            
+            ex.printStackTrace();
         }
 
         return "";
+    }
+
+    public Boolean getRenderedUsuarioPerfilAdmin() {
+        if (FacesContext.getCurrentInstance() != null
+                && FacesContext.getCurrentInstance().getExternalContext() != null
+                && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null
+                && FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") != null) {
+            Pessoa pessoaUser = (Pessoa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
+            if (pessoaUser != null
+                    && pessoaUser.getPerfil() != null
+                    && pessoaUser.getPerfil().equals("A")) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     public Pessoa getPessoa() {

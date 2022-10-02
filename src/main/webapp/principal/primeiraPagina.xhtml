@@ -28,7 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <h:commandButton action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" />
                     <h:commandButton action="#{pessoaController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
-                    <h:commandButton action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" />
                     <h:commandButton type="reset" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" />
                 </h:panelGroup>
 
@@ -110,7 +110,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
                     </h:commandLink>
                 </h:column>
-                <h:column>
+                <h:column rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
                     <f:facet name="header">Excluir</f:facet>
                     <h:commandLink action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
