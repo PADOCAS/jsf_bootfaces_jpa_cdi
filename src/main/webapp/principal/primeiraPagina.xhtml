@@ -14,19 +14,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
     </h:head>
 
     <!-- Sempre tem o corpo da página (body) -->
-    <h:body>
+    <h:body style="height: 100%; width: 100%; position: fixed;">
         <!--Menu Auxiliar-->
         <h:form id="formMenuAuxiliar">
             <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
             <h:commandLink value="Cadastro de Usuários" action="/principal/primeiraPagina" style="margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}"/>
             <h:commandLink value="Trocar Usuário" action="/index" style="margin-right: 5px;"/>
         </h:form>
-        
-        <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
-        <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
-            <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
 
-            <h:panelGrid columns="2">                
+        <h:form id="formMenuAuxiliarOperador" style="margin-top: 2px; margin-bottom: 2px;">
+            <h:outputText value="#{pessoaController.getOperadorLogado()}" style="font-size: 13px; color: darkblue; font-weight: bold;" />
+        </h:form>
+
+        <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
+        <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
+            </div>
+
+            <h:panelGrid id="pnlGridPrimeiraPagina" columns="2" style="display: flex; flex-direction: column; align-items: center;">            
                 <f:facet name="header">
                     <h:outputText value="Cadastro de Usuário em JSF" />
                 </f:facet>
@@ -89,7 +95,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="5" style="width: 500px;" />                          
             </h:panelGrid>
 
-            <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3">
+            <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3" style="width: 100%;">
                 <f:facet name="header" >
                     <h:outputText value="Lista de Usuário(s) Cadastrado(s)" />
                 </f:facet>

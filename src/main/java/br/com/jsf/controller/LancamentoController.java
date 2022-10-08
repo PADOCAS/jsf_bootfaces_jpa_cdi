@@ -5,12 +5,11 @@
 package br.com.jsf.controller;
 
 import br.com.jsf.hibernate.dao.DAOGenerico;
+import br.com.jsf.model.Lancamento;
 import br.com.jsf.model.Pessoa;
-import br.com.jsf.repository.IDaoPessoa;
-import br.com.jsf.repository.IDaoPessoaImpl;
+import br.com.jsf.repository.IDaoLancamento;
+import br.com.jsf.repository.IDaoLancamentoImpl;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -19,91 +18,83 @@ import javax.faces.context.FacesContext;
  *
  * @author lucia
  */
-@ManagedBean(name = "pessoaController")
+@ManagedBean(name = "lancamentoController")
 @ViewScoped
-public class PessoaController {
+public class LancamentoController {
 
-    private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
+    //Bean sempre iniciad no controller:
+    private Lancamento lancamento = new Lancamento();
 
-    private Pessoa pessoa = new Pessoa();
+    private IDaoLancamento daoLancamento = new IDaoLancamentoImpl();
 
-    private DAOGenerico<Pessoa> daoGenerico = new DAOGenerico<>();
+    //DaoGenerico de Lancamento:
+    private DAOGenerico<Lancamento> daoGenerico = new DAOGenerico<>();
 
-    private List<Pessoa> listPessoa = null;
+    private List<Lancamento> listLancamento = null;
 
     @javax.annotation.PostConstruct
     public void initManagedBean() {
-        carregarPessoas();
+        carregarLancamentos();
     }
 
     public String salvar() {
-        if (getPessoa() != null) {
-            //Merge >> SaveOrUpdate - Vai salvar e Retornar o objeto salvo pra gente:
-            setPessoa(daoGenerico.saveOrUpdate(pessoa));
+        if (FacesContext.getCurrentInstance() != null
+                && FacesContext.getCurrentInstance().getExternalContext() != null
+                && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null
+                && FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") != null) {
+            Pessoa pessoaUser = (Pessoa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
+            if (pessoaUser != null) {
+                lancamento.setPessoaUser(pessoaUser);
+                setLancamento(daoGenerico.saveOrUpdate(lancamento));
+            }
         }
 
-        //Atualiza Lista Pessoas:
-        carregarPessoas();
+        //Atualiza Lista Lancamentos:
+        carregarLancamentos();
         //Retornando Vazio, vai ficar na mesma página
+        return "";
+    }
+
+    public String limpar() {
+        setLancamento(new Lancamento());
         return "";
     }
 
     public String deletar() {
-        if (getPessoa() != null) {
+        if (getLancamento() != null) {
             //Deletar o Objeto:
-            daoGenerico.deletar(pessoa);
+            daoGenerico.deletar(getLancamento());
 
-            if (getPessoa().getId() != null
-                    && getPessoa().getNome() != null
-                    && getPessoa().getSobrenome() != null) {
+            if (getLancamento().getId() != null) {
                 //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
-                setPessoa(new Pessoa());
+                setLancamento(new Lancamento());
             }
         }
 
-        //Atualiza Lista Pessoas:
-        carregarPessoas();
+        //Atualiza Lista Lancamentos:
+        carregarLancamentos();
         //Retornando Vazio, vai ficar na mesma página
         return "";
     }
 
-    public void carregarPessoas() {
-        setListPessoa(daoGenerico.listar(Pessoa.class));
-    }
+    public void carregarLancamentos() {
+        setListLancamento(null);
 
-    public String limpar() {
-        setPessoa(new Pessoa());
-        return "";
-    }
-
-    /**
-     * Método usado para Logar -- tela de login (index.xhtml)
-     *
-     * @return Direcionamento (Pagina principal ou volta para o Login)
-     */
-    public String logar() {
         try {
-            if (getPessoa() != null
-                    && getPessoa().getLogin() != null
-                    && getPessoa().getSenha() != null) {
-                Pessoa pessoaUser = iDaoPessoa.consultarUsuario(getPessoa().getLogin(), getPessoa().getSenha());
+            if (FacesContext.getCurrentInstance() != null
+                    && FacesContext.getCurrentInstance().getExternalContext() != null
+                    && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null
+                    && FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") != null) {
+                Pessoa pessoaUser = (Pessoa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 
                 if (pessoaUser != null) {
-                    //Adicionar o usuário na sessão:
-                    if (FacesContext.getCurrentInstance() != null
-                            && FacesContext.getCurrentInstance().getExternalContext() != null
-                            && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
-                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", pessoaUser);
-                        return "/principal/primeiraPagina.xhtml";
-                    }
+                    setListLancamento(daoLancamento.listarLancamentos(pessoaUser));
                 }
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        return "";
     }
 
     public Boolean getRenderedUsuarioPerfilAdmin() {
@@ -119,10 +110,10 @@ public class PessoaController {
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     public String getOperadorLogado() {
         if (FacesContext.getCurrentInstance() != null
                 && FacesContext.getCurrentInstance().getExternalContext() != null
@@ -139,19 +130,20 @@ public class PessoaController {
         return "";
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    public Lancamento getLancamento() {
+        return lancamento;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setLancamento(Lancamento lancamento) {
+        this.lancamento = lancamento;
     }
 
-    public List<Pessoa> getListPessoa() {
-        return listPessoa;
+    public List<Lancamento> getListLancamento() {
+        return listLancamento;
     }
 
-    public void setListPessoa(List<Pessoa> listPessoa) {
-        this.listPessoa = listPessoa;
+    public void setListLancamento(List<Lancamento> listLancamento) {
+        this.listLancamento = listLancamento;
     }
+
 }

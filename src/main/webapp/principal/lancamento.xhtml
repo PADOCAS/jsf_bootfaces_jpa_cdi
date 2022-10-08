@@ -5,15 +5,92 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
     <head>
         <title>Lançamentos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-    <body>
-        <h:form id="formLancamento">
+    <body style="height: 100%; width: 100%; position: fixed;">
+        <!--Menu Auxiliar-->
+        <h:form id="formMenuAuxiliar">
+            <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
+            <h:commandLink value="Cadastro de Usuários" action="/principal/primeiraPagina" style="margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}"/>
+            <h:commandLink value="Trocar Usuário" action="/index" style="margin-right: 5px;"/>
+        </h:form>
 
+        <h:form id="formMenuAuxiliarOperador" style="margin-top: 2px; margin-bottom: 2px;">
+            <h:outputText value="#{lancamentoController.getOperadorLogado()}" style="font-size: 13px; color: darkblue; font-weight: bold;" />
+        </h:form>
+
+        <h:form id="formLancamento" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
+            </div>
+
+            <h:panelGrid id="pnlGridLancamento" columns="2" style="display: flex; flex-direction: column; align-items: center;" >
+                <f:facet name="header">
+                    <h:outputText value="Lançamentos" />
+                </f:facet>
+
+                <h:outputLabel value="" />
+                <h:panelGroup>
+                    <h:commandButton action="#{lancamentoController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton action="#{lancamentoController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
+                    <h:commandButton action="#{lancamentoController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}" />
+                    <h:commandButton type="reset" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" />
+                </h:panelGroup>
+
+                <h:outputLabel id="lblId" value="ID" for="txtId"/>
+                <h:inputText id="txtId" value="#{lancamentoController.lancamento.id}" readonly="true" style="background-color: gainsboro;"/>
+
+                <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />     
+                <h:inputText id="txtNumeroNota" value="#{lancamentoController.lancamento.numeroNota}" style="width: 300px;"/>
+
+                <h:outputLabel id="lblEmpresaOrigem" value="Empresa Origem" for="txtEmpresaOrigem" />     
+                <h:inputText id="txtEmpresaOrigem" value="#{lancamentoController.lancamento.empresaOrigem}" style="width: 300px;"/>
+
+                <h:outputLabel id="lblEmpresaDestino" value="Empresa Destino" for="txtEmpresaDestino" />     
+                <h:inputText id="txtEmpresaDestino" value="#{lancamentoController.lancamento.empresaDestino}" style="width: 300px;"/>
+            </h:panelGrid>
+
+            <h:dataTable value="#{lancamentoController.listLancamento}" var="lanc" border="3" style="width: 100%;">
+                <f:facet name="header" >
+                    <h:outputText value="Lista de Usuário(s) Cadastrado(s)" />
+                </f:facet>
+
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    <h:outputText value="#{lanc.id}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Número Nota</f:facet>
+                    <h:outputText value="#{lanc.numeroNota}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Empresa Origem</f:facet>
+                    <h:outputText value="#{lanc.empresaOrigem}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Empresa Destino</f:facet>
+                    <h:outputText value="#{lanc.empresaDestino}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Editar</f:facet>
+                    <h:commandLink style="display: flex; justify-content: center;">
+                        <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
+                        <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
+                    </h:commandLink>
+                </h:column>
+                <h:column rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}">
+                    <f:facet name="header">Excluir</f:facet>
+                    <h:commandLink action="#{lancamentoController.deletar()}" style="display: flex; justify-content: center;">
+                        <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
+                        <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
         </h:form>
     </body>
 </html>
