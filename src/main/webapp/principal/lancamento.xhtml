@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-    <body style="height: 100%; width: 100%; position: fixed;">
+    <body>
         <!--Menu Auxiliar-->
         <h:form id="formMenuAuxiliar">
             <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
@@ -25,6 +25,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         </h:form>
 
         <h:form id="formLancamento" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <h:messages infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
+            
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
             </div>

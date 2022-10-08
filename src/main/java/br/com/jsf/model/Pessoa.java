@@ -42,6 +42,8 @@ public class Pessoa implements Serializable {
 
     private String[] esportesPraticados;
 
+    private String[] linguagensProgramacao;
+
     private Boolean ativo;
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -146,6 +148,14 @@ public class Pessoa implements Serializable {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String[] getLinguagensProgramacao() {
+        return linguagensProgramacao;
+    }
+
+    public void setLinguagensProgramacao(String[] linguagensProgramacao) {
+        this.linguagensProgramacao = linguagensProgramacao;
     }
 
     @Override

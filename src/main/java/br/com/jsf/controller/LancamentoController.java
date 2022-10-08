@@ -10,6 +10,7 @@ import br.com.jsf.model.Pessoa;
 import br.com.jsf.repository.IDaoLancamento;
 import br.com.jsf.repository.IDaoLancamentoImpl;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -52,6 +53,7 @@ public class LancamentoController {
 
         //Atualiza Lista Lancamentos:
         carregarLancamentos();
+        mostrarMsg("Cadastro salvo com sucesso!");
         //Retornando Vazio, vai ficar na mesma página
         return "";
     }
@@ -74,6 +76,7 @@ public class LancamentoController {
 
         //Atualiza Lista Lancamentos:
         carregarLancamentos();
+        mostrarMsg("Registro removido com sucesso!");
         //Retornando Vazio, vai ficar na mesma página
         return "";
     }
@@ -128,6 +131,12 @@ public class LancamentoController {
         }
 
         return "";
+    }
+    
+    private void mostrarMsg(String mensagem) {
+        FacesMessage message = new FacesMessage(mensagem);
+        //Pode ser dado a mensagem sobre algum componente especifico ou null quando é geral:
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public Lancamento getLancamento() {
