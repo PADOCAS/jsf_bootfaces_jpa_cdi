@@ -62,6 +62,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Masculino" itemValue="M"/>
                     <f:selectItem itemLabel="Feminino" itemValue="F"/>    
                 </h:selectOneRadio>
+                
+                <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
+                <h:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" converterMessage="Data de Nascimento inválida!!" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00" />
+                </h:inputText>
 
                 <h:outputLabel id="lblEsportes" value="Esportes Praticados" for="selManyEsportes"/>
                 <h:selectManyMenu id="selManyEsportes" value="#{pessoaController.pessoa.esportesPraticados}" style="height: 105px; width: 140px;">
