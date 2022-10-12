@@ -6,7 +6,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui = "http://java.sun.com/jsf/facelets">
     <head>
         <title>Lançamentos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,11 +15,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
     <body>
         <!--Menu Auxiliar-->
-        <h:form id="formMenuAuxiliar">
-            <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
-            <h:commandLink value="Cadastro de Usuários" action="/principal/primeiraPagina" style="margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}"/>
-            <h:commandLink value="Trocar Usuário" action="/index" style="margin-right: 5px;"/>
-        </h:form>
+        <!--Usando facelets para incluir um template pronto na página-->
+        <ui:include src="templates/menu.xhtml" />       
 
         <h:form id="formMenuAuxiliarOperador" style="margin-top: 2px; margin-bottom: 2px;">
             <h:outputText value="#{lancamentoController.getOperadorLogado()}" style="font-size: 13px; color: darkblue; font-weight: bold;" />

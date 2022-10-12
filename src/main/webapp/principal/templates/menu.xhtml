@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<!--xmlns é xml name space, onde você mapei com um comando para utilizar, nesse caso abaixo (h) -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <!--Menu Auxiliar-->
+    <h:form id="formMenuAuxiliar">
+        <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
+        <h:commandLink value="Cadastro de Usuários" action="/principal/primeiraPagina" style="margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}"/>
+        <h:commandLink value="Trocar Usuário" action="/index" style="margin-right: 5px;"/>
+    </h:form>     
+</html>
