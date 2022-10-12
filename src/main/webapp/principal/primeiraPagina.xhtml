@@ -49,10 +49,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;"/>
 
                 <h:outputLabel id="lblNome" value="Nome" for="txtNome" />     
-                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;"/>
+                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;" required="true" requiredMessage="Nome é requerido!" validatorMessage="Nome deve ter de 10 a 50 caracteres.">
+                    <f:validateLength minimum="10" maximum="50" />
+                </h:inputText>
 
                 <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
-                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;"/>
+                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;" required="true" requiredMessage="Sobrenome é requerido!" validatorMessage="Sobrenome deve ter de 10 a 50 caracteres." >
+                    <f:validateLength minimum="10" maximum="50" />
+                </h:inputText>
 
                 <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
                 <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" />
