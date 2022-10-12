@@ -76,6 +76,11 @@ public class PessoaController {
         setPessoa(new Pessoa());
         return "";
     }
+    
+    public String resetar() {
+        setPessoa(new Pessoa());
+        return "";
+    }
 
     /**
      * Método usado para Logar -- tela de login (index.xhtml)

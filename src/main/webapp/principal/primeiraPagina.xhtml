@@ -27,7 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
         <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
             <h:messages infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
-            
+
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
             </div>
@@ -39,23 +39,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                 <h:outputLabel value="" />
                 <h:panelGroup>
-                    <h:commandButton action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton id="btnLimpar" action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
+                        <f:ajax execute="btnLimpar" render="@form"/>
+                    </h:commandButton>
                     <h:commandButton action="#{pessoaController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
-                    <h:commandButton action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" />
-                    <h:commandButton type="reset" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton id="btnDeletar" action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" >
+                        <f:ajax execute="btnDeletar" render="@form"/>
+                    </h:commandButton>
+                    <h:commandButton id="btnResetar" action="#{pessoaController.resetar()}" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" >
+                        <f:ajax execute="btnResetar" render="@form"/>
+                    </h:commandButton>
                 </h:panelGroup>
 
                 <h:outputLabel id="lblId" value="Id" for="txtId" />     
                 <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;"/>
 
                 <h:outputLabel id="lblNome" value="Nome" for="txtNome" />     
-                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;" required="true" requiredMessage="Nome é requerido!" validatorMessage="Nome deve ter de 10 a 50 caracteres.">
-                    <f:validateLength minimum="10" maximum="50" />
+                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;" required="true" requiredMessage="Nome é requerido!" validatorMessage="Nome deve ter de 2 a 50 caracteres.">
+                    <f:validateLength minimum="2" maximum="50" />
                 </h:inputText>
 
                 <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
-                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;" required="true" requiredMessage="Sobrenome é requerido!" validatorMessage="Sobrenome deve ter de 10 a 50 caracteres." >
-                    <f:validateLength minimum="10" maximum="50" />
+                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;" required="true" requiredMessage="Sobrenome é requerido!" validatorMessage="Sobrenome deve ter de 2 a 50 caracteres." >
+                    <f:validateLength minimum="2" maximum="50" />
                 </h:inputText>
 
                 <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
@@ -66,7 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Masculino" itemValue="M"/>
                     <f:selectItem itemLabel="Feminino" itemValue="F"/>    
                 </h:selectOneRadio>
-                
+
                 <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
                 <h:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" converterMessage="Data de Nascimento inválida!!" >
                     <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00" />
@@ -113,7 +119,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
                 <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="4" style="width: 500px;" />                          
             </h:panelGrid>
-
+            
             <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3" style="width: 100%;">
                 <f:facet name="header" >
                     <h:outputText value="Lista de Usuário(s) Cadastrado(s)" />
@@ -137,19 +143,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:column>
                 <h:column>
                     <f:facet name="header">Editar</f:facet>
-                    <h:commandLink style="display: flex; justify-content: center;">
+                    <h:commandLink id="cmdEditar" style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
                         <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
+                        <f:ajax execute="cmdEditar" render="@form" />
                     </h:commandLink>
                 </h:column>
                 <h:column rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
                     <f:facet name="header">Excluir</f:facet>
-                    <h:commandLink action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
+                    <h:commandLink id="cmdDeletar" action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
                         <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
+                        <f:ajax execute="cmdDetetar" render="@form" />
                     </h:commandLink>
                 </h:column>
             </h:dataTable>
-        </h:form>
+        </h:form>        
     </h:body>
 </html>
