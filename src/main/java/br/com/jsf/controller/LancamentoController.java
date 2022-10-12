@@ -63,6 +63,11 @@ public class LancamentoController {
         return "";
     }
 
+    public String resetar() {
+        setLancamento(new Lancamento());
+        return "";
+    }
+
     public String deletar() {
         if (getLancamento() != null) {
             //Deletar o Objeto:
@@ -132,7 +137,7 @@ public class LancamentoController {
 
         return "";
     }
-    
+
     private void mostrarMsg(String mensagem) {
         FacesMessage message = new FacesMessage(mensagem);
         //Pode ser dado a mensagem sobre algum componente especifico ou null quando é geral:

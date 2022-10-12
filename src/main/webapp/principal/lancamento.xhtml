@@ -8,10 +8,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui = "http://java.sun.com/jsf/facelets">
-    <head>
+    <h:head>
         <title>Lançamentos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    </h:head>
 
     <body>
         <!--Menu Auxiliar-->
@@ -24,7 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
         <h:form id="formLancamento" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
             <h:messages infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
-            
+
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
             </div>
@@ -36,22 +36,52 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                 <h:outputLabel value="" />
                 <h:panelGroup>
-                    <h:commandButton action="#{lancamentoController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton id="btnLimpar" action="#{lancamentoController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
+                        <f:ajax execute="btnLimpar" render="@form"/>
+                    </h:commandButton>
                     <h:commandButton action="#{lancamentoController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
-                    <h:commandButton action="#{lancamentoController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}" />
-                    <h:commandButton type="reset" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" />
+                    <h:commandButton id="btnDeletar" action="#{lancamentoController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}" >
+                        <f:ajax execute="btnDeletar" render="@form"/>
+                    </h:commandButton>
+                    <h:commandButton id="btnResetar" action="#{lancamentoController.resetar()}" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" >
+                        <f:ajax execute="btnResetar" render="@form"/>
+                    </h:commandButton>
                 </h:panelGroup>
 
-                <h:outputLabel id="lblId" value="ID" for="txtId"/>
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblId" value="ID" for="txtId"/>
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtId" value="#{lancamentoController.lancamento.id}" readonly="true" style="background-color: gainsboro;"/>
 
-                <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtNumeroNota" value="#{lancamentoController.lancamento.numeroNota}" style="width: 300px;"/>
 
-                <h:outputLabel id="lblEmpresaOrigem" value="Empresa Origem" for="txtEmpresaOrigem" />     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblEmpresaOrigem" value="Empresa Origem" for="txtEmpresaOrigem" />     
+                        </li>
+                    </ul>
+                </h:panelGroup>                
                 <h:inputText id="txtEmpresaOrigem" value="#{lancamentoController.lancamento.empresaOrigem}" style="width: 300px;"/>
 
-                <h:outputLabel id="lblEmpresaDestino" value="Empresa Destino" for="txtEmpresaDestino" />     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblEmpresaDestino" value="Empresa Destino" for="txtEmpresaDestino" />     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtEmpresaDestino" value="#{lancamentoController.lancamento.empresaDestino}" style="width: 300px;"/>
             </h:panelGrid>
 
@@ -78,16 +108,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:column>
                 <h:column>
                     <f:facet name="header">Editar</f:facet>
-                    <h:commandLink style="display: flex; justify-content: center;">
+                    <h:commandLink id="cmdEditar" style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
                         <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
+                        <f:ajax execute="cmdEditar" render="@form"/>
                     </h:commandLink>
                 </h:column>
                 <h:column rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}">
                     <f:facet name="header">Excluir</f:facet>
-                    <h:commandLink action="#{lancamentoController.deletar()}" style="display: flex; justify-content: center;">
+                    <h:commandLink id="cmdExcluir" action="#{lancamentoController.deletar()}" style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
                         <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
+                        <f:ajax execute="cmdExcluir" render="@form"/>
                     </h:commandLink>
                 </h:column>
             </h:dataTable>

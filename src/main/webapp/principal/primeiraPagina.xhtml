@@ -51,34 +51,76 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </h:commandButton>
                 </h:panelGroup>
 
-                <h:outputLabel id="lblId" value="Id" for="txtId" />     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblId" value="Id" for="txtId" />     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;"/>
 
-                <h:outputLabel id="lblNome" value="Nome" for="txtNome" />     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblNome" value="Nome" for="txtNome" />    
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;" required="true" requiredMessage="Nome é requerido!" validatorMessage="Nome deve ter de 2 a 50 caracteres.">
                     <f:validateLength minimum="2" maximum="50" />
                 </h:inputText>
 
-                <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;" required="true" requiredMessage="Sobrenome é requerido!" validatorMessage="Sobrenome deve ter de 2 a 50 caracteres." >
                     <f:validateLength minimum="2" maximum="50" />
                 </h:inputText>
 
-                <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" />
 
-                <h:outputLabel id="lblSexo" value="Sexo" for="selOneRadioSexo" />
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblSexo" value="Sexo" for="selOneRadioSexo" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:selectOneRadio id="selOneRadioSexo" value="#{pessoaController.pessoa.sexo}" layout="lineDirection">
                     <f:selectItem itemLabel="Masculino" itemValue="M"/>
                     <f:selectItem itemLabel="Feminino" itemValue="F"/>    
                 </h:selectOneRadio>
 
-                <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" converterMessage="Data de Nascimento inválida!!" >
                     <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00" />
                 </h:inputText>
 
-                <h:outputLabel id="lblEsportes" value="Esportes Praticados" for="selManyEsportes"/>
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblEsportes" value="Esportes Praticados" for="selManyEsportes"/>
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:selectManyMenu id="selManyEsportes" value="#{pessoaController.pessoa.esportesPraticados}" style="height: 105px; width: 140px;">
                     <f:selectItem itemLabel="Futebol" itemValue="F" />
                     <f:selectItem itemLabel="Lesca" itemValue="L" />
@@ -88,7 +130,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Peteca" itemValue="P" />
                 </h:selectManyMenu>
 
-                <h:outputLabel id="lblLinguagens" value="Linguagens Programação" for="selManyCheckLinguagens" />
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblLinguagens" value="Linguagens Programação" for="selManyCheckLinguagens" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:selectManyCheckbox id="selManyCheckLinguagens" value="#{pessoaController.pessoa.linguagensProgramacao}">
                     <f:selectItem itemLabel="Java" itemValue="J" />
                     <f:selectItem itemLabel="C#" itemValue="C" />
@@ -99,13 +147,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Visual Basic" itemValue="V" />
                 </h:selectManyCheckbox>
 
-                <h:outputLabel id="lblLogin" value="Login" for="txtLogin"/>     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblLogin" value="Login" for="txtLogin"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" />
 
-                <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}"></h:inputSecret>
 
-                <h:outputLabel id="lblPerfil" value="Perfil Usuário" for="selOnePerfil" />
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblPerfil" value="Perfil Usuário" for="selOnePerfil" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:selectOneMenu id="selOnePerfil" value="#{pessoaController.pessoa.perfil}">
                     <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true"/>
                     <f:selectItem itemLabel="Administrador" itemValue="A"/>
@@ -113,13 +179,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Recepcionista" itemValue="R"/>    
                 </h:selectOneMenu>
 
-                <h:outputLabel id="lblAtivo" value="Ativo" for="selBooCheckAtivo" />
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblAtivo" value="Ativo" for="selBooCheckAtivo" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
 
-                <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
                 <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" rows="4" style="width: 500px;" />                          
             </h:panelGrid>
-            
+
             <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3" style="width: 100%;">
                 <f:facet name="header" >
                     <h:outputText value="Lista de Usuário(s) Cadastrado(s)" />
