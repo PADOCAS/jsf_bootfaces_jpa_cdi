@@ -67,7 +67,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 300px;" required="true" requiredMessage="Nome é requerido!" validatorMessage="Nome deve ter de 2 a 50 caracteres.">
+                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 400px;" required="true" requiredMessage="Nome é requerido!" validatorMessage="Nome deve ter de 2 a 50 caracteres.">
                     <f:validateLength minimum="2" maximum="50" />
                 </h:inputText>
 
@@ -78,7 +78,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 300px;" required="true" requiredMessage="Sobrenome é requerido!" validatorMessage="Sobrenome deve ter de 2 a 50 caracteres." >
+                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 400px;" required="true" requiredMessage="Sobrenome é requerido!" validatorMessage="Sobrenome deve ter de 2 a 50 caracteres." >
                     <f:validateLength minimum="2" maximum="50" />
                 </h:inputText>
 
@@ -178,6 +178,92 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Secretário" itemValue="S"/>    
                     <f:selectItem itemLabel="Recepcionista" itemValue="R"/>    
                 </h:selectOneMenu>
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblCep" value="CEP" for="txtCep" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtCep" value="#{pessoaController.pessoa.cep}" >
+                    <!--Ajax >> executar no campo txtCep, evento quando perder o foco e recarregando com o render alguns outros componentes da tela (endereco.. bairro.. etc..)-->
+                    <!--Deve ter um metodo no managedBean para pesquisar o CEP no webService (pesquisaCep)-->
+                    <!--Render separar por espaço apenas.. não por virgula que nao funciona no ajax do jsf padrão (f:ajax)-->
+                    <f:ajax execute="txtCep" event="blur" render="txtLogradouro txtComplemento txtBairro txtLocalidade txtUf txtIbge txtGia" listener="#{pessoaController.pesquisaCep}" />
+                </h:inputText>
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblLogradouro" value="Logradouro" for="txtLogradouro" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtLogradouro" value="#{pessoaController.pessoa.logradouro}" style="width: 400px;" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblNumero" value="Número" for="txtNumero" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtNumero" value="#{pessoaController.pessoa.numero}" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblComplemento" value="Complemento" for="txtComplemento" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtComplemento" value="#{pessoaController.pessoa.complemento}" style="width: 200px;" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblBairro" value="Bairro" for="txtBairro" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtBairro" value="#{pessoaController.pessoa.bairro}" style="width: 400px;" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblLocalidade" value="Localidade" for="txtLocalidade" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtLocalidade" value="#{pessoaController.pessoa.localidade}" style="width: 300px;" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblUf" value="UF" for="txtUf" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtUf" value="#{pessoaController.pessoa.uf}" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblIbge" value="IBGE" for="txtIbge" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtIbge" value="#{pessoaController.pessoa.ibge}" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblGia" value="GIA" for="txtGia" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtGia" value="#{pessoaController.pessoa.gia}" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
