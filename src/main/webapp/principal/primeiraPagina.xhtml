@@ -151,6 +151,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblSelOneMenuEstado" value="Estado" for="selOneMenuEstado"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:selectOneMenu id="selOneMenuEstado" value="#{pessoaController.pessoa.estado}">
+                    <f:selectItems value="#{pessoaController.getListSelItEstadoCharged()}" />
+                </h:selectOneMenu>
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
                             <h:outputLabel id="lblLogin" value="Login" for="txtLogin"/>     
                         </li>
                     </ul>
@@ -193,7 +204,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <!--Render separar por espaço apenas.. não por virgula que nao funciona no ajax do jsf padrão (f:ajax)-->
                     <f:ajax execute="txtCep" event="blur" render="txtLogradouro txtComplemento txtBairro txtLocalidade txtUf txtIbge txtGia" listener="#{pessoaController.pesquisaCep}" />
                 </h:inputText>
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -202,7 +213,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtLogradouro" value="#{pessoaController.pessoa.logradouro}" pt:placeholder="Informe o Logradouro" style="width: 400px;" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -211,7 +222,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtNumero" value="#{pessoaController.pessoa.numero}" pt:placeholder="Informe o Número" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -220,7 +231,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtComplemento" value="#{pessoaController.pessoa.complemento}" pt:placeholder="Informe o Complemento" style="width: 200px;" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -229,7 +240,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtBairro" value="#{pessoaController.pessoa.bairro}" pt:placeholder="Informe o Bairro" style="width: 400px;" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -238,7 +249,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtLocalidade" value="#{pessoaController.pessoa.localidade}" pt:placeholder="Informe a Localidade" style="width: 300px;" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -247,7 +258,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtUf" value="#{pessoaController.pessoa.uf}" pt:placeholder="Informe a UF" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -256,7 +267,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtIbge" value="#{pessoaController.pessoa.ibge}" pt:placeholder="Informe o Cód. IBGE" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">

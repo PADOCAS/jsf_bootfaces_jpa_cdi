@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -61,6 +62,10 @@ public class Pessoa implements Serializable {
     private String[] esportesPraticados;
 
     private String[] linguagensProgramacao;
+
+    //Manter apenas como um transient.. não precisa jogar isso na tabela, hibernate não vai criar isso no banco!!!
+    @Transient
+    private Estados estado;
 
     private Boolean ativo;
 
@@ -246,6 +251,14 @@ public class Pessoa implements Serializable {
 
     public void setLinguagensProgramacao(String[] linguagensProgramacao) {
         this.linguagensProgramacao = linguagensProgramacao;
+    }
+
+    public Estados getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estados estado) {
+        this.estado = estado;
     }
 
     @Override

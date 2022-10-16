@@ -6,6 +6,8 @@
         <!--Mas funcionou normalmente sem por essa classe aqui!! Não fez diferença pra mim-->
         <class>br.com.jsf.model.Pessoa</class>
         <class>br.com.jsf.model.Lancamento</class>
+        <class>br.com.jsf.model.Estados</class>
+        <class>br.com.jsf.model.Cidades</class>
         
         <properties>
             <!--Dados de Conexão com o banco de dados:-->

@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -37,6 +38,8 @@ public class PessoaController {
     private DAOGenerico<Pessoa> daoGenerico = new DAOGenerico<>();
 
     private List<Pessoa> listPessoa = null;
+
+    private List<SelectItem> listSelectItemEstados = null;
 
     @javax.annotation.PostConstruct
     public void initManagedBean() {
@@ -222,6 +225,11 @@ public class PessoaController {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    public List<SelectItem> getListSelItEstadoCharged() {
+        setListSelectItemEstados(iDaoPessoa.listaEstados());
+        return getListSelectItemEstados();
+    }
+
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -237,4 +245,13 @@ public class PessoaController {
     public void setListPessoa(List<Pessoa> listPessoa) {
         this.listPessoa = listPessoa;
     }
+
+    public List<SelectItem> getListSelectItemEstados() {
+        return listSelectItemEstados;
+    }
+
+    public void setListSelectItemEstados(List<SelectItem> listSelectItemEstados) {
+        this.listSelectItemEstados = listSelectItemEstados;
+    }
+
 }

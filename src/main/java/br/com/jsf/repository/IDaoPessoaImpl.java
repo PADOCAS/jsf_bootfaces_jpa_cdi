@@ -5,7 +5,11 @@
 package br.com.jsf.repository;
 
 import br.com.jsf.hibernate.util.JPAUtil;
+import br.com.jsf.model.Estados;
 import br.com.jsf.model.Pessoa;
+import java.util.ArrayList;
+import java.util.List;
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -37,6 +41,34 @@ public class IDaoPessoaImpl implements IDaoPessoa {
         }
 
         return pessoa;
+    }
+
+    @Override
+    public List<SelectItem> listaEstados() {
+        List<SelectItem> listSelectItemEstado = new ArrayList<>();
+
+        List<Estados> listEstados;
+
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        listEstados = entityManager.createQuery("SELECT e from Estados e ORDER BY nome").getResultList();
+
+        if (listEstados != null
+                && !listEstados.isEmpty()) {
+            for (Estados estado : listEstados) {
+                if (estado.getSigla() != null
+                        && estado.getNome() != null) {
+                    listSelectItemEstado.add(new SelectItem(estado, estado.getNome()));
+                }
+            }
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+
+        return listSelectItemEstado;
     }
 
 }
