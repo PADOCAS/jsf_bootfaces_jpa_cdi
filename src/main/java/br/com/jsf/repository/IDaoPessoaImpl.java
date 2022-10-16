@@ -58,9 +58,10 @@ public class IDaoPessoaImpl implements IDaoPessoa {
         if (listEstados != null
                 && !listEstados.isEmpty()) {
             for (Estados estado : listEstados) {
-                if (estado.getSigla() != null
+                if (estado.getId() != null
+                        && estado.getSigla() != null
                         && estado.getNome() != null) {
-                    listSelectItemEstado.add(new SelectItem(estado, estado.getNome()));
+                    listSelectItemEstado.add(new SelectItem(estado.getId(), estado.getNome()));
                 }
             }
         }

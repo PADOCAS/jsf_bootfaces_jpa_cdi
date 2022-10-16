@@ -118,6 +118,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblSelOneMenuEstado" value="Estado Nascimento" for="selOneMenuEstado"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:selectOneMenu id="selOneMenuEstado" value="#{pessoaController.pessoa.estado}" immediate="true">
+                    <!--Immediate = true para executar imediatamente antes das validacoes de formulario etc.. caso contrario não vai rodar o ajax-->
+                    <!--A primeira opcao não é valida.. nao passa em evento ajax nada.. pra isso marcar o noSelectionOption = true-->
+                    <f:selectItem itemLabel="..." noSelectionOption="true" />
+                    <f:selectItems value="#{pessoaController.getListSelItEstadoCharged()}" />
+                    <f:ajax event="change" execute="@this" listener="${pessoaController.carregaCidades}" />
+                </h:selectOneMenu>
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblSelOneMenuCidade" value="Cidade Nascimento" for="selOneMenuCidade"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:selectOneMenu id="selOneMenuCidade" immediate="true">
+                    <f:selectItem itemLabel="..." noSelectionOption="true" />
+                </h:selectOneMenu>
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
                             <h:outputLabel id="lblEsportes" value="Esportes Praticados" for="selManyEsportes"/>
                         </li>
                     </ul>
@@ -151,17 +177,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblSelOneMenuEstado" value="Estado" for="selOneMenuEstado"/>     
-                        </li>
-                    </ul>
-                </h:panelGroup>
-                <h:selectOneMenu id="selOneMenuEstado" value="#{pessoaController.pessoa.estado}">
-                    <f:selectItems value="#{pessoaController.getListSelItEstadoCharged()}" />
-                </h:selectOneMenu>
-
-                <h:panelGroup>
-                    <ul style="margin: 0px; margin-right: 2px;">
-                        <li style="text-align: right; list-style-type: none;">
                             <h:outputLabel id="lblLogin" value="Login" for="txtLogin"/>     
                         </li>
                     </ul>
@@ -190,6 +205,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <f:selectItem itemLabel="Secretário" itemValue="S"/>    
                     <f:selectItem itemLabel="Recepcionista" itemValue="R"/>    
                 </h:selectOneMenu>
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblAtivo" value="Ativo" for="selBooCheckAtivo" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px; margin-top: 5px; margin-bottom: 5px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblInfoEndereco" value="" for="txtInfoEndereco" />
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:outputLabel id="txtInfoEndereco" value=" ** Informações de Endereço ** " style="font-weight: bold; color: blue; margin-top: 5px; margin-bottom: 5px;" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -275,25 +317,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtGia" value="#{pessoaController.pessoa.gia}" pt:placeholder="Informe o Cód. GIA" />
-
-                <h:panelGroup>
-                    <ul style="margin: 0px; margin-right: 2px;">
-                        <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblAtivo" value="Ativo" for="selBooCheckAtivo" />
-                        </li>
-                    </ul>
-                </h:panelGroup>
-                <h:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
-
-                <h:panelGroup>
-                    <ul style="margin: 0px; margin-right: 2px;">
-                        <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
-                        </li>
-                    </ul>
-                </h:panelGroup>
-                <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
+                <h:inputText id="txtGia" value="#{pessoaController.pessoa.gia}" pt:placeholder="Informe o Cód. GIA" />              
             </h:panelGrid>
 
             <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3" style="width: 100%;">

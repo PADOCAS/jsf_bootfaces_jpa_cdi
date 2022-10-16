@@ -230,6 +230,20 @@ public class PessoaController {
         return getListSelectItemEstados();
     }
 
+    public void carregaCidades(AjaxBehaviorEvent event) {
+        //Para pegar o ID do estado selecionado, usar o event.. submittedValue
+        String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
+        try {
+            if (codigoEstado != null
+                    && !codigoEstado.isEmpty()) {
+                System.out.println("Estado: " + event.getComponent().getAttributes().get("submittedValue"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarMsg("Erro ao carregar Cidades!\n" + e.getMessage());
+        }
+    }
+
     public Pessoa getPessoa() {
         return pessoa;
     }
