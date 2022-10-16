@@ -7,7 +7,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui = "http://java.sun.com/jsf/facelets">
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Lançamentos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -64,7 +65,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtNumeroNota" value="#{lancamentoController.lancamento.numeroNota}" style="width: 300px;"/>
+                <h:inputText id="txtNumeroNota" value="#{lancamentoController.lancamento.numeroNota}" pt:placeholder="Informe o Número" style="width: 300px;"/>
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -73,7 +74,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>                
-                <h:inputText id="txtEmpresaOrigem" value="#{lancamentoController.lancamento.empresaOrigem}" style="width: 300px;"/>
+                <h:inputText id="txtEmpresaOrigem" value="#{lancamentoController.lancamento.empresaOrigem}" pt:placeholder="Informe a Empresa Origem" style="width: 300px;"/>
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -82,7 +83,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtEmpresaDestino" value="#{lancamentoController.lancamento.empresaDestino}" style="width: 300px;"/>
+                <h:inputText id="txtEmpresaDestino" value="#{lancamentoController.lancamento.empresaDestino}" pt:placeholder="Informe a Empresa Destino" style="width: 300px;"/>
             </h:panelGrid>
 
             <h:dataTable value="#{lancamentoController.listLancamento}" var="lanc" border="3" style="width: 100%;">

@@ -5,7 +5,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <head>
         <title>JSF BootFaces</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,10 +18,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
             <h:panelGrid columns="2" >
                 <h:outputLabel id="lblLogin" value="Login" for="txtLogin" />
-                <h:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" />
+                <h:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" pt:placeholder="Informe o Login" />
 
                 <h:outputLabel id="lblSenha" value="Senha" for="txtSenha" />
-                <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" />
+                <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" pt:placeholder="Informe a Senha" />
 
                 <h:outputLabel value="" />
                 <h:commandButton value="Acessar" action="#{pessoaController.logar()}" />            
