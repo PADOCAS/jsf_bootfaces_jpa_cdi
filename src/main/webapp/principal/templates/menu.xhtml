@@ -12,6 +12,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
     <h:form id="formMenuAuxiliar">
         <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
         <h:commandLink value="Cadastro de Usuários" action="/principal/primeiraPagina" style="margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}"/>
-        <h:commandLink value="Trocar Usuário" action="/index" style="margin-right: 5px;"/>
+        <h:commandLink value="Trocar Usuário" action="#{pessoaController.deslogar()}" style="margin-right: 5px;" />
     </h:form>     
 </html>

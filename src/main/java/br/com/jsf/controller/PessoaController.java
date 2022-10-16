@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -128,6 +129,28 @@ public class PessoaController {
     public String resetar() {
         setPessoa(new Pessoa());
         return "";
+    }
+
+    /**
+     * 1)Método para deslogar usuário e retirar da session o (usuario) carregado
+     * anteriormente! 2)Inválida a sessão dele
+     *
+     * @return Página index para como redirecionamento
+     */
+    public String deslogar() {
+        if (FacesContext.getCurrentInstance() != null
+                && FacesContext.getCurrentInstance().getExternalContext() != null
+                && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
+
+            //Invalida sessão ao deslogar
+            if (FacesContext.getCurrentInstance().getExternalContext().getRequest() != null) {
+                HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+                httpServletRequest.getSession().invalidate();
+            }
+        }
+
+        return "/index";
     }
 
     /**
