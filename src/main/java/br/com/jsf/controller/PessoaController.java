@@ -5,6 +5,7 @@
 package br.com.jsf.controller;
 
 import br.com.jsf.hibernate.dao.DAOGenerico;
+import br.com.jsf.model.Estados;
 import br.com.jsf.model.Pessoa;
 import br.com.jsf.repository.IDaoPessoa;
 import br.com.jsf.repository.IDaoPessoaImpl;
@@ -18,6 +19,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
@@ -40,6 +42,8 @@ public class PessoaController {
     private List<Pessoa> listPessoa = null;
 
     private List<SelectItem> listSelectItemEstados = null;
+
+    private List<SelectItem> listSelectItemCidades = null;
 
     @javax.annotation.PostConstruct
     public void initManagedBean() {
@@ -97,6 +101,21 @@ public class PessoaController {
         } catch (Exception e) {
             e.printStackTrace();
             mostrarMsg("Erro ao consultar o CEP!\n" + e.getMessage());
+        }
+    }
+
+    public void editar() {
+        //Se tiver cidade informado na Pessoa, carregar os selectItens de Cidade para o Estado 
+        if (getPessoa().getCidade() != null
+                && getPessoa().getCidade().getId() != null
+                && getPessoa().getCidade().getEstados() != null
+                && getPessoa().getCidade().getEstados().getId() != null) {
+            setListSelectItemCidades(iDaoPessoa.listaCidades(getPessoa().getCidade().getEstados().getId()));
+            
+            //Caso o Estado estiver NULO, setar o Estado vinculado a Cidade:
+            if (getPessoa().getEstado() == null) {
+                getPessoa().setEstado(getPessoa().getCidade().getEstados());
+            }
         }
     }
 
@@ -230,20 +249,23 @@ public class PessoaController {
         return getListSelectItemEstados();
     }
 
-    public void carregaCidades(AjaxBehaviorEvent event) {
-        //Para pegar o ID do estado selecionado, usar o event.. submittedValue
-        String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
+    public void selOneEstado(AjaxBehaviorEvent event) {
+        //Estamos trabalhando com o selectItem retornando o objeto Estados direto:
+        Estados estado = ((Estados) ((HtmlSelectOneMenu) event.getSource()).getValue());
+
+        //Caso fosse pegar o resultado do combo por ID... NAO VAMOS USAR ASSIM AGORA:
+//        String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
         try {
-            if (codigoEstado != null
-                    && !codigoEstado.isEmpty()) {
-                System.out.println("Estado: " + event.getComponent().getAttributes().get("submittedValue"));
+            if (estado != null
+                    && estado.getId() != null) {
+                setListSelectItemCidades(iDaoPessoa.listaCidades(estado.getId()));
             }
         } catch (Exception e) {
             e.printStackTrace();
             mostrarMsg("Erro ao carregar Cidades!\n" + e.getMessage());
         }
     }
-
+   
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -266,6 +288,14 @@ public class PessoaController {
 
     public void setListSelectItemEstados(List<SelectItem> listSelectItemEstados) {
         this.listSelectItemEstados = listSelectItemEstados;
+    }
+
+    public List<SelectItem> getListSelectItemCidades() {
+        return listSelectItemCidades;
+    }
+
+    public void setListSelectItemCidades(List<SelectItem> listSelectItemCidades) {
+        this.listSelectItemCidades = listSelectItemCidades;
     }
 
 }

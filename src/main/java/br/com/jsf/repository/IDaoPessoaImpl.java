@@ -5,6 +5,7 @@
 package br.com.jsf.repository;
 
 import br.com.jsf.hibernate.util.JPAUtil;
+import br.com.jsf.model.Cidades;
 import br.com.jsf.model.Estados;
 import br.com.jsf.model.Pessoa;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class IDaoPessoaImpl implements IDaoPessoa {
                 if (estado.getId() != null
                         && estado.getSigla() != null
                         && estado.getNome() != null) {
-                    listSelectItemEstado.add(new SelectItem(estado.getId(), estado.getNome()));
+                    listSelectItemEstado.add(new SelectItem(estado, estado.getNome()));
                 }
             }
         }
@@ -70,6 +71,33 @@ public class IDaoPessoaImpl implements IDaoPessoa {
         entityManager.close();
 
         return listSelectItemEstado;
+    }
+
+    @Override
+    public List<SelectItem> listaCidades(Long estadoId) {
+        List<SelectItem> listSelectItemCidade = new ArrayList<>();
+
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        if (estadoId != null) {
+            List<Cidades> listCidades = JPAUtil.getEntityManager().createQuery("SELECT c FROM Cidades c WHERE estados.id = :estadoId")
+                    .setParameter("estadoId", estadoId)
+                    .getResultList();
+
+            if (listCidades != null
+                    && !listCidades.isEmpty()) {
+                for (Cidades cidade : listCidades) {
+                    listSelectItemCidade.add(new SelectItem(cidade, cidade.getNome()));
+                }
+            }
+        }
+
+        entityTransaction.commit();
+        entityManager.close();
+
+        return listSelectItemCidade;
     }
 
 }

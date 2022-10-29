@@ -122,12 +122,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:selectOneMenu id="selOneMenuEstado" value="#{pessoaController.pessoa.estado}" immediate="true">
+                <h:selectOneMenu id="selOneMenuEstado" value="#{pessoaController.pessoa.estado}" converter="estadosConverter" immediate="true">
                     <!--Immediate = true para executar imediatamente antes das validacoes de formulario etc.. caso contrario não vai rodar o ajax-->
                     <!--A primeira opcao não é valida.. nao passa em evento ajax nada.. pra isso marcar o noSelectionOption = true-->
                     <f:selectItem itemLabel="..." noSelectionOption="true" />
                     <f:selectItems value="#{pessoaController.getListSelItEstadoCharged()}" />
-                    <f:ajax event="change" execute="@this" listener="${pessoaController.carregaCidades}" />
+                    <f:ajax event="change" execute="@this" listener="${pessoaController.selOneEstado}" render="selOneMenuCidade" />
                 </h:selectOneMenu>
 
                 <h:panelGroup>
@@ -137,8 +137,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:selectOneMenu id="selOneMenuCidade" immediate="true">
+                <h:selectOneMenu id="selOneMenuCidade" value="#{pessoaController.pessoa.cidade}" converter="cidadesConverter" immediate="true">
                     <f:selectItem itemLabel="..." noSelectionOption="true" />
+                    <f:selectItems value="#{pessoaController.getListSelectItemCidades()}" />
                 </h:selectOneMenu>
 
                 <h:panelGroup>
@@ -343,7 +344,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:column>
                 <h:column>
                     <f:facet name="header">Editar</f:facet>
-                    <h:commandLink id="cmdEditar" style="display: flex; justify-content: center;">
+                    <h:commandLink id="cmdEditar" style="display: flex; justify-content: center;" action="#{pessoaController.editar()}">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
                         <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
                         <f:ajax execute="cmdEditar" render="@form" />

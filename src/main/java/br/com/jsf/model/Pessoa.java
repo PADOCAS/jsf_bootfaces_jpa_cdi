@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 /**
  *
@@ -63,9 +63,13 @@ public class Pessoa implements Serializable {
 
     private String[] linguagensProgramacao;
 
-    //Manter apenas como um transient.. não precisa jogar isso na tabela, hibernate não vai criar isso no banco!!!
-    @Transient
+    @ManyToOne(optional = true)
+    @org.hibernate.annotations.ForeignKey(name = "estado_fk1")
     private Estados estado;
+
+    @ManyToOne(optional = true)
+    @org.hibernate.annotations.ForeignKey(name = "cidade_fk1")
+    private Cidades cidade;
 
     private Boolean ativo;
 
@@ -259,6 +263,14 @@ public class Pessoa implements Serializable {
 
     public void setEstado(Estados estado) {
         this.estado = estado;
+    }
+
+    public Cidades getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidades cidade) {
+        this.cidade = cidade;
     }
 
     @Override
