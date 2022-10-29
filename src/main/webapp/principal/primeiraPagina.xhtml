@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
     </h:head>
 
     <!-- Sempre tem o corpo da página (body) -->
-    <h:body>
+    <h:body style="background: ghostwhite;">
         <!--Menu Auxiliar-->
         <!--Usando facelets para incluir um template pronto na página-->
         <ui:include src="templates/menu.xhtml" />
@@ -26,7 +26,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         </h:form>
 
         <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
-        <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
             <h:messages infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
 
             <div style="display: flex; flex-direction: column; align-items: center;">
@@ -61,6 +61,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:panelGroup>
                 <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;" />
 
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblFoto" value="Foto" for="inpFilFoto" />    
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputFile id="inpFilFoto" value="#{pessoaController.arquivoFoto}"></h:inputFile>
+                
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">

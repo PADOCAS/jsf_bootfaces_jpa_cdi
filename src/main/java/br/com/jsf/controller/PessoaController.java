@@ -10,12 +10,19 @@ import br.com.jsf.model.Pessoa;
 import br.com.jsf.repository.IDaoPessoa;
 import br.com.jsf.repository.IDaoPessoaImpl;
 import com.google.gson.Gson;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -23,7 +30,10 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -45,15 +55,50 @@ public class PessoaController {
 
     private List<SelectItem> listSelectItemCidades = null;
 
+    //Pega o arquivo que selecionou na tela, cria temporariamente no servidor para poder pega-lo depois
+    private Part arquivoFoto;
+
     @javax.annotation.PostConstruct
     public void initManagedBean() {
         carregarPessoas();
     }
 
     public String salvar() {
-        if (getPessoa() != null) {
-            //Merge >> SaveOrUpdate - Vai salvar e Retornar o objeto salvo pra gente:
-            setPessoa(daoGenerico.saveOrUpdate(pessoa));
+        try {
+            if (getPessoa() != null) {
+                //Processar Imagem:
+                if (arquivoFoto != null) {
+                    byte[] imagemByte = getByteFotoSel(arquivoFoto.getInputStream());
+                    getPessoa().setFotoIconBase64Original(imagemByte);
+                    
+                    //Transformar em BufferImage:
+                    BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
+                    
+                    //Tipo da Imagem:
+                    int typeImg = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_RGB : bufferedImage.getType();
+                    int largura = 200;
+                    int altura = 200;
+                    //Criando a miniatura:
+                    BufferedImage resizedImage = new BufferedImage(altura, largura, typeImg);
+                    Graphics2D graphics2D = resizedImage.createGraphics();
+                    graphics2D.drawImage(bufferedImage, 0, 0, largura, altura, null);
+                    graphics2D.dispose();
+                    //Escrever a imagem miniatura:
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    //Retorna assim o contentType /image/png por exemplo.. entao vamos quebrar em array e pegar apenas a extensao
+                    String extensao = arquivoFoto.getContentType().split("\\/")[1];
+                    ImageIO.write(resizedImage, extensao, baos);                    
+                    String imagemMiniatura = "data:" + arquivoFoto.getContentType() + ";base64," + DatatypeConverter.printBase64Binary(baos.toByteArray());
+                    
+                    getPessoa().setFotoIconBase64(imagemMiniatura);
+                    getPessoa().setExtencao(extensao);
+                }
+
+                //Merge >> SaveOrUpdate - Vai salvar e Retornar o objeto salvo pra gente:
+                setPessoa(daoGenerico.saveOrUpdate(pessoa));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PessoaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //Atualiza Lista Pessoas:
@@ -111,7 +156,7 @@ public class PessoaController {
                 && getPessoa().getCidade().getEstados() != null
                 && getPessoa().getCidade().getEstados().getId() != null) {
             setListSelectItemCidades(iDaoPessoa.listaCidades(getPessoa().getCidade().getEstados().getId()));
-            
+
             //Caso o Estado estiver NULO, setar o Estado vinculado a Cidade:
             if (getPessoa().getEstado() == null) {
                 getPessoa().setEstado(getPessoa().getCidade().getEstados());
@@ -265,7 +310,40 @@ public class PessoaController {
             mostrarMsg("Erro ao carregar Cidades!\n" + e.getMessage());
         }
     }
-   
+
+    /**
+     * Método que converte um inputStream para um byte[]
+     *
+     * @param inputStream
+     * @return byte[]
+     */
+    private byte[] getByteFotoSel(InputStream inputStream) {
+        int len;
+        int size = 1024;
+        byte[] buff = null;
+
+        try {
+            if (inputStream instanceof ByteArrayInputStream) {
+                size = inputStream.available();
+                buff = new byte[size];
+                len = inputStream.read(buff, 0, size);
+            } else {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                buff = new byte[size];
+
+                while ((len = inputStream.read(buff, 0, size)) != -1) {
+                    byteArrayOutputStream.write(buff, 0, len);
+                }
+
+                buff = byteArrayOutputStream.toByteArray();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PessoaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return buff;
+    }
+
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -296,6 +374,14 @@ public class PessoaController {
 
     public void setListSelectItemCidades(List<SelectItem> listSelectItemCidades) {
         this.listSelectItemCidades = listSelectItemCidades;
+    }
+
+    public Part getArquivoFoto() {
+        return arquivoFoto;
+    }
+
+    public void setArquivoFoto(Part arquivoFoto) {
+        this.arquivoFoto = arquivoFoto;
     }
 
 }

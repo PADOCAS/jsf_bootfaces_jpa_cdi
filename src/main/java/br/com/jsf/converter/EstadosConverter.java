@@ -33,7 +33,10 @@ public class EstadosConverter implements Converter, Serializable {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        if (codigoEstado != null) {
+        if (codigoEstado != null
+                && !codigoEstado.isEmpty()
+                && !codigoEstado.equals("...")) {
+            //Caso receba ... é quando nao seleciona nada!!
             estado = JPAUtil.getEntityManager().find(Estados.class, Long.parseLong(codigoEstado));
         }
 

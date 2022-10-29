@@ -32,7 +32,10 @@ public class CidadesConverter implements Converter, Serializable {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        if (codigoCidade != null) {
+        if (codigoCidade != null
+                && !codigoCidade.isEmpty()
+                && !codigoCidade.equals("...")) {
+            //Caso receba ... é quando nao seleciona nada!!
             cidade = JPAUtil.getEntityManager().find(Cidades.class, Long.parseLong(codigoCidade));
         }
 

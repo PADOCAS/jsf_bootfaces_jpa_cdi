@@ -7,10 +7,14 @@ package br.com.jsf.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -77,6 +81,15 @@ public class Pessoa implements Serializable {
     private Date dataNascimento;
 
     private String observacao;
+
+    @Column(columnDefinition = "text") //grava arquivo em base64
+    private String fotoIconBase64;
+
+    private String extencao; //jpg, pmg, jpeg etc..
+
+    @Lob //Gravar Arquivos no banco de dados
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] fotoIconBase64Original;
 
     public Pessoa() {
     }
@@ -271,6 +284,30 @@ public class Pessoa implements Serializable {
 
     public void setCidade(Cidades cidade) {
         this.cidade = cidade;
+    }
+
+    public String getFotoIconBase64() {
+        return fotoIconBase64;
+    }
+
+    public void setFotoIconBase64(String fotoIconBase64) {
+        this.fotoIconBase64 = fotoIconBase64;
+    }
+
+    public String getExtencao() {
+        return extencao;
+    }
+
+    public void setExtencao(String extencao) {
+        this.extencao = extencao;
+    }
+
+    public byte[] getFotoIconBase64Original() {
+        return fotoIconBase64Original;
+    }
+
+    public void setFotoIconBase64Original(byte[] fotoIconBase64Original) {
+        this.fotoIconBase64Original = fotoIconBase64Original;
     }
 
     @Override
