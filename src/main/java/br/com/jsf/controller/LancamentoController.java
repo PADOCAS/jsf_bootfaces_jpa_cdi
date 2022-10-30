@@ -10,6 +10,8 @@ import br.com.jsf.model.Pessoa;
 import br.com.jsf.repository.IDaoLancamento;
 import br.com.jsf.repository.IDaoLancamentoImpl;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -39,21 +41,27 @@ public class LancamentoController {
     }
 
     public String salvar() {
-        if (FacesContext.getCurrentInstance() != null
-                && FacesContext.getCurrentInstance().getExternalContext() != null
-                && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null
-                && FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") != null) {
-            Pessoa pessoaUser = (Pessoa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        try {
+            if (FacesContext.getCurrentInstance() != null
+                    && FacesContext.getCurrentInstance().getExternalContext() != null
+                    && FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null
+                    && FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario") != null) {
+                Pessoa pessoaUser = (Pessoa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 
-            if (pessoaUser != null) {
-                lancamento.setPessoaUser(pessoaUser);
-                setLancamento(daoGenerico.saveOrUpdate(lancamento));
+                if (pessoaUser != null) {
+                    lancamento.setPessoaUser(pessoaUser);
+                    setLancamento(daoGenerico.saveOrUpdate(lancamento));
+
+                    mostrarMsg("Cadastro salvo com sucesso!");
+                }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mostrarMsg(ex.getMessage());
         }
 
         //Atualiza Lista Lancamentos:
         carregarLancamentos();
-        mostrarMsg("Cadastro salvo com sucesso!");
         //Retornando Vazio, vai ficar na mesma página
         return "";
     }
@@ -69,19 +77,26 @@ public class LancamentoController {
     }
 
     public String deletar() {
-        if (getLancamento() != null) {
-            //Deletar o Objeto:
-            daoGenerico.deletar(getLancamento());
+        try {
+            if (getLancamento() != null
+                    && getLancamento().getId() != null) {
+                //Deletar o Objeto:
+                daoGenerico.deletar(getLancamento());
 
-            if (getLancamento().getId() != null) {
-                //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
-                setLancamento(new Lancamento());
+                if (getLancamento().getId() != null) {
+                    //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
+                    setLancamento(new Lancamento());
+                }
+            } else {
+                mostrarMsg("Selecione um lançamento já cadastrado para excluir.");
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mostrarMsg("Erro ao excluir registro!/n" + ex.getMessage());
         }
 
         //Atualiza Lista Lancamentos:
         carregarLancamentos();
-        mostrarMsg("Registro removido com sucesso!");
         //Retornando Vazio, vai ficar na mesma página
         return "";
     }

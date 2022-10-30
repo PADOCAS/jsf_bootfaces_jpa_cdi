@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -63,21 +64,25 @@ public class PessoaController {
         carregarPessoas();
     }
 
-    public String salvar() {
+    public void carregarFotoMiniatura(AjaxBehaviorEvent event) {
         try {
-            if (getPessoa() != null) {
-                //Processar Imagem:
-                if (arquivoFoto != null) {
+            if (arquivoFoto != null
+                    && arquivoFoto.getContentType() != null) {
+                String extensaoVerify = arquivoFoto.getContentType().split("\\/")[1];
+
+                if (extensaoVerify.equals("jpg")
+                        || extensaoVerify.equals("mp4")
+                        || extensaoVerify.equals("jpeg")
+                        || extensaoVerify.equals("png")) {
                     byte[] imagemByte = getByteFotoSel(arquivoFoto.getInputStream());
-                    getPessoa().setFotoIconBase64Original(imagemByte);
-                    
+
                     //Transformar em BufferImage:
                     BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
-                    
+
                     //Tipo da Imagem:
                     int typeImg = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_RGB : bufferedImage.getType();
-                    int largura = 200;
-                    int altura = 200;
+                    int largura = 80;
+                    int altura = 80;
                     //Criando a miniatura:
                     BufferedImage resizedImage = new BufferedImage(altura, largura, typeImg);
                     Graphics2D graphics2D = resizedImage.createGraphics();
@@ -87,23 +92,70 @@ public class PessoaController {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     //Retorna assim o contentType /image/png por exemplo.. entao vamos quebrar em array e pegar apenas a extensao
                     String extensao = arquivoFoto.getContentType().split("\\/")[1];
-                    ImageIO.write(resizedImage, extensao, baos);                    
+                    ImageIO.write(resizedImage, extensao, baos);
                     String imagemMiniatura = "data:" + arquivoFoto.getContentType() + ";base64," + DatatypeConverter.printBase64Binary(baos.toByteArray());
-                    
+
                     getPessoa().setFotoIconBase64(imagemMiniatura);
-                    getPessoa().setExtencao(extensao);
+                } else {
+                    throw new Exception("Informe apenas imagens dos tipos (jpg, mp4, jpeg ou png).");
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mostrarMsg(ex.getMessage());
+        }
+    }
+
+    public String salvar() {
+        try {
+            if (getPessoa() != null) {
+                //Processar Imagem:
+                if (arquivoFoto != null
+                        && arquivoFoto.getContentType() != null) {
+                    String extensaoVerify = arquivoFoto.getContentType().split("\\/")[1];
+
+                    if (extensaoVerify.equals("jpg")
+                            || extensaoVerify.equals("mp4")
+                            || extensaoVerify.equals("jpeg")
+                            || extensaoVerify.equals("png")) {
+                        byte[] imagemByte = getByteFotoSel(arquivoFoto.getInputStream());
+                        getPessoa().setFotoIconBase64Original(imagemByte);
+
+                        //Transformar em BufferImage:
+                        BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
+
+                        //Tipo da Imagem:
+                        int typeImg = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_RGB : bufferedImage.getType();
+                        int largura = 200;
+                        int altura = 200;
+                        //Criando a miniatura:
+                        BufferedImage resizedImage = new BufferedImage(altura, largura, typeImg);
+                        Graphics2D graphics2D = resizedImage.createGraphics();
+                        graphics2D.drawImage(bufferedImage, 0, 0, largura, altura, null);
+                        graphics2D.dispose();
+                        //Escrever a imagem miniatura:
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        //Retorna assim o contentType /image/png por exemplo.. entao vamos quebrar em array e pegar apenas a extensao
+                        String extensao = arquivoFoto.getContentType().split("\\/")[1];
+                        ImageIO.write(resizedImage, extensao, baos);
+                        String imagemMiniatura = "data:" + arquivoFoto.getContentType() + ";base64," + DatatypeConverter.printBase64Binary(baos.toByteArray());
+
+                        getPessoa().setFotoIconBase64(imagemMiniatura);
+                        getPessoa().setExtencao(extensao);
+                    }
                 }
 
                 //Merge >> SaveOrUpdate - Vai salvar e Retornar o objeto salvo pra gente:
                 setPessoa(daoGenerico.saveOrUpdate(pessoa));
+                mostrarMsg("Cadastro salvo com sucesso!");
             }
-        } catch (IOException ex) {
-            Logger.getLogger(PessoaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mostrarMsg(ex.getMessage());
         }
 
         //Atualiza Lista Pessoas:
         carregarPessoas();
-        mostrarMsg("Cadastro salvo com sucesso!");
         //Retornando Vazio, vai ficar na mesma página
         return "";
     }
@@ -150,42 +202,63 @@ public class PessoaController {
     }
 
     public void editar() {
-        //Se tiver cidade informado na Pessoa, carregar os selectItens de Cidade para o Estado 
-        if (getPessoa().getCidade() != null
-                && getPessoa().getCidade().getId() != null
-                && getPessoa().getCidade().getEstados() != null
-                && getPessoa().getCidade().getEstados().getId() != null) {
-            setListSelectItemCidades(iDaoPessoa.listaCidades(getPessoa().getCidade().getEstados().getId()));
+        try {
+            //Se tiver cidade informado na Pessoa, carregar os selectItens de Cidade para o Estado 
+            if (getPessoa().getCidade() != null
+                    && getPessoa().getCidade().getId() != null
+                    && getPessoa().getCidade().getEstados() != null
+                    && getPessoa().getCidade().getEstados().getId() != null) {
+                setListSelectItemCidades(iDaoPessoa.listaCidades(getPessoa().getCidade().getEstados().getId()));
 
-            //Caso o Estado estiver NULO, setar o Estado vinculado a Cidade:
-            if (getPessoa().getEstado() == null) {
-                getPessoa().setEstado(getPessoa().getCidade().getEstados());
+                //Caso o Estado estiver NULO, setar o Estado vinculado a Cidade:
+                if (getPessoa().getEstado() == null) {
+                    getPessoa().setEstado(getPessoa().getCidade().getEstados());
+                }
             }
+
+            //Reseta arquivo foto para o editar.. 
+            setArquivoFoto(null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mostrarMsg("Erro ao carregar editar!/n" + ex.getMessage());
         }
     }
 
     public String deletar() {
-        if (getPessoa() != null) {
-            //Deletar o Objeto:
-            daoGenerico.deletar(pessoa);
+        try {
+            if (getPessoa() != null
+                    && getPessoa().getId() != null) {
+                //Deletar os lançamentos da Pessoa antes de excluir a Pessoa:
+                iDaoPessoa.deletar(pessoa);
 
-            if (getPessoa().getId() != null
-                    && getPessoa().getNome() != null
-                    && getPessoa().getSobrenome() != null) {
-                //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
-                setPessoa(new Pessoa());
+                if (getPessoa().getId() != null
+                        && getPessoa().getNome() != null
+                        && getPessoa().getSobrenome() != null) {
+                    //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
+                    setPessoa(new Pessoa());
+                }
+
+                mostrarMsg("Registro removido com sucesso!");
+            } else {
+                mostrarMsg("Selecione um usuário já cadastrado para excluir.");
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mostrarMsg("Erro ao excluir registro!/n" + ex.getMessage());
         }
 
         //Atualiza Lista Pessoas:
         carregarPessoas();
-        mostrarMsg("Registro removido com sucesso!");
         //Retornando Vazio, vai ficar na mesma página
         return "";
     }
 
     public void carregarPessoas() {
-        setListPessoa(daoGenerico.listar(Pessoa.class));
+        try {
+            setListPessoa(daoGenerico.listar(Pessoa.class));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public String limpar() {
@@ -290,7 +363,11 @@ public class PessoaController {
     }
 
     public List<SelectItem> getListSelItEstadoCharged() {
-        setListSelectItemEstados(iDaoPessoa.listaEstados());
+        try {
+            setListSelectItemEstados(iDaoPessoa.listaEstados());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return getListSelectItemEstados();
     }
 
@@ -342,6 +419,12 @@ public class PessoaController {
         }
 
         return buff;
+    }
+
+    public void downloadFoto() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String fileDownloadImg = params.get("fileDownloadImg");
+
     }
 
     public Pessoa getPessoa() {

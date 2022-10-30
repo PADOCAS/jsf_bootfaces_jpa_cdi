@@ -8,6 +8,9 @@ import br.com.jsf.hibernate.util.JPAUtil;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 
 /**
  * Dao Generico para receber qualquer tipo de classe para trabalhar as rotinas
@@ -29,36 +32,56 @@ public class DAOGenerico<E> {
         return entityManager;
     }
 
-    public void salvar(E entity) {
+    public void salvar(E entity) throws Exception {
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
 
         //Inicia Transação:
         entityTransaction.begin();
-        //Salvar:
-        entityManager.persist(entity);
-        //Comita:
-        entityTransaction.commit();
-        entityManager.close();
+        try {
+            //Salvar:
+            entityManager.persist(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entityTransaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+            throw new Exception("Erro ao Salvar!\n" + e.getMessage());
+        } finally {
+            //Comita:
+            if (entityTransaction.isActive()) {
+                entityTransaction.commit();
+            }
+            entityManager.close();
+        }
     }
 
-    public E saveOrUpdate(E entity) {
+    public E saveOrUpdate(E entity) throws Exception {
+        E entitySave = null;
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         //Inicia Transação
         transaction.begin();
-        //Merge: Vai Salvar ou dar Update se já existir
-        //Retorna a entidade salva no banco
-        E entitySave = entityManager.merge(entity);
-        //Comita:
-        transaction.commit();
-        entityManager.close();
+        try {
+            //Merge: Vai Salvar ou dar Update se já existir
+            //Retorna a entidade salva no banco
+            entitySave = entityManager.merge(entity);
+            entityManager.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+            throw new Exception("Erro ao Salvar!\n" + e.getMessage());
+        } finally {
+            //Comita:
+            if (transaction.isActive()) {
+                transaction.commit();
+            }
+            entityManager.close();
+        }
 
         return entitySave;
     }
 
-    public void deletar(E entity) {
+    public void deletar(E entity) throws Exception {
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         Object primaryKey = JPAUtil.getPrimaryKey(entity);
@@ -76,27 +99,48 @@ public class DAOGenerico<E> {
 //            transaction.commit();
 //            entityManager.close();
 //        }
-
         //Forma 2):
         //Caso for deletar direto pela PK manualmente:
         if (primaryKey != null) {
             transaction.begin();
-            //Fazendo o processo manualmente por SQL:
-            entityManager.createNativeQuery("DELETE FROM " + entity.getClass().getSimpleName().toLowerCase() + " WHERE ID = " + primaryKey).executeUpdate();
-            transaction.commit();
-            entityManager.close();
+            try {
+                //Fazendo o processo manualmente por SQL:
+                entityManager.createNativeQuery("DELETE FROM " + entity.getClass().getSimpleName().toLowerCase() + " WHERE ID = " + primaryKey).executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                transaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+                throw new Exception("Erro ao Excluir!\n" + e.getMessage());
+            } finally {
+                if (transaction.isActive()) {
+                    transaction.commit();
+                }
+
+                entityManager.close();
+            }
         }
     }
 
-    public List<E> listar(Class<E> entity) {
+    public List<E> listar(Class<E> entity) throws Exception {
+        List<E> list = null;
         EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        List<E> list = entityManager.createQuery("from " + entity.getName()).getResultList();
-        transaction.commit();
-        entityManager.close();
+
+        try {
+            list = entityManager.createQuery("from " + entity.getName()).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+            throw new Exception("Erro ao Listar!\n" + e.getMessage());
+        } finally {
+            if (transaction.isActive()) {
+                transaction.commit();
+            }
+
+            entityManager.close();
+        }
 
         return list;
     }
-    
+
 }

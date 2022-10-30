@@ -16,7 +16,9 @@ public interface IDaoPessoa {
     
     public Pessoa consultarUsuario(String login, String senha) throws Exception;
     
-    public List<SelectItem> listaEstados();
+    public List<SelectItem> listaEstados() throws Exception;
     
-    public List<SelectItem> listaCidades(Long estadoId);
+    public List<SelectItem> listaCidades(Long estadoId) throws Exception;
+    
+    public void deletar(Pessoa pessoa) throws Exception;
 }

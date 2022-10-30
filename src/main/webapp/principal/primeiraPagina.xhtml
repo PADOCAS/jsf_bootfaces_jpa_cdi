@@ -27,11 +27,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
         <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
         <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-            <h:messages infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
+            <h:messages id="messageCadPessoa" infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
 
-            <div style="display: flex; flex-direction: column; align-items: center;">
+<!--            <div style="display: flex; flex-direction: column; align-items: center;">
                 <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
-            </div>
+            </div>-->
 
             <h:panelGrid id="pnlGridPrimeiraPagina" columns="2" style="display: flex; flex-direction: column; align-items: center;">            
                 <f:facet name="header">
@@ -43,7 +43,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <h:commandButton id="btnLimpar" action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
                         <f:ajax execute="btnLimpar" render="@form"/>
                     </h:commandButton>
-                    <h:commandButton action="#{pessoaController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
+                    <h:commandButton id="btnSalvar" action="#{pessoaController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
                     <h:commandButton id="btnDeletar" action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" >
                         <f:ajax execute="btnDeletar" render="@form"/>
                     </h:commandButton>
@@ -64,16 +64,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblFoto" value="Foto" for="inpFilFoto" />    
+                            <h:outputLabel id="lblFoto" value="Foto (jpg, mp4, jpeg ou png)" for="inpFilFoto" />    
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputFile id="inpFilFoto" value="#{pessoaController.arquivoFoto}"></h:inputFile>
-                
+                <h:inputFile id="inpFilFoto" value="#{pessoaController.arquivoFoto}">
+                    <f:ajax execute="inpFilFoto" listener="#{pessoaController.carregarFotoMiniatura}" render="graImgFotoCharged messageCadPessoa"/>
+                </h:inputFile>
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblNome" value="Nome" for="txtNome" />    
+                            <h:outputLabel id="lblFotoCharged" value="" for="graImgFotoCharged" />    
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:graphicImage id="graImgFotoCharged" width="100" height="100" value="#{pessoaController.pessoa.fotoIconBase64}" style="#{pessoaController.pessoa.fotoIconBase64 eq null ? 'display: none;' : 'display: block;'}" />
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblNome" value="* Nome" for="txtNome" />    
                         </li>
                     </ul>
                 </h:panelGroup>
@@ -84,7 +97,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblSobrenome" value="Sobrenome" for="txtSobrenome"/>     
+                            <h:outputLabel id="lblSobrenome" value="* Sobrenome" for="txtSobrenome"/>     
                         </li>
                     </ul>
                 </h:panelGroup>
@@ -134,7 +147,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:selectOneMenu id="selOneMenuEstado" value="#{pessoaController.pessoa.estado}" converter="estadosConverter" immediate="true">
                     <!--Immediate = true para executar imediatamente antes das validacoes de formulario etc.. caso contrario não vai rodar o ajax-->
                     <!--A primeira opcao não é valida.. nao passa em evento ajax nada.. pra isso marcar o noSelectionOption = true-->
-                    <f:selectItem itemLabel="..." noSelectionOption="true" />
+                    <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="" />
                     <f:selectItems value="#{pessoaController.getListSelItEstadoCharged()}" />
                     <f:ajax event="change" execute="@this" listener="${pessoaController.selOneEstado}" render="selOneMenuCidade" />
                 </h:selectOneMenu>
@@ -147,7 +160,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:selectOneMenu id="selOneMenuCidade" value="#{pessoaController.pessoa.cidade}" converter="cidadesConverter" immediate="true">
-                    <f:selectItem itemLabel="..." noSelectionOption="true" />
+                    <f:selectItem itemLabel="..." noSelectionOption="true" itemValue=""/>
                     <f:selectItems value="#{pessoaController.getListSelectItemCidades()}" />
                 </h:selectOneMenu>
 
@@ -210,7 +223,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:selectOneMenu id="selOnePerfil" value="#{pessoaController.pessoa.perfil}">
-                    <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true" />
                     <f:selectItem itemLabel="Administrador" itemValue="A"/>
                     <f:selectItem itemLabel="Secretário" itemValue="S"/>    
                     <f:selectItem itemLabel="Recepcionista" itemValue="R"/>    
@@ -346,6 +359,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:column>
                     <f:facet name="header">Sobrenome</f:facet>
                     <h:outputText value="#{pes.sobrenome}" />
+                </h:column>                
+                <h:column>
+                    <f:facet name="header">Foto</f:facet>
+                    <!--ActionListener nao redireciona a tela.. o action redireciona-->
+                    <h:commandLink actionListener="#{pessoaController.downloadFoto()}" rendered="#{pes.fotoIconBase64 ne null}" style="display: flex; justify-content: center;">
+                        <h:graphicImage width="60" height="60" value="#{pes.fotoIconBase64}" />
+                        <f:param name="fileDownloadImg" value="#{pes.id}" />
+                    </h:commandLink>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Idade</f:facet>
@@ -353,7 +374,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:column>
                 <h:column>
                     <f:facet name="header">Editar</f:facet>
-                    <h:commandLink id="cmdEditar" style="display: flex; justify-content: center;" action="#{pessoaController.editar()}">
+                    <h:commandLink id="cmdEditar" immediate="true" style="display: flex; justify-content: center;" action="#{pessoaController.editar()}">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
                         <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
                         <f:ajax execute="cmdEditar" render="@form" />
@@ -361,7 +382,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </h:column>
                 <h:column rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
                     <f:facet name="header">Excluir</f:facet>
-                    <h:commandLink id="cmdDeletar" action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
+                    <h:commandLink id="cmdDeletar" immediate="true" action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
                         <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
                         <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
                         <f:ajax execute="cmdDetetar" render="@form" />

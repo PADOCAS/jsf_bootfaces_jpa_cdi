@@ -28,12 +28,20 @@ public class IDaoLancamentoImpl implements IDaoLancamento {
 
             entityTransaction.begin();
 
-            listLancamento = entityManager.createQuery("SELECT l from Lancamento l WHERE pessoaUser.id = :userId")
-                    .setParameter("userId", usuario.getId())
-                    .getResultList();
-
-            entityTransaction.commit();
-            entityManager.close();
+            try {
+                listLancamento = entityManager.createQuery("SELECT l from Lancamento l WHERE pessoaUser.id = :userId")
+                        .setParameter("userId", usuario.getId())
+                        .getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                entityTransaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+                throw new Exception("Erro ao Listar lançamentos!\n" + e.getMessage());
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.commit();
+                }
+                entityManager.close();
+            }
         }
 
         return listLancamento;

@@ -24,11 +24,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         </h:form>
 
         <h:form id="formLancamento" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-            <h:messages infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
+            <h:messages id="messageLancamento" infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
 
-            <div style="display: flex; flex-direction: column; align-items: center;">
+<!--            <div style="display: flex; flex-direction: column; align-items: center;">
                 <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
-            </div>
+            </div>-->
 
             <h:panelGrid id="pnlGridLancamento" columns="2" style="display: flex; flex-direction: column; align-items: center;" >
                 <f:facet name="header">
@@ -40,7 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <h:commandButton id="btnLimpar" action="#{lancamentoController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
                         <f:ajax execute="btnLimpar" render="@form"/>
                     </h:commandButton>
-                    <h:commandButton action="#{lancamentoController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
+                    <h:commandButton id="btnSalvar" action="#{lancamentoController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
                     <h:commandButton id="btnDeletar" action="#{lancamentoController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}" >
                         <f:ajax execute="btnDeletar" render="@form"/>
                     </h:commandButton>
