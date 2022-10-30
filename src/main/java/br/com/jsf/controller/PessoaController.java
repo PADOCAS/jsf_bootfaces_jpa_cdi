@@ -33,6 +33,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
@@ -422,9 +423,29 @@ public class PessoaController {
     }
 
     public void downloadFoto() {
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String fileDownloadImg = params.get("fileDownloadImg");
+        try {
+            Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+            String fileDownloadImg = params.get("fileDownloadImg");
 
+            if (fileDownloadImg != null
+                    && !fileDownloadImg.isEmpty()) {
+                Pessoa pessoa = daoGenerico.consultar(Pessoa.class, Long.valueOf(fileDownloadImg));
+
+                if (pessoa != null
+                        && pessoa.getExtencao() != null
+                        && pessoa.getFotoIconBase64Original() != null) {
+                    HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                    httpServletResponse.addHeader("Content-Disposition", "attachment; filename=download." + pessoa.getExtencao());
+                    httpServletResponse.setContentType("application/octet-stream");
+                    httpServletResponse.setContentLength(pessoa.getFotoIconBase64Original().length);
+                    httpServletResponse.getOutputStream().write(pessoa.getFotoIconBase64Original());
+                    httpServletResponse.getOutputStream().flush();
+                    FacesContext.getCurrentInstance().responseComplete();
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public Pessoa getPessoa() {

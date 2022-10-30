@@ -8,9 +8,6 @@ import br.com.jsf.hibernate.util.JPAUtil;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 
 /**
  * Dao Generico para receber qualquer tipo de classe para trabalhar as rotinas
@@ -141,6 +138,29 @@ public class DAOGenerico<E> {
         }
 
         return list;
+    }
+
+    public E consultar(Class<E> entidade, Object primarykey) throws Exception {
+        E objeto = null;
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        try {
+            objeto = (E) entityManager.find(entidade, primarykey);
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+            throw new Exception("Erro ao consultar!\n" + e.getMessage());
+        } finally {
+            if (transaction.isActive()) {
+                transaction.commit();
+            }
+
+            entityManager.close();
+        }
+
+        return objeto;
     }
 
 }

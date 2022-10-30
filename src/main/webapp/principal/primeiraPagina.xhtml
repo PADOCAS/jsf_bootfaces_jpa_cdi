@@ -363,7 +363,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:column>
                     <f:facet name="header">Foto</f:facet>
                     <!--ActionListener nao redireciona a tela.. o action redireciona-->
-                    <h:commandLink actionListener="#{pessoaController.downloadFoto()}" rendered="#{pes.fotoIconBase64 ne null}" style="display: flex; justify-content: center;">
+                    <h:commandLink immediate="true" actionListener="#{pessoaController.downloadFoto()}" rendered="#{pes.fotoIconBase64 ne null}" style="display: flex; justify-content: center;">
                         <h:graphicImage width="60" height="60" value="#{pes.fotoIconBase64}" />
                         <f:param name="fileDownloadImg" value="#{pes.id}" />
                     </h:commandLink>
