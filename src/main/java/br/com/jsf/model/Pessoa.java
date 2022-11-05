@@ -17,6 +17,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -31,18 +35,31 @@ public class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message = "Nome é requerido")
+    @NotEmpty(message = "Nome é requerido")
+    @Size(max = 20, message = "Nome deve ter no máximo 20 caracteres")
     private String nome;
 
+    @NotEmpty(message = "Sobrenome é requerido")
+    @NotNull(message = "Sobrenome é requerido")
+    @Size(min = 2, max = 50, message = "Sobrenome deve ter de 2 a 50 caracteres")
     private String sobrenome;
 
+    @NotEmpty(message = "Login é requerido")
+    @NotNull(message = "Login é requerido")
+    @Size(min = 3, max = 20, message = "Login deve ter de 3 a 20 caracteres")
     private String login;
 
+    @NotEmpty(message = "Senha é requerida")
+    @NotNull(message = "Senha é requerida")
+    @Size(max = 20, message = "Senha deve ter no máximo 20 caracteres")
     private String senha;
 
     private String perfil;
 
     private Integer idade;
 
+    @NotNull(message = "Sexo deve ser informado")
     private String sexo;
 
     private String cep;
@@ -66,6 +83,9 @@ public class Pessoa implements Serializable {
     private String[] esportesPraticados;
 
     private String[] linguagensProgramacao;
+
+    @CPF(message = "CPF inválido")
+    private String cpf;
 
     @ManyToOne(optional = true)
     @org.hibernate.annotations.ForeignKey(name = "estado_fk1")
@@ -308,6 +328,14 @@ public class Pessoa implements Serializable {
 
     public void setFotoIconBase64Original(byte[] fotoIconBase64Original) {
         this.fotoIconBase64Original = fotoIconBase64Original;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override

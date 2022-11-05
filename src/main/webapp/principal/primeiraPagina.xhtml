@@ -90,9 +90,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 400px;" pt:placeholder="Informe o Nome" required="true" requiredMessage="Nome é requerido!" validatorMessage="Nome deve ter de 2 a 50 caracteres.">
-                    <f:validateLength minimum="2" maximum="50" />
-                </h:inputText>
+                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 400px;" pt:placeholder="Informe o Nome"/>
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -101,9 +99,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 400px;" pt:placeholder="Informe o Sobrenome" required="true" requiredMessage="Sobrenome é requerido!" validatorMessage="Sobrenome deve ter de 2 a 50 caracteres." >
-                    <f:validateLength minimum="2" maximum="50" />
-                </h:inputText>
+                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 400px;" pt:placeholder="Informe o Sobrenome" />
+                
+                <h:panelGroup>
+                    <ul style="margin: 0px; margin-right: 2px;">
+                        <li style="text-align: right; list-style-type: none;">
+                            <h:outputLabel id="lblCpf" value="* CPF" for="txtCpf"/>     
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:inputText id="txtCpf" value="#{pessoaController.pessoa.cpf}" style="width: 400px;" pt:placeholder="Informe o CPF" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -112,12 +117,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" pt:placeholder="Informe a Idade" />
+                <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" pt:placeholder="Informe a Idade" />               
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblSexo" value="Sexo" for="selOneRadioSexo" />
+                            <h:outputLabel id="lblSexo" value="* Sexo" for="selOneRadioSexo" />
                         </li>
                     </ul>
                 </h:panelGroup>
@@ -200,7 +205,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblLogin" value="Login" for="txtLogin"/>     
+                            <h:outputLabel id="lblLogin" value="* Login" for="txtLogin"/>     
                         </li>
                     </ul>
                 </h:panelGroup>
@@ -209,7 +214,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblSenha" value="Senha" for="txtSenha"/>     
+                            <h:outputLabel id="lblSenha" value="* Senha" for="txtSenha"/>     
                         </li>
                     </ul>
                 </h:panelGroup>
