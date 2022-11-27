@@ -4,9 +4,9 @@
  */
 package br.com.jsf.converter;
 
-import br.com.jsf.hibernate.util.JPAUtil;
 import br.com.jsf.model.Cidades;
 import java.io.Serializable;
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -23,12 +23,17 @@ public class CidadesConverter implements Converter, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+//    Não está conseguindo pegar por CDI diretamente!!! Usar por CDI.current().select.....
+//    @Inject
+//    private EntityManager entityManager;
+//         
     //Retorna o Objeto Cidade (Quando for salvar chama esse metodo)
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String codigoCidade) {
         Cidades cidade = null;
 
-        EntityManager entityManager = JPAUtil.getEntityManager();
+        //Caso der problema ao pegar por cdi o entity manager usar >> EntityManager entityManager = CDI.current().select(EntityManager.class).get();
+        EntityManager entityManager = CDI.current().select(EntityManager.class).get();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
@@ -36,11 +41,13 @@ public class CidadesConverter implements Converter, Serializable {
                 && !codigoCidade.isEmpty()
                 && !codigoCidade.equals("...")) {
             //Caso receba ... é quando nao seleciona nada!!
-            cidade = JPAUtil.getEntityManager().find(Cidades.class, Long.parseLong(codigoCidade));
+            cidade = entityManager.find(Cidades.class, Long.parseLong(codigoCidade));
         }
 
         entityTransaction.commit();
-        entityManager.close();
+        //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+        //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+        //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
 
         return cidade;
     }

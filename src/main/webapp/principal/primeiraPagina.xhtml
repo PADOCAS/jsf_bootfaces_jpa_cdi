@@ -29,9 +29,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
             <h:messages id="messageCadPessoa" infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
 
-<!--            <div style="display: flex; flex-direction: column; align-items: center;">
-                <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
-            </div>-->
+            <!--            <div style="display: flex; flex-direction: column; align-items: center;">
+                            <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
+                        </div>-->
 
             <h:panelGrid id="pnlGridPrimeiraPagina" columns="2" style="display: flex; flex-direction: column; align-items: center;">            
                 <f:facet name="header">
@@ -64,12 +64,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblFoto" value="Foto (jpg, mp4, jpeg ou png)" for="inpFilFoto" />    
+                            <h:outputLabel id="lblFoto" value="Foto (jpg, jpeg ou png)" for="inpFilFoto" />    
                         </li>
                     </ul>
                 </h:panelGroup>
                 <h:inputFile id="inpFilFoto" value="#{pessoaController.arquivoFoto}">
-                    <f:ajax execute="inpFilFoto" listener="#{pessoaController.carregarFotoMiniatura}" render="graImgFotoCharged messageCadPessoa"/>
+                    <!--Ajax não funcionando com o inputFile.. aguardar futuras atualizações, por enquanto vou retirar o ajax para não dar pal em tela!!!!-->
+                    <!--<f:ajax execute="inpFilFoto" listener="......pessoaController.carregarFotoMiniatura" render="graImgFotoCharged messageCadPessoa"/>-->
                 </h:inputFile>
 
                 <h:panelGroup>
@@ -100,7 +101,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </ul>
                 </h:panelGroup>
                 <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 400px;" pt:placeholder="Informe o Sobrenome" />
-                
+
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">

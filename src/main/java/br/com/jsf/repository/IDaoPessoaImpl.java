@@ -4,13 +4,15 @@
  */
 package br.com.jsf.repository;
 
-import br.com.jsf.hibernate.util.JPAUtil;
 import br.com.jsf.model.Cidades;
 import br.com.jsf.model.Estados;
 import br.com.jsf.model.Pessoa;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -18,7 +20,13 @@ import javax.persistence.EntityTransaction;
  *
  * @author lucia
  */
-public class IDaoPessoaImpl implements IDaoPessoa {
+@Named
+public class IDaoPessoaImpl implements IDaoPessoa, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    private EntityManager entityManager;
 
     @Override
     public Pessoa consultarUsuario(String login, String senha) throws Exception {
@@ -28,7 +36,6 @@ public class IDaoPessoaImpl implements IDaoPessoa {
                 && !login.isEmpty()
                 && senha != null
                 && !senha.isEmpty()) {
-            EntityManager entityManager = JPAUtil.getEntityManager();
             EntityTransaction entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
 
@@ -45,7 +52,9 @@ public class IDaoPessoaImpl implements IDaoPessoa {
                 if (entityTransaction.isActive()) {
                     entityTransaction.commit();
                 }
-                entityManager.close();
+                //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+                //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+                //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
             }
         }
 
@@ -58,7 +67,6 @@ public class IDaoPessoaImpl implements IDaoPessoa {
 
         List<Estados> listEstados;
 
-        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
@@ -83,7 +91,9 @@ public class IDaoPessoaImpl implements IDaoPessoa {
             if (entityTransaction.isActive()) {
                 entityTransaction.commit();
             }
-            entityManager.close();
+            //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+            //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+            //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
         }
 
         return listSelectItemEstado;
@@ -93,13 +103,12 @@ public class IDaoPessoaImpl implements IDaoPessoa {
     public List<SelectItem> listaCidades(Long estadoId) throws Exception {
         List<SelectItem> listSelectItemCidade = new ArrayList<>();
 
-        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
         try {
             if (estadoId != null) {
-                List<Cidades> listCidades = JPAUtil.getEntityManager().createQuery("SELECT c FROM Cidades c WHERE estados.id = :estadoId")
+                List<Cidades> listCidades = entityManager.createQuery("SELECT c FROM Cidades c WHERE estados.id = :estadoId")
                         .setParameter("estadoId", estadoId)
                         .getResultList();
 
@@ -118,7 +127,9 @@ public class IDaoPessoaImpl implements IDaoPessoa {
             if (entityTransaction.isActive()) {
                 entityTransaction.commit();
             }
-            entityManager.close();
+            //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+            //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+            //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
         }
 
         return listSelectItemCidade;
@@ -128,7 +139,6 @@ public class IDaoPessoaImpl implements IDaoPessoa {
     public void deletar(Pessoa pessoa) throws Exception {
         if (pessoa != null
                 && pessoa.getId() != null) {
-            EntityManager entityManager = JPAUtil.getEntityManager();
             EntityTransaction entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
 
@@ -142,7 +152,9 @@ public class IDaoPessoaImpl implements IDaoPessoa {
                 if (entityTransaction.isActive()) {
                     entityTransaction.commit();
                 }
-                entityManager.close();
+                //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+                //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+                //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
             }
         }
     }

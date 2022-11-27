@@ -8,7 +8,6 @@ import br.com.jsf.hibernate.dao.DAOGenerico;
 import br.com.jsf.model.Estados;
 import br.com.jsf.model.Pessoa;
 import br.com.jsf.repository.IDaoPessoa;
-import br.com.jsf.repository.IDaoPessoaImpl;
 import com.google.gson.Gson;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -18,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -25,13 +25,15 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -41,15 +43,19 @@ import javax.xml.bind.DatatypeConverter;
  *
  * @author lucia
  */
-@ManagedBean(name = "pessoaController")
 @ViewScoped
-public class PessoaController {
+@Named(value = "pessoaController")
+public class PessoaController implements Serializable {
 
-    private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    private IDaoPessoa iDaoPessoa;
 
     private Pessoa pessoa = new Pessoa();
 
-    private DAOGenerico<Pessoa> daoGenerico = new DAOGenerico<>();
+    @Inject
+    private DAOGenerico<Pessoa> daoGenerico;
 
     private List<Pessoa> listPessoa = null;
 
@@ -72,7 +78,6 @@ public class PessoaController {
                 String extensaoVerify = arquivoFoto.getContentType().split("\\/")[1];
 
                 if (extensaoVerify.equals("jpg")
-                        || extensaoVerify.equals("mp4")
                         || extensaoVerify.equals("jpeg")
                         || extensaoVerify.equals("png")) {
                     byte[] imagemByte = getByteFotoSel(arquivoFoto.getInputStream());
@@ -98,7 +103,7 @@ public class PessoaController {
 
                     getPessoa().setFotoIconBase64(imagemMiniatura);
                 } else {
-                    throw new Exception("Informe apenas imagens dos tipos (jpg, mp4, jpeg ou png).");
+                    throw new Exception("Informe apenas imagens dos tipos (jpg, jpeg ou png).");
                 }
             }
         } catch (Exception ex) {
@@ -116,7 +121,6 @@ public class PessoaController {
                     String extensaoVerify = arquivoFoto.getContentType().split("\\/")[1];
 
                     if (extensaoVerify.equals("jpg")
-                            || extensaoVerify.equals("mp4")
                             || extensaoVerify.equals("jpeg")
                             || extensaoVerify.equals("png")) {
                         byte[] imagemByte = getByteFotoSel(arquivoFoto.getInputStream());

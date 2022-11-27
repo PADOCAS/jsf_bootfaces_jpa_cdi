@@ -77,6 +77,4 @@ public class Estados implements Serializable {
         return Objects.equals(this.id, other.id);
     }
 
-   
-
 }

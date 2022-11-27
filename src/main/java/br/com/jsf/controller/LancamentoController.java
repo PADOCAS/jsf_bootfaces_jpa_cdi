@@ -8,30 +8,33 @@ import br.com.jsf.hibernate.dao.DAOGenerico;
 import br.com.jsf.model.Lancamento;
 import br.com.jsf.model.Pessoa;
 import br.com.jsf.repository.IDaoLancamento;
-import br.com.jsf.repository.IDaoLancamentoImpl;
+import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author lucia
  */
-@ManagedBean(name = "lancamentoController")
 @ViewScoped
-public class LancamentoController {
+@Named(value = "lancamentoController")
+public class LancamentoController implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     //Bean sempre iniciad no controller:
     private Lancamento lancamento = new Lancamento();
 
-    private IDaoLancamento daoLancamento = new IDaoLancamentoImpl();
+    @Inject
+    private IDaoLancamento daoLancamento;
 
     //DaoGenerico de Lancamento:
-    private DAOGenerico<Lancamento> daoGenerico = new DAOGenerico<>();
+    @Inject
+    private DAOGenerico<Lancamento> daoGenerico;
 
     private List<Lancamento> listLancamento = null;
 

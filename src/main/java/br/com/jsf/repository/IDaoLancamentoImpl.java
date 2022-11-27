@@ -4,10 +4,12 @@
  */
 package br.com.jsf.repository;
 
-import br.com.jsf.hibernate.util.JPAUtil;
 import br.com.jsf.model.Lancamento;
 import br.com.jsf.model.Pessoa;
+import java.io.Serializable;
 import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -15,7 +17,13 @@ import javax.persistence.EntityTransaction;
  *
  * @author lucia
  */
-public class IDaoLancamentoImpl implements IDaoLancamento {
+@Named
+public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    private EntityManager entityManager;
 
     @Override
     public List<Lancamento> listarLancamentos(Pessoa usuario) throws Exception {
@@ -23,7 +31,6 @@ public class IDaoLancamentoImpl implements IDaoLancamento {
 
         if (usuario != null
                 && usuario.getId() != null) {
-            EntityManager entityManager = JPAUtil.getEntityManager();
             EntityTransaction entityTransaction = entityManager.getTransaction();
 
             entityTransaction.begin();
@@ -40,7 +47,9 @@ public class IDaoLancamentoImpl implements IDaoLancamento {
                 if (entityTransaction.isActive()) {
                     entityTransaction.commit();
                 }
-                entityManager.close();
+                //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+                //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+                //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
             }
         }
 

@@ -5,7 +5,10 @@
 package br.com.jsf.hibernate.dao;
 
 import br.com.jsf.hibernate.util.JPAUtil;
+import java.io.Serializable;
 import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -16,7 +19,16 @@ import javax.persistence.EntityTransaction;
  *
  * @author lucia
  */
-public class DAOGenerico<E> {
+@Named
+public class DAOGenerico<E> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    private EntityManager entityManager;
+
+    @Inject
+    private JPAUtil jpaUtil;
 
     /**
      * Método para retornar o entityManager para poder fazer queries especificas
@@ -25,12 +37,10 @@ public class DAOGenerico<E> {
      * @return
      */
     public EntityManager getEntityManager() {
-        EntityManager entityManager = JPAUtil.getEntityManager();
         return entityManager;
     }
 
     public void salvar(E entity) throws Exception {
-        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
 
         //Inicia Transação:
@@ -47,13 +57,14 @@ public class DAOGenerico<E> {
             if (entityTransaction.isActive()) {
                 entityTransaction.commit();
             }
-            entityManager.close();
+            //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+            //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+            //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
         }
     }
 
     public E saveOrUpdate(E entity) throws Exception {
         E entitySave = null;
-        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         //Inicia Transação
@@ -72,16 +83,17 @@ public class DAOGenerico<E> {
             if (transaction.isActive()) {
                 transaction.commit();
             }
-            entityManager.close();
+            //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+            //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+            //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
         }
 
         return entitySave;
     }
 
     public void deletar(E entity) throws Exception {
-        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        Object primaryKey = JPAUtil.getPrimaryKey(entity);
+        Object primaryKey = jpaUtil.getPrimaryKey(entity);
 
         //O delete dessa forma por REMOVE (o objeto tem que estár identico ao banco de dados... se não vai dar erro ao deletar!
         //Por isso, ao inves de consultar o usuario pegar o objeto e remover! É melhor fazer direto pela PK dele.. (segunda forma abaixo)
@@ -111,15 +123,15 @@ public class DAOGenerico<E> {
                 if (transaction.isActive()) {
                     transaction.commit();
                 }
-
-                entityManager.close();
+                //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+                //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+                //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
             }
         }
     }
 
     public List<E> listar(Class<E> entity) throws Exception {
         List<E> list = null;
-        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
@@ -133,8 +145,9 @@ public class DAOGenerico<E> {
             if (transaction.isActive()) {
                 transaction.commit();
             }
-
-            entityManager.close();
+            //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+            //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+            //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
         }
 
         return list;
@@ -142,7 +155,6 @@ public class DAOGenerico<E> {
 
     public E consultar(Class<E> entidade, Object primarykey) throws Exception {
         E objeto = null;
-        EntityManager entityManager = JPAUtil.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
@@ -156,8 +168,9 @@ public class DAOGenerico<E> {
             if (transaction.isActive()) {
                 transaction.commit();
             }
-
-            entityManager.close();
+            //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+            //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+            //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
         }
 
         return objeto;

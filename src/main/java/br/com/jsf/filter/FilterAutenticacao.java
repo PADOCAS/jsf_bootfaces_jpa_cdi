@@ -7,6 +7,7 @@ package br.com.jsf.filter;
 import br.com.jsf.hibernate.util.JPAUtil;
 import br.com.jsf.model.Pessoa;
 import java.io.IOException;
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -27,6 +28,9 @@ import javax.servlet.http.HttpSession;
 //Tudo que vier de dentro da pasta principal do webApp vai ser interceptado (urlPatterns = {"/principal/*"})
 @WebFilter(filterName = "FilterAutenticacao", urlPatterns = {"/principal/*"})
 public class FilterAutenticacao implements Filter {
+
+    @Inject
+    private JPAUtil jpaUtil;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -64,7 +68,7 @@ public class FilterAutenticacao implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         //Roda ao iniciar o Sistema:
         //Já criar o entityManager ao iniciar, agilizando o sistema!
-        JPAUtil.getEntityManager();
+        jpaUtil.getEntityManager();
     }
 
     @Override

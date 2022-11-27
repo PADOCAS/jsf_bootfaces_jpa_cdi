@@ -4,6 +4,9 @@
  */
 package br.com.jsf.hibernate.util;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,16 +15,12 @@ import javax.persistence.Persistence;
  *
  * @author lucia
  */
+@ApplicationScoped
 public class JPAUtil {
 
-    private static EntityManagerFactory factory = null;
+    private EntityManagerFactory factory = null;
 
-    static {
-        //Sempre que chamar essa classe vai iniciar o factory (metodo init())!
-        init();
-    }
-
-    public static void init() {
+    public JPAUtil() {
         try {
             if (factory == null) {
                 //Vai ler o arquivo persistence com o nome (jsf_persistence_unit) >> No arquivo persistence.xml: <persistence-unit name="jsf_persistence_unit">
@@ -33,7 +32,9 @@ public class JPAUtil {
         }
     }
 
-    public static EntityManager getEntityManager() {
+    @Produces
+    @RequestScoped
+    public EntityManager getEntityManager() {
         return factory.createEntityManager();
     }
 
@@ -43,7 +44,7 @@ public class JPAUtil {
      * @param entity
      * @return Primary Key da entidade
      */
-    public static Object getPrimaryKey(Object entity) {
+    public Object getPrimaryKey(Object entity) {
         return factory.getPersistenceUnitUtil().getIdentifier(entity);
     }
 }
