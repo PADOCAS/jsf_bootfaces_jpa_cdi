@@ -55,5 +55,4 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 
         return listLancamento;
     }
-
 }
