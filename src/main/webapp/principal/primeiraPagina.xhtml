@@ -7,6 +7,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 <!--xmlns é xml name space, onde você mapei com um comando para utilizar, nesse caso abaixo (h) -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui = "http://java.sun.com/jsf/facelets"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
@@ -14,7 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
     <h:head>
         <title>Cadastro de Usuário</title>
     </h:head>
-
+    
     <!-- Sempre tem o corpo da página (body) -->
     <h:body style="background: ghostwhite;">
         <!--Menu Auxiliar-->
@@ -27,13 +28,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
         <!-- Formulario onde as coisas se comunicam com o managedbean (form) -->
         <h:form id="formPessoa" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-            <h:messages id="messageCadPessoa" infoStyle="color: blanchedalmond; background: #3366FF; font-size: 16px; font-weight: bold;"/>
-
+            <b:messages id="messageCadPessoa" />
             <!--            <div style="display: flex; flex-direction: column; align-items: center;">
                             <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
                         </div>-->
-
-            <h:panelGrid id="pnlGridPrimeiraPagina" columns="2" style="display: flex; flex-direction: column; align-items: center;">            
+            <b:panelGrid id="pnlGridPrimeiraPagina" columns="2" style="display: flex; flex-direction: column; align-items: center;">            
                 <f:facet name="header">
                     <h:outputText value="Cadastro de Usuário em JSF" />
                 </f:facet>
@@ -59,7 +58,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;" />
+                <b:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -76,7 +75,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
                         <li style="text-align: right; list-style-type: none;">
-                            <h:outputLabel id="lblFotoCharged" value="" for="graImgFotoCharged" />    
+                            <h:outputLabel id="lblFotoCharged" value="" for="graImgFotoCharged" />  
                         </li>
                     </ul>
                 </h:panelGroup>
@@ -91,7 +90,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 400px;" pt:placeholder="Informe o Nome"/>
+                <b:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 400px;" pt:placeholder="Informe o Nome"/>
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -100,7 +99,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 400px;" pt:placeholder="Informe o Sobrenome" />
+                <b:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 400px;" pt:placeholder="Informe o Sobrenome" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -109,7 +108,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtCpf" value="#{pessoaController.pessoa.cpf}" style="width: 400px;" pt:placeholder="Informe o CPF" />
+                <b:inputText id="txtCpf" value="#{pessoaController.pessoa.cpf}" style="width: 400px;" pt:placeholder="Informe o CPF" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -118,7 +117,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" pt:placeholder="Informe a Idade" />               
+                <b:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" pt:placeholder="Informe a Idade" />               
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -139,9 +138,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" style="width: 300px;" pt:placeholder="Informe a Data Nascimento(dd/MM/yyyy)" converterMessage="Data de Nascimento inválida!!" >
+                <b:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" style="width: 300px;" pt:placeholder="Informe a Data Nascimento(dd/MM/yyyy)" converterMessage="Data de Nascimento inválida!!" >
                     <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00" />
-                </h:inputText>
+                </b:inputText>
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -210,7 +209,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" pt:placeholder="Informe o Login"/>
+                <b:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" pt:placeholder="Informe o Login"/>
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -242,7 +241,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
+                <b:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -251,8 +250,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
-
+                <b:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px; margin-top: 5px; margin-bottom: 5px;">
                         <li style="text-align: right; list-style-type: none;">
@@ -269,12 +267,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtCep" value="#{pessoaController.pessoa.cep}" style="width: 300px;" pt:placeholder="Informe o CEP(Apenas número)">
+                <b:inputText id="txtCep" value="#{pessoaController.pessoa.cep}" style="width: 300px;" pt:placeholder="Informe o CEP(Apenas número)">
                     <!--Ajax >> executar no campo txtCep, evento quando perder o foco e recarregando com o render alguns outros componentes da tela (endereco.. bairro.. etc..)-->
                     <!--Deve ter um metodo no managedBean para pesquisar o CEP no webService (pesquisaCep)-->
                     <!--Render separar por espaço apenas.. não por virgula que nao funciona no ajax do jsf padrão (f:ajax)-->
                     <f:ajax execute="txtCep" event="blur" render="txtLogradouro txtComplemento txtBairro txtLocalidade txtUf txtIbge txtGia" listener="#{pessoaController.pesquisaCep}" />
-                </h:inputText>
+                </b:inputText>
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -283,7 +281,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtLogradouro" value="#{pessoaController.pessoa.logradouro}" pt:placeholder="Informe o Logradouro" style="width: 400px;" />
+                <b:inputText id="txtLogradouro" value="#{pessoaController.pessoa.logradouro}" pt:placeholder="Informe o Logradouro" style="width: 400px;" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -292,7 +290,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtNumero" value="#{pessoaController.pessoa.numero}" pt:placeholder="Informe o Número" />
+                <b:inputText id="txtNumero" value="#{pessoaController.pessoa.numero}" pt:placeholder="Informe o Número" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -301,7 +299,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtComplemento" value="#{pessoaController.pessoa.complemento}" pt:placeholder="Informe o Complemento" style="width: 200px;" />
+                <b:inputText id="txtComplemento" value="#{pessoaController.pessoa.complemento}" pt:placeholder="Informe o Complemento" style="width: 200px;" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -310,7 +308,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtBairro" value="#{pessoaController.pessoa.bairro}" pt:placeholder="Informe o Bairro" style="width: 400px;" />
+                <b:inputText id="txtBairro" value="#{pessoaController.pessoa.bairro}" pt:placeholder="Informe o Bairro" style="width: 400px;" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -319,7 +317,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtLocalidade" value="#{pessoaController.pessoa.localidade}" pt:placeholder="Informe a Localidade" style="width: 300px;" />
+                <b:inputText id="txtLocalidade" value="#{pessoaController.pessoa.localidade}" pt:placeholder="Informe a Localidade" style="width: 300px;" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -328,7 +326,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtUf" value="#{pessoaController.pessoa.uf}" pt:placeholder="Informe a UF" />
+                <b:inputText id="txtUf" value="#{pessoaController.pessoa.uf}" pt:placeholder="Informe a UF" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -337,7 +335,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtIbge" value="#{pessoaController.pessoa.ibge}" pt:placeholder="Informe o Cód. IBGE" />
+                <b:inputText id="txtIbge" value="#{pessoaController.pessoa.ibge}" pt:placeholder="Informe o Cód. IBGE" />
 
                 <h:panelGroup>
                     <ul style="margin: 0px; margin-right: 2px;">
@@ -346,10 +344,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         </li>
                     </ul>
                 </h:panelGroup>
-                <h:inputText id="txtGia" value="#{pessoaController.pessoa.gia}" pt:placeholder="Informe o Cód. GIA" />              
-            </h:panelGrid>
+                <b:inputText id="txtGia" value="#{pessoaController.pessoa.gia}" pt:placeholder="Informe o Cód. GIA" />              
+            </b:panelGrid>
 
-            <h:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3" style="width: 100%;">
+            <b:dataTable value="#{pessoaController.listPessoa}" var="pes" border="3" style="width: 100%;">
+                <!--Trocando o dataTable pelo do bootfaces-->
                 <f:facet name="header" >
                     <h:outputText value="Lista de Usuário(s) Cadastrado(s)" />
                 </f:facet>
@@ -394,7 +393,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <f:ajax execute="cmdDetetar" render="@form" />
                     </h:commandLink>
                 </h:column>
-            </h:dataTable>
+            </b:dataTable>
         </h:form>        
     </h:body>
 </html>

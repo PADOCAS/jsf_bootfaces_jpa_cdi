@@ -69,6 +69,13 @@
             <artifactId>javaee-web-api</artifactId>
             <version>8.0.1</version>
         </dependency>
+        
+        <!--Bootfaces-->
+        <dependency>
+            <groupId>net.bootsfaces</groupId>
+            <artifactId>bootsfaces</artifactId>
+            <version>1.5.0</version>
+        </dependency>               
     </dependencies>
     
     <build>
