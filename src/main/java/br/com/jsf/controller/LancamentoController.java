@@ -90,6 +90,8 @@ public class LancamentoController implements Serializable {
                     //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
                     setLancamento(new Lancamento());
                 }
+                
+                mostrarMsg("Registro removido com sucesso!");
             } else {
                 mostrarMsg("Selecione um lançamento já cadastrado para excluir.");
             }
