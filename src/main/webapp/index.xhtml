@@ -6,26 +6,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
-    <head>
+    <h:head>
         <title>JSF BootFaces</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    </h:head>
 
-    <body style="height: 100%; width: 100%; position: fixed; background: ghostwhite;">
+    <h:body style="height: 100%; width: 100%; position: fixed; background: ghostwhite;">
+        <b:messages id="msgGeralTelaLogin" />
+        
         <h:form id="formLogin" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
             <h1>Realize o Login</h1>
 
-            <h:panelGrid columns="2" >
-                <h:outputLabel id="lblLogin" value="Login" for="txtLogin" />
-                <h:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" pt:placeholder="Informe o Login" />
-
-                <h:outputLabel id="lblSenha" value="Senha" for="txtSenha" />
-                <h:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" pt:placeholder="Informe a Senha" />
-
-                <h:outputLabel value="" />
-                <h:commandButton value="Acessar" action="#{pessoaController.logar()}" />            
+            <h:panelGrid >
+                <b:column>
+                    <h:outputLabel id="lblLogin" value="Login" for="txtLogin" />
+                    <b:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" pt:placeholder="Informe o Login" required="true" requiredMessage="Login deve ser informado!"/>
+                </b:column>
+                
+                <b:column>
+                    <h:outputLabel id="lblSenha" value="Senha" for="txtSenha" />
+                    <b:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" pt:placeholder="Informe a Senha" required="true" requiredMessage="Senha deve ser informada!"/>
+                </b:column>
+                
+                <b:column>
+                    <h:outputLabel value="" />
+                    <h:commandButton value="Acessar" action="#{pessoaController.logar()}" />            
+                    <h:outputLabel value="" />
+                </b:column>
             </h:panelGrid>
         </h:form>
-    </body>
+    </h:body>
 </html>

@@ -323,6 +323,7 @@ public class PessoaController implements Serializable {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            mostrarMsg(ex.getMessage());
         }
 
         return "";

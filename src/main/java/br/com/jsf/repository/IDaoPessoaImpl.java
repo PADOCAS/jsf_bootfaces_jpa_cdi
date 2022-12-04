@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -44,6 +45,10 @@ public class IDaoPessoaImpl implements IDaoPessoa, Serializable {
                         .setParameter("login", login)
                         .setParameter("senha", senha)
                         .getSingleResult();
+            } catch (NoResultException e) {
+                e.printStackTrace();
+                entityTransaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+                throw new Exception("Usuário não encontrado!");
             } catch (Exception e) {
                 e.printStackTrace();
                 entityTransaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
