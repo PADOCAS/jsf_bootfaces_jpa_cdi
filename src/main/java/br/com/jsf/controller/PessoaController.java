@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
@@ -33,11 +32,11 @@ import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
+import net.bootsfaces.component.selectOneMenu.SelectOneMenu;
 
 /**
  *
@@ -379,7 +378,7 @@ public class PessoaController implements Serializable {
 
     public void selOneEstado(AjaxBehaviorEvent event) {
         //Estamos trabalhando com o selectItem retornando o objeto Estados direto:
-        Estados estado = ((Estados) ((HtmlSelectOneMenu) event.getSource()).getValue());
+        Estados estado = ((Estados) ((SelectOneMenu) event.getSource()).getValue());
 
         //Caso fosse pegar o resultado do combo por ID... NAO VAMOS USAR ASSIM AGORA:
 //        String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
