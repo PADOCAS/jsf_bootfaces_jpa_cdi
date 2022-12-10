@@ -74,7 +74,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
         <h:form id="formTableLancamento" style="width: 100%;">
             <!--Trocando o dataTable pelo do bootfaces-->
-            <h:outputText value="** Lista de Lançamento(s) **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
+            <h:outputText value="** Lista de Lançamento(s) - últimos 10 lançamentos **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
 
             <b:dataTable value="#{lancamentoController.listLancamento}" var="lanc"  border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"
                          custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}}]" >

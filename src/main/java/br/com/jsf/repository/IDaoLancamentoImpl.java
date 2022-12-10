@@ -55,4 +55,37 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 
         return listLancamento;
     }
+    
+    @Override
+    public List<Lancamento> listarLancamentosLimit10(Pessoa usuario) throws Exception {
+        //Limitar em 10 os resultados para melhorar performance na tela do cadastro:
+        List<Lancamento> listLancamento = null;
+
+        if (usuario != null
+                && usuario.getId() != null) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+
+            entityTransaction.begin();
+
+            try {
+                listLancamento = entityManager.createQuery("SELECT l from Lancamento l WHERE pessoaUser.id = :userId ORDER BY id desc ")
+                        .setParameter("userId", usuario.getId())
+                        .setMaxResults(10)
+                        .getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                entityTransaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+                throw new Exception("Erro ao Listar lançamentos!\n" + e.getMessage());
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.commit();
+                }
+                //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+                //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+                //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
+            }
+        }
+
+        return listLancamento;
+    }
 }

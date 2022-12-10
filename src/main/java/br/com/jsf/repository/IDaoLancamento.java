@@ -15,4 +15,6 @@ import java.util.List;
 public interface IDaoLancamento {
 
     public List<Lancamento> listarLancamentos(Pessoa usuario) throws Exception;
+    
+    public List<Lancamento> listarLancamentosLimit10(Pessoa usuario) throws Exception;
 }

@@ -117,7 +117,8 @@ public class LancamentoController implements Serializable {
                 Pessoa pessoaUser = (Pessoa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 
                 if (pessoaUser != null) {
-                    setListLancamento(daoLancamento.listarLancamentos(pessoaUser));
+                    //Limitar em 10 os resultados para melhor performance do cadastro:
+                    setListLancamento(daoLancamento.listarLancamentosLimit10(pessoaUser));
                 }
             }
         } catch (Exception ex) {
