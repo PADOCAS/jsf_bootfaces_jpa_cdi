@@ -53,6 +53,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <h:outputLabel id="lblId" value="ID" for="txtId"/>
                     <b:inputText id="txtId" value="#{lancamentoController.lancamento.id}" readonly="true" style="background-color: gainsboro;"/>
                 </b:column>
+                
+                <b:column>
+                    <h:outputLabel id="lblDataEmissao" value="Data Emissão" for="txtDataEmissao" />     
+                    <b:dateTimePicker show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{lancamentoController.lancamento.dataEmissao}" required="true" required-message="Data Emissão é requerida!" />
+                </b:column>
 
                 <b:column>
                     <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />     
@@ -80,6 +85,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <b:dataTableColumn>
                     <f:facet name="header">ID</f:facet>
                     <h:outputText value="#{lanc.id}" />
+                </b:dataTableColumn>
+                <b:dataTableColumn>
+                    <f:facet name="header">Data Emissão</f:facet>
+                    <h:outputText value="#{lanc.dataEmissao}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
                 </b:dataTableColumn>
                 <b:dataTableColumn>
                     <f:facet name="header">Número Nota</f:facet>

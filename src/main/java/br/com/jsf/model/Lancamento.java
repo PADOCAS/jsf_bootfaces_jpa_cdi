@@ -5,12 +5,14 @@
 package br.com.jsf.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -30,6 +32,9 @@ public class Lancamento implements Serializable {
     private String empresaOrigem;
 
     private String empresaDestino;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataEmissao;
 
     @ManyToOne(optional = false)
     @org.hibernate.annotations.ForeignKey(name = "pessoa_fk1")
@@ -73,6 +78,14 @@ public class Lancamento implements Serializable {
 
     public void setPessoaUser(Pessoa pessoaUser) {
         this.pessoaUser = pessoaUser;
+    }
+
+    public Date getDataEmissao() {
+        return dataEmissao;
+    }
+
+    public void setDataEmissao(Date dataEmissao) {
+        this.dataEmissao = dataEmissao;
     }
 
     @Override
