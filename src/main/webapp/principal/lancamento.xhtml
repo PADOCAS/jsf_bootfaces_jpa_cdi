@@ -20,10 +20,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <!--Usando facelets para incluir um template pronto na página-->
         <ui:include src="templates/menu.xhtml" />       
 
-        <h:form id="formMenuAuxiliarOperador" style="margin-top: 2px; margin-bottom: 2px;">
-            <h:outputText value="#{lancamentoController.getOperadorLogado()}" style="font-size: 13px; color: darkblue; font-weight: bold;" />
-        </h:form>
-
         <b:messages id="messageLancamento" />
 
         <h:form id="formLancamento" style="display: flex; flex-direction: column; align-items: center; width: 100%;">

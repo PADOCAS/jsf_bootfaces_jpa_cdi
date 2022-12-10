@@ -7,11 +7,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 <!--xmlns é xml name space, onde você mapei com um comando para utilizar, nesse caso abaixo (h) -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <!--Menu Auxiliar-->
     <h:form id="formMenuAuxiliar">
-        <h:commandLink value="Lançamentos" action="/principal/lancamento" style="margin-right: 5px;"/>
-        <h:commandLink value="Cadastro de Usuários" action="/principal/primeiraPagina" style="margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}"/>
-        <h:commandLink value="Trocar Usuário" action="#{pessoaController.deslogar()}" style="margin-right: 5px;" />
+        <b:navBar brand="Menu" fluid="true" style="margin-bottom: 3px !important;">
+            <b:navbarLinks>
+                <b:navCommandLink action="/principal/lancamento" value="Lançamentos" />
+                <b:navCommandLink action="/principal/primeiraPagina" value="Cadastro de Usuários" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" />
+
+                <b:dropMenu value="Relatórios" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
+                    <b:navCommandLink value="Rel. Lançamentos" />
+                    <b:navCommandLink value="Rel. Usuários" />
+                </b:dropMenu>
+
+                <b:navCommandLink action="#{pessoaController.deslogar()}" value="Trocar Usuário"/>
+            </b:navbarLinks>
+        </b:navBar>
+        
+        <h:outputText value="#{pessoaController.getOperadorLogado()}" style="font-size: 13px; color: darkblue; font-weight: bold; margin-bottom: 2px;" />
     </h:form>     
 </html>
