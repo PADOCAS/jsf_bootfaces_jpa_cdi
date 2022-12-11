@@ -26,97 +26,100 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             <!--            <div style="display: flex; flex-direction: column; align-items: center;">
                             <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
                         </div>-->
+            <b:panel>
+                <h:panelGrid id="pnlGridLancamento" style="display: flex; flex-direction: column; align-items: center;" >
+                    <f:facet name="header">
+                        <h:outputText value="Lançamentos" />
+                    </f:facet>
 
-            <h:panelGrid id="pnlGridLancamento" style="display: flex; flex-direction: column; align-items: center;" >
-                <f:facet name="header">
-                    <h:outputText value="Lançamentos" />
-                </f:facet>
+                    <b:column>
+                        <h:commandButton id="btnLimpar" action="#{lancamentoController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
+                            <f:ajax execute="btnLimpar" render="formLancamento formTableLancamento messageLancamento"/>
+                        </h:commandButton>
+                        <h:commandButton id="btnSalvar" action="#{lancamentoController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
+                        <h:commandButton id="btnDeletar" action="#{lancamentoController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}" >
+                            <f:ajax execute="btnDeletar" render="formLancamento formTableLancamento messageLancamento"/>
+                        </h:commandButton>
+                        <h:commandButton id="btnResetar" action="#{lancamentoController.resetar()}" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" >
+                            <f:ajax execute="btnResetar" render="formLancamento formTableLancamento messageLancamento"/>
+                        </h:commandButton>
+                    </b:column>
 
-                <b:column>
-                    <h:commandButton id="btnLimpar" action="#{lancamentoController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
-                        <f:ajax execute="btnLimpar" render="formLancamento formTableLancamento messageLancamento"/>
-                    </h:commandButton>
-                    <h:commandButton id="btnSalvar" action="#{lancamentoController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;"/>
-                    <h:commandButton id="btnDeletar" action="#{lancamentoController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}" >
-                        <f:ajax execute="btnDeletar" render="formLancamento formTableLancamento messageLancamento"/>
-                    </h:commandButton>
-                    <h:commandButton id="btnResetar" action="#{lancamentoController.resetar()}" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" >
-                        <f:ajax execute="btnResetar" render="formLancamento formTableLancamento messageLancamento"/>
-                    </h:commandButton>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblId" value="ID" for="txtId"/>
+                        <b:inputText id="txtId" value="#{lancamentoController.lancamento.id}" readonly="true" style="background-color: gainsboro; width: 200px;"/>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblId" value="ID" for="txtId"/>
-                    <b:inputText id="txtId" value="#{lancamentoController.lancamento.id}" readonly="true" style="background-color: gainsboro;"/>
-                </b:column>
-                
-                <b:column>
-                    <h:outputLabel id="lblDataEmissao" value="Data Emissão" for="txtDataEmissao" />     
-                    <b:dateTimePicker show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{lancamentoController.lancamento.dataEmissao}" required="true" required-message="Data Emissão é requerida!" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblDataEmissao" value="Data Emissão" for="txtDataEmissao" />     
+                        <b:dateTimePicker show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{lancamentoController.lancamento.dataEmissao}" style="width: 250px;" required="true" required-message="Data Emissão é requerida!" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />     
-                    <b:inputText id="txtNumeroNota" value="#{lancamentoController.lancamento.numeroNota}" pt:placeholder="Informe o Número" style="width: 300px;" required="true" required-message="Número da Nota é requerido!" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />     
+                        <b:inputText id="txtNumeroNota" value="#{lancamentoController.lancamento.numeroNota}" pt:placeholder="Informe o Número" style="width: 250px;" required="true" required-message="Número da Nota é requerido!" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblEmpresaOrigem" value="Empresa Origem" for="txtEmpresaOrigem" />     
-                    <b:inputText id="txtEmpresaOrigem" value="#{lancamentoController.lancamento.empresaOrigem}" pt:placeholder="Informe a Empresa Origem" style="width: 500px;" required="true" required-message="Empresa Origem é requerido!"/>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblEmpresaOrigem" value="Empresa Origem" for="txtEmpresaOrigem" />     
+                        <b:inputText id="txtEmpresaOrigem" value="#{lancamentoController.lancamento.empresaOrigem}" pt:placeholder="Informe a Empresa Origem" style="width: 500px;" required="true" required-message="Empresa Origem é requerido!"/>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblEmpresaDestino" value="Empresa Destino" for="txtEmpresaDestino" />     
-                    <b:inputText id="txtEmpresaDestino" value="#{lancamentoController.lancamento.empresaDestino}" pt:placeholder="Informe a Empresa Destino" style="width: 500px;" required="true" required-message="Empresa Destino é requerido!"/>
-                </b:column>
-            </h:panelGrid>
+                    <b:column>
+                        <h:outputLabel id="lblEmpresaDestino" value="Empresa Destino" for="txtEmpresaDestino" />     
+                        <b:inputText id="txtEmpresaDestino" value="#{lancamentoController.lancamento.empresaDestino}" pt:placeholder="Informe a Empresa Destino" style="width: 500px;" required="true" required-message="Empresa Destino é requerido!"/>
+                    </b:column>
+                </h:panelGrid>
+            </b:panel>
         </h:form>
 
         <h:form id="formTableLancamento" style="width: 100%;">
-            <!--Trocando o dataTable pelo do bootfaces-->
-            <h:outputText value="** Lista de Lançamento(s) - últimos 10 lançamentos **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
+            <b:panel>
+                <!--Trocando o dataTable pelo do bootfaces-->
+                <h:outputText value="** Lista de Lançamento(s) - últimos 10 lançamentos **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
 
-            <b:dataTable value="#{lancamentoController.listLancamento}" var="lanc"  border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"
-                         custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}}]" >
-                <b:dataTableColumn>
-                    <f:facet name="header">ID</f:facet>
-                    <h:outputText value="#{lanc.id}" />
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Data Emissão</f:facet>
-                    <h:outputText value="#{lanc.dataEmissao}" >
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                    </h:outputText>
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Número Nota</f:facet>
-                    <h:outputText value="#{lanc.numeroNota}" />
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Empresa Origem</f:facet>
-                    <h:outputText value="#{lanc.empresaOrigem}" />
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Empresa Destino</f:facet>
-                    <h:outputText value="#{lanc.empresaDestino}" />
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Editar</f:facet>
-                    <h:commandLink id="cmdEditar" style="display: flex; justify-content: center;">
-                        <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
-                        <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
-                        <f:ajax execute="cmdEditar" render="formLancamento messageLancamento"/>
-                    </h:commandLink>
-                </b:dataTableColumn>
-                <b:dataTableColumn rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}">
-                    <f:facet name="header">Excluir</f:facet>
-                    <h:commandLink id="cmdExcluir" action="#{lancamentoController.deletar()}" style="display: flex; justify-content: center;">
-                        <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
-                        <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
-                        <f:ajax execute="cmdExcluir" render="formLancamento formTableLancamento messageLancamento"/>
-                    </h:commandLink>
-                </b:dataTableColumn>
-            </b:dataTable>
+                <b:dataTable value="#{lancamentoController.listLancamento}" var="lanc"  border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"
+                             custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}}]" >
+                    <b:dataTableColumn>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{lanc.id}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Data Emissão</f:facet>
+                        <h:outputText value="#{lanc.dataEmissao}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Número Nota</f:facet>
+                        <h:outputText value="#{lanc.numeroNota}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Empresa Origem</f:facet>
+                        <h:outputText value="#{lanc.empresaOrigem}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Empresa Destino</f:facet>
+                        <h:outputText value="#{lanc.empresaDestino}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Editar</f:facet>
+                        <h:commandLink id="cmdEditar" style="display: flex; justify-content: center;">
+                            <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
+                            <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
+                            <f:ajax execute="cmdEditar" render="formLancamento messageLancamento"/>
+                        </h:commandLink>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn rendered="#{lancamentoController.getRenderedUsuarioPerfilAdmin()}">
+                        <f:facet name="header">Excluir</f:facet>
+                        <h:commandLink id="cmdExcluir" action="#{lancamentoController.deletar()}" style="display: flex; justify-content: center;">
+                            <f:setPropertyActionListener target="#{lancamentoController.lancamento}" value="#{lanc}" />
+                            <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
+                            <f:ajax execute="cmdExcluir" render="formLancamento formTableLancamento messageLancamento"/>
+                        </h:commandLink>
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </b:panel>
         </h:form>
     </body>
 </html>

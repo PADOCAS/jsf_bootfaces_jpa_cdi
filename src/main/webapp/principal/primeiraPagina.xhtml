@@ -29,254 +29,258 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             <!--            <div style="display: flex; flex-direction: column; align-items: center;">
                             <h:graphicImage name="teste-design-sketch-name.png" library="imagens" height="100" width="200"></h:graphicImage>
                         </div>-->
-            <h:panelGrid id="pnlGridPrimeiraPagina" style="display: flex; flex-direction: column; align-items: center;">            
-                <f:facet name="header">
-                    <h:outputText value="Cadastro de Usuário em JSF" />
-                </f:facet>
+            <b:panel>
+                <h:panelGrid id="pnlGridPrimeiraPagina" style="display: flex; flex-direction: column; align-items: center;">            
+                    <f:facet name="header">
+                        <h:outputText value="Cadastro de Usuário em JSF" />
+                    </f:facet>
 
-                <b:column>
-                    <h:commandButton id="btnLimpar" action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
-                        <f:ajax execute="btnLimpar" render="formTable formPessoa messageCadPessoa"/>
-                    </h:commandButton>
-                    <h:commandButton id="btnSalvar" action="#{pessoaController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;" />
-                    <h:commandButton id="btnDeletar" action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" >
-                        <f:ajax execute="btnDeletar" render="formTable formPessoa messageCadPessoa"/>
-                    </h:commandButton>
-                    <h:commandButton id="btnResetar" action="#{pessoaController.resetar()}" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" >
-                        <f:ajax execute="btnResetar" render="formTable formPessoa messageCadPessoa"/>
-                    </h:commandButton>
-                </b:column>
+                    <b:column>
+                        <h:commandButton id="btnLimpar" action="#{pessoaController.limpar()}" image="/resources/imagens/addPessoa.png" title="Incluir Novo" style="height: 32px; width: 32px; margin-right: 5px;" >
+                            <f:ajax execute="btnLimpar" render="formTable formPessoa messageCadPessoa"/>
+                        </h:commandButton>
+                        <h:commandButton id="btnSalvar" action="#{pessoaController.salvar()}" image="/resources/imagens/save.png" title="Salvar" style="height: 32px; width: 32px; margin-right: 5px;" />
+                        <h:commandButton id="btnDeletar" action="#{pessoaController.deletar()}" image="/resources/imagens/delete.png" title="Excluir" style="height: 32px; width: 32px; margin-right: 5px;" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" >
+                            <f:ajax execute="btnDeletar" render="formTable formPessoa messageCadPessoa"/>
+                        </h:commandButton>
+                        <h:commandButton id="btnResetar" action="#{pessoaController.resetar()}" image="/resources/imagens/reset.png" title="Resetar" style="height: 32px; width: 32px; margin-right: 5px;" >
+                            <f:ajax execute="btnResetar" render="formTable formPessoa messageCadPessoa"/>
+                        </h:commandButton>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblId" value="Id" for="txtId" />
-                    <b:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro;" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblId" value="Id" for="txtId" />
+                        <b:inputText id="txtId" value="#{pessoaController.pessoa.id}" readonly="true" style="background-color: gainsboro; width: 200px;" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblFoto" value="Foto (jpg, jpeg ou png)" for="inpFilFoto" />    
-                    <h:inputFile id="inpFilFoto" value="#{pessoaController.arquivoFoto}">
-                        <!--Ajax não funcionando com o inputFile.. aguardar futuras atualizações, por enquanto vou retirar o ajax para não dar pal em tela!!!!-->
-                        <!--<f:ajax execute="inpFilFoto" listener="......pessoaController.carregarFotoMiniatura" render="graImgFotoCharged messageCadPessoa"/>-->
-                    </h:inputFile>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblFoto" value="Foto (jpg, jpeg ou png)" for="inpFilFoto" />    
+                        <h:inputFile id="inpFilFoto" value="#{pessoaController.arquivoFoto}">
+                            <!--Ajax não funcionando com o inputFile.. aguardar futuras atualizações, por enquanto vou retirar o ajax para não dar pal em tela!!!!-->
+                            <!--<f:ajax execute="inpFilFoto" listener="......pessoaController.carregarFotoMiniatura" render="graImgFotoCharged messageCadPessoa"/>-->
+                        </h:inputFile>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblFotoCharged" value="" for="graImgFotoCharged" />  
-                    <h:graphicImage id="graImgFotoCharged" width="100" height="100" value="#{pessoaController.pessoa.fotoIconBase64}" style="#{pessoaController.pessoa.fotoIconBase64 eq null ? 'display: none;' : 'display: block;'}" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblFotoCharged" value="" for="graImgFotoCharged" />  
+                        <h:graphicImage id="graImgFotoCharged" width="100" height="100" value="#{pessoaController.pessoa.fotoIconBase64}" style="#{pessoaController.pessoa.fotoIconBase64 eq null ? 'display: none;' : 'display: block;'}" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblNome" value="* Nome" for="txtNome" />    
-                    <b:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" style="width: 400px;" pt:placeholder="Informe o Nome" required="true" required-message="Nome é requerido!"/>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblNome" value="* Nome" for="txtNome" />    
+                        <b:inputText id="txtNome" value="#{pessoaController.pessoa.nome}" pt:placeholder="Informe o Nome" required="true" required-message="Nome é requerido!"/>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblSobrenome" value="* Sobrenome" for="txtSobrenome"/>     
-                    <b:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" style="width: 400px;" pt:placeholder="Informe o Sobrenome" required="true" required-message="Sobrenome é requerido!" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblSobrenome" value="* Sobrenome" for="txtSobrenome"/>     
+                        <b:inputText id="txtSobrenome" value="#{pessoaController.pessoa.sobrenome}" pt:placeholder="Informe o Sobrenome" required="true" required-message="Sobrenome é requerido!" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblCpf" value="* CPF" for="txtCpf"/>     
-                    <b:inputText id="txtCpf" value="#{pessoaController.pessoa.cpf}" style="width: 400px;" pt:placeholder="Informe o CPF" required="true" required-message="CPF é requerido!"/>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblCpf" value="* CPF" for="txtCpf"/>     
+                        <b:inputText id="txtCpf" value="#{pessoaController.pessoa.cpf}" style="width: 200px;" pt:placeholder="Informe o CPF" required="true" required-message="CPF é requerido!"/>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
-                    <b:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" pt:placeholder="Informe a Idade" />               
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
+                        <b:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" style="width: 200px;" pt:placeholder="Informe a Idade" />               
+                    </b:column>
 
-                <b:column style="display: flex; flex-direction: row;">
-                    <h:outputLabel id="lblSexo" value="* Sexo" for="selOneRadioSexo" style="margin-right: 5px;" />
-                    <h:selectOneRadio id="selOneRadioSexo" value="#{pessoaController.pessoa.sexo}" layout="lineDirection" required="true" requiredMessage="Sexo é requerido!">
-                        <f:selectItem itemLabel="Masculino" itemValue="M"/>
-                        <f:selectItem itemLabel="Feminino" itemValue="F"/>    
-                    </h:selectOneRadio>
-                </b:column>
+                    <b:column style="display: flex; flex-direction: row;">
+                        <h:outputLabel id="lblSexo" value="* Sexo" for="selOneRadioSexo" style="margin-right: 5px;" />
+                        <h:selectOneRadio id="selOneRadioSexo" value="#{pessoaController.pessoa.sexo}" layout="lineDirection" required="true" requiredMessage="Sexo é requerido!">
+                            <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                            <f:selectItem itemLabel="Feminino" itemValue="F"/>    
+                        </h:selectOneRadio>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
-                    <b:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" style="width: 300px;" pt:placeholder="Informe a Data Nascimento(dd/MM/yyyy)" converterMessage="Data de Nascimento inválida!!" >
-                        <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00" />
-                    </b:inputText>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
+                        <b:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" style="width: 300px;" pt:placeholder="Informe a Data Nascimento(dd/MM/yyyy)" converterMessage="Data de Nascimento inválida!!" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00" />
+                        </b:inputText>
+                    </b:column>
 
-                <b:column style="display: flex; flex-direction: column;">
-                    <h:outputLabel id="lblSelOneMenuEstado" value="* Estado Nascimento" for="selOneMenuEstado"/>     
-                    <b:selectOneMenu id="selOneMenuEstado" required="true" required-message="Estado é requerido!" value="#{pessoaController.pessoa.estado}" converter="estadosConverter" >
-                        <!--Immediate = true para executar imediatamente antes das validacoes de formulario etc.. caso contrario não vai rodar o ajax-->
-                        <!--A primeira opcao não é valida.. nao passa em evento ajax nada.. pra isso marcar o noSelectionOption = true-->
-                        <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="" />
-                        <f:selectItems value="#{pessoaController.getListSelItEstadoCharged()}" />
-                        <f:ajax event="change" execute="@this" listener="${pessoaController.selOneEstado}" render="selOneMenuCidade" />
-                    </b:selectOneMenu>
-                </b:column>
+                    <b:column style="display: flex; flex-direction: column;">
+                        <h:outputLabel id="lblSelOneMenuEstado" value="* Estado Nascimento" for="selOneMenuEstado"/>     
+                        <b:selectOneMenu id="selOneMenuEstado" style="width: 250px;" required="true" required-message="Estado é requerido!" value="#{pessoaController.pessoa.estado}" converter="estadosConverter" >
+                            <!--Immediate = true para executar imediatamente antes das validacoes de formulario etc.. caso contrario não vai rodar o ajax-->
+                            <!--A primeira opcao não é valida.. nao passa em evento ajax nada.. pra isso marcar o noSelectionOption = true-->
+                            <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="" />
+                            <f:selectItems value="#{pessoaController.getListSelItEstadoCharged()}" />
+                            <f:ajax event="change" execute="@this" listener="${pessoaController.selOneEstado}" render="selOneMenuCidade" />
+                        </b:selectOneMenu>
+                    </b:column>
 
-                <b:column style="display: flex; flex-direction: column;">
-                    <h:outputLabel id="lblSelOneMenuCidade" value="* Cidade Nascimento" for="selOneMenuCidade"/>     
-                    <b:selectOneMenu id="selOneMenuCidade" required="true" required-message="Cidade é requerida!" value="#{pessoaController.pessoa.cidade}" converter="cidadesConverter" >
-                        <f:selectItem itemLabel="..." noSelectionOption="true" itemValue=""/>
-                        <f:selectItems value="#{pessoaController.getListSelectItemCidades()}" />
-                    </b:selectOneMenu>
-                </b:column>
+                    <b:column style="display: flex; flex-direction: column;">
+                        <h:outputLabel id="lblSelOneMenuCidade" value="* Cidade Nascimento" for="selOneMenuCidade"/>     
+                        <b:selectOneMenu id="selOneMenuCidade" style="width: 350px;" required="true" required-message="Cidade é requerida!" value="#{pessoaController.pessoa.cidade}" converter="cidadesConverter" >
+                            <f:selectItem itemLabel="..." noSelectionOption="true" itemValue=""/>
+                            <f:selectItems value="#{pessoaController.getListSelectItemCidades()}" />
+                        </b:selectOneMenu>
+                    </b:column>
 
-                <b:column style="display: flex; flex-direction: column;">
-                    <h:outputLabel id="lblEsportes" value="Esportes Praticados" for="selManyEsportes"/>
-                    <h:selectManyMenu id="selManyEsportes" value="#{pessoaController.pessoa.esportesPraticados}" style="height: 105px; width: 140px;">
-                        <f:selectItem itemLabel="Futebol" itemValue="F" />
-                        <f:selectItem itemLabel="Lesca" itemValue="L" />
-                        <f:selectItem itemLabel="Basquete" itemValue="B" />
-                        <f:selectItem itemLabel="Natação" itemValue="N" />
-                        <f:selectItem itemLabel="Hugby" itemValue="H" />
-                        <f:selectItem itemLabel="Peteca" itemValue="P" />
-                    </h:selectManyMenu>
-                </b:column>
+                    <b:column style="display: flex; flex-direction: column;">
+                        <h:outputLabel id="lblEsportes" value="Esportes Praticados" for="selManyEsportes"/>
+                        <h:selectManyMenu id="selManyEsportes" value="#{pessoaController.pessoa.esportesPraticados}" style="height: 105px; width: 200px;">
+                            <f:selectItem itemLabel="Futebol" itemValue="F" />
+                            <f:selectItem itemLabel="Lesca" itemValue="L" />
+                            <f:selectItem itemLabel="Basquete" itemValue="B" />
+                            <f:selectItem itemLabel="Natação" itemValue="N" />
+                            <f:selectItem itemLabel="Hugby" itemValue="H" />
+                            <f:selectItem itemLabel="Peteca" itemValue="P" />
+                        </h:selectManyMenu>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblLinguagens" value="Linguagens Programação" for="selManyCheckLinguagens" />
-                    <h:selectManyCheckbox id="selManyCheckLinguagens" value="#{pessoaController.pessoa.linguagensProgramacao}">
-                        <f:selectItem itemLabel="Java" itemValue="J" />
-                        <f:selectItem itemLabel="C#" itemValue="C" />
-                        <f:selectItem itemLabel="Phyton" itemValue="H" />
-                        <f:selectItem itemLabel="Cobol" itemValue="O" />
-                        <f:selectItem itemLabel="Zim" itemValue="Z" />
-                        <f:selectItem itemLabel="Php" itemValue="P" />
-                        <f:selectItem itemLabel="Visual Basic" itemValue="V" />
-                    </h:selectManyCheckbox>
-                </b:column>
-                <b:column>
-                    <h:outputLabel id="lblLogin" value="* Login" for="txtLogin"/>     
-                    <b:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" pt:placeholder="Informe o Login" required="true" required-message="Login é requerido!"/>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblLinguagens" value="Linguagens Programação" for="selManyCheckLinguagens" />
+                        <h:selectManyCheckbox id="selManyCheckLinguagens" style="width: 490px;" value="#{pessoaController.pessoa.linguagensProgramacao}">
+                            <f:selectItem itemLabel="Java" itemValue="J" />
+                            <f:selectItem itemLabel="C#" itemValue="C" />
+                            <f:selectItem itemLabel="Phyton" itemValue="H" />
+                            <f:selectItem itemLabel="Cobol" itemValue="O" />
+                            <f:selectItem itemLabel="Zim" itemValue="Z" />
+                            <f:selectItem itemLabel="Php" itemValue="P" />
+                            <f:selectItem itemLabel="Visual Basic" itemValue="V" />
+                        </h:selectManyCheckbox>
+                    </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblLogin" value="* Login" for="txtLogin"/>     
+                        <b:inputText id="txtLogin" value="#{pessoaController.pessoa.login}" style="width: 300px;" pt:placeholder="Informe o Login" required="true" required-message="Login é requerido!"/>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblSenha" value="* Senha" for="txtSenha"/>     
-                    <b:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" pt:placeholder="Informe a Senha" required="true" required-message="Senha é requerida!"></b:inputSecret>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblSenha" value="* Senha" for="txtSenha"/>     
+                        <b:inputSecret id="txtSenha" value="#{pessoaController.pessoa.senha}" style="width: 300px;" pt:placeholder="Informe a Senha" required="true" required-message="Senha é requerida!"></b:inputSecret>
+                    </b:column>
 
-                <b:column style="display: flex; flex-direction: column;">
-                    <h:outputLabel id="lblPerfil" value="Perfil Usuário" for="selOnePerfil" />
-                    <b:selectOneMenu id="selOnePerfil" value="#{pessoaController.pessoa.perfil}">
-                        <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="Administrador" itemValue="A"/>
-                        <f:selectItem itemLabel="Secretário" itemValue="S"/>    
-                        <f:selectItem itemLabel="Recepcionista" itemValue="R"/>    
-                    </b:selectOneMenu>
-                </b:column>
+                    <b:column style="display: flex; flex-direction: column;">
+                        <h:outputLabel id="lblPerfil" value="Perfil Usuário" for="selOnePerfil" />
+                        <b:selectOneMenu id="selOnePerfil" style="width: 350px;" value="#{pessoaController.pessoa.perfil}">
+                            <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Administrador" itemValue="A"/>
+                            <f:selectItem itemLabel="Secretário" itemValue="S"/>    
+                            <f:selectItem itemLabel="Recepcionista" itemValue="R"/>    
+                        </b:selectOneMenu>
+                    </b:column>
 
-                <b:column style="display: flex; flex-direction: row;">
-                    <h:outputLabel id="lblAtivo" value="Ativo" for="selBooCheckAtivo" style="margin-right: 5px;" />
-                    <b:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblAtivo" value="Ativo" for="selBooCheckAtivo" />
+                        <b:selectBooleanCheckbox id="selBooCheckAtivo" value="#{pessoaController.pessoa.ativo}" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
-                    <b:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
+                        <b:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblInfoEndereco" value="" for="txtInfoEndereco" />
-                    <h:outputLabel id="txtInfoEndereco" value=" ** Informações de Endereço ** " style="font-weight: bold; color: blue; margin-top: 5px; margin-bottom: 5px;" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblInfoEndereco" value="" for="txtInfoEndereco" />
+                        <h:outputLabel id="txtInfoEndereco" value=" ** Informações de Endereço ** " style="font-weight: bold; color: blue; margin-top: 5px; margin-bottom: 5px;" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblCep" value="CEP" for="txtCep" />
-                    <b:inputText id="txtCep" value="#{pessoaController.pessoa.cep}" style="width: 300px;" pt:placeholder="Informe o CEP(Apenas número)">
-                        <!--Ajax >> executar no campo txtCep, evento quando perder o foco e recarregando com o render alguns outros componentes da tela (endereco.. bairro.. etc..)-->
-                        <!--Deve ter um metodo no managedBean para pesquisar o CEP no webService (pesquisaCep)-->
-                        <!--Render separar por espaço apenas.. não por virgula que nao funciona no ajax do jsf padrão (f:ajax)-->
-                        <f:ajax execute="txtCep" event="blur" render="txtLogradouro txtComplemento txtBairro txtLocalidade txtUf txtIbge txtGia" listener="#{pessoaController.pesquisaCep}" />
-                    </b:inputText>
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblCep" value="CEP" for="txtCep" />
+                        <b:inputText id="txtCep" value="#{pessoaController.pessoa.cep}" style="width: 250px;" pt:placeholder="Informe o CEP(Apenas número)">
+                            <!--Ajax >> executar no campo txtCep, evento quando perder o foco e recarregando com o render alguns outros componentes da tela (endereco.. bairro.. etc..)-->
+                            <!--Deve ter um metodo no managedBean para pesquisar o CEP no webService (pesquisaCep)-->
+                            <!--Render separar por espaço apenas.. não por virgula que nao funciona no ajax do jsf padrão (f:ajax)-->
+                            <f:ajax execute="txtCep" event="blur" render="txtLogradouro txtComplemento txtBairro txtLocalidade txtUf txtIbge txtGia" listener="#{pessoaController.pesquisaCep}" />
+                        </b:inputText>
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblLogradouro" value="Logradouro" for="txtLogradouro" />
-                    <b:inputText id="txtLogradouro" value="#{pessoaController.pessoa.logradouro}" pt:placeholder="Informe o Logradouro" style="width: 400px;" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblLogradouro" value="Logradouro" for="txtLogradouro" />
+                        <b:inputText id="txtLogradouro" value="#{pessoaController.pessoa.logradouro}" pt:placeholder="Informe o Logradouro" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblNumero" value="Número" for="txtNumero" />
-                    <b:inputText id="txtNumero" value="#{pessoaController.pessoa.numero}" pt:placeholder="Informe o Número" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblNumero" value="Número" for="txtNumero" />
+                        <b:inputText id="txtNumero" value="#{pessoaController.pessoa.numero}" pt:placeholder="Informe o Número" style="width: 200px;" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblComplemento" value="Complemento" for="txtComplemento" />
-                    <b:inputText id="txtComplemento" value="#{pessoaController.pessoa.complemento}" pt:placeholder="Informe o Complemento" style="width: 200px;" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblComplemento" value="Complemento" for="txtComplemento" />
+                        <b:inputText id="txtComplemento" value="#{pessoaController.pessoa.complemento}" pt:placeholder="Informe o Complemento" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblBairro" value="Bairro" for="txtBairro" />
-                    <b:inputText id="txtBairro" value="#{pessoaController.pessoa.bairro}" pt:placeholder="Informe o Bairro" style="width: 400px;" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblBairro" value="Bairro" for="txtBairro" />
+                        <b:inputText id="txtBairro" value="#{pessoaController.pessoa.bairro}" pt:placeholder="Informe o Bairro" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblLocalidade" value="Localidade" for="txtLocalidade" />
-                    <b:inputText id="txtLocalidade" value="#{pessoaController.pessoa.localidade}" pt:placeholder="Informe a Localidade" style="width: 300px;" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblLocalidade" value="Localidade" for="txtLocalidade" />
+                        <b:inputText id="txtLocalidade" value="#{pessoaController.pessoa.localidade}" pt:placeholder="Informe a Localidade" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblUf" value="UF" for="txtUf" />
-                    <b:inputText id="txtUf" value="#{pessoaController.pessoa.uf}" pt:placeholder="Informe a UF" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblUf" value="UF" for="txtUf" />
+                        <b:inputText id="txtUf" value="#{pessoaController.pessoa.uf}" pt:placeholder="Informe a UF" style="width: 250px;" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblIbge" value="IBGE" for="txtIbge" />
-                    <b:inputText id="txtIbge" value="#{pessoaController.pessoa.ibge}" pt:placeholder="Informe o Cód. IBGE" />
-                </b:column>
+                    <b:column>
+                        <h:outputLabel id="lblIbge" value="IBGE" for="txtIbge" />
+                        <b:inputText id="txtIbge" value="#{pessoaController.pessoa.ibge}" pt:placeholder="Informe o Cód. IBGE" style="width: 250px;" />
+                    </b:column>
 
-                <b:column>
-                    <h:outputLabel id="lblGia" value="GIA" for="txtGia" />
-                    <b:inputText id="txtGia" value="#{pessoaController.pessoa.gia}" pt:placeholder="Informe o Cód. GIA" />              
-                </b:column>                
-            </h:panelGrid>
+                    <b:column>
+                        <h:outputLabel id="lblGia" value="GIA" for="txtGia" />
+                        <b:inputText id="txtGia" value="#{pessoaController.pessoa.gia}" pt:placeholder="Informe o Cód. GIA" style="width: 250px;" />              
+                    </b:column>                
+                </h:panelGrid>
+            </b:panel>
         </h:form>        
 
         <h:form id="formTable" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}" enctype="multipart/form-data" style="width: 100%;">
-            <!--Trocando o dataTable pelo do bootfaces-->
-            <h:outputText value="** Lista de Usuário(s) Cadastrado(s) **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
+            <b:panel>
+                <!--Trocando o dataTable pelo do bootfaces-->
+                <h:outputText value="** Lista de Usuário(s) Cadastrado(s) **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
 
-            <b:dataTable value="#{pessoaController.listPessoa}" var="pes" border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"
-                         custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 4 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 4 ]}}]">
-                <b:dataTableColumn>
-                    <f:facet name="header">ID</f:facet>
-                    <h:outputText value="#{pes.id}" />
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Nome</f:facet>
-                    <h:outputText value="#{pes.nome}" />
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Sobrenome</f:facet>
-                    <h:outputText value="#{pes.sobrenome}" />
-                </b:dataTableColumn>                
-                <b:dataTableColumn>
-                    <f:facet name="header">Foto</f:facet>
-                    <!--ActionListener nao redireciona a tela.. o action redireciona-->
-                    <h:commandLink immediate="true" actionListener="#{pessoaController.downloadFoto()}" rendered="#{pes.fotoIconBase64 ne null}" style="display: flex; justify-content: center;">
-                        <h:graphicImage width="60" height="60" value="#{pes.fotoIconBase64}" />
-                        <f:param name="fileDownloadImg" value="#{pes.id}" />
-                    </h:commandLink>
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Idade</f:facet>
-                    <h:outputText value="#{pes.idade}" />
-                </b:dataTableColumn>
-                <b:dataTableColumn>
-                    <f:facet name="header">Editar</f:facet>
-                    <h:commandLink id="cmdEditar" immediate="true" style="display: flex; justify-content: center;" action="#{pessoaController.editar()}">
-                        <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
-                        <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
-                        <f:ajax execute="cmdEditar" render="formPessoa" />
-                    </h:commandLink>
-                </b:dataTableColumn>
-                <b:dataTableColumn rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
-                    <f:facet name="header">Excluir</f:facet>
-                    <h:commandLink id="cmdDeletar" immediate="true" action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
-                        <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
-                        <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
-                        <f:ajax execute="cmdDetetar" render="formTable formPessoa messageCadPessoa" />
-                    </h:commandLink>
-                </b:dataTableColumn>
-            </b:dataTable>
+                <b:dataTable value="#{pessoaController.listPessoa}" var="pes" border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"
+                             custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 4 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 4 ]}}]">
+                    <b:dataTableColumn>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{pes.id}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Nome</f:facet>
+                        <h:outputText value="#{pes.nome}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Sobrenome</f:facet>
+                        <h:outputText value="#{pes.sobrenome}" />
+                    </b:dataTableColumn>                
+                    <b:dataTableColumn>
+                        <f:facet name="header">Foto</f:facet>
+                        <!--ActionListener nao redireciona a tela.. o action redireciona-->
+                        <h:commandLink immediate="true" actionListener="#{pessoaController.downloadFoto()}" rendered="#{pes.fotoIconBase64 ne null}" style="display: flex; justify-content: center;">
+                            <h:graphicImage width="60" height="60" value="#{pes.fotoIconBase64}" />
+                            <f:param name="fileDownloadImg" value="#{pes.id}" />
+                        </h:commandLink>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Idade</f:facet>
+                        <h:outputText value="#{pes.idade}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Editar</f:facet>
+                        <h:commandLink id="cmdEditar" immediate="true" style="display: flex; justify-content: center;" action="#{pessoaController.editar()}">
+                            <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
+                            <h:graphicImage name="editar.png" library="imagens" height="15" width="15" title="Editar"></h:graphicImage>
+                            <f:ajax execute="cmdEditar" render="formPessoa" />
+                        </h:commandLink>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
+                        <f:facet name="header">Excluir</f:facet>
+                        <h:commandLink id="cmdDeletar" immediate="true" action="#{pessoaController.deletar()}" style="display: flex; justify-content: center;">
+                            <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{pes}" />
+                            <h:graphicImage name="table_remove.png" library="imagens" height="15" width="15" title="Excluir"></h:graphicImage>
+                            <f:ajax execute="cmdDetetar" render="formTable formPessoa messageCadPessoa" />
+                        </h:commandLink>
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </b:panel>
         </h:form>        
     </h:body>
 </html>
