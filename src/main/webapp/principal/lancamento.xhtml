@@ -52,12 +52,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblDataEmissao" value="Data Emissão" for="txtDataEmissao" />     
-                        <b:dateTimePicker show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{lancamentoController.lancamento.dataEmissao}" style="width: 250px;" required="true" required-message="Data Emissão é requerida!" />
+                        <b:dateTimePicker id="txtDataEmissao" show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{lancamentoController.lancamento.dataEmissao}" style="width: 250px;" required="true" required-message="Data Emissão é requerida!" />
                     </b:column>
 
                     <b:column>
                         <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />     
-                        <b:inputText id="txtNumeroNota" value="#{lancamentoController.lancamento.numeroNota}" pt:placeholder="Informe o Número" style="width: 250px;" required="true" required-message="Número da Nota é requerido!" />
+                        <b:inputText id="txtNumeroNota" type="number" value="#{lancamentoController.lancamento.numeroNota}" pt:placeholder="Informe o Número" style="width: 250px;" required="true" required-message="Número da Nota é requerido!" />
                     </b:column>
 
                     <b:column>
@@ -79,7 +79,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 <h:outputText value="** Lista de Lançamento(s) - últimos 10 lançamentos **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
 
                 <b:dataTable value="#{lancamentoController.listLancamento}" var="lanc"  border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"
-                             custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3 ]}}]" >
+                             custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}}]" >
                     <b:dataTableColumn>
                         <f:facet name="header">ID</f:facet>
                         <h:outputText value="#{lanc.id}" />

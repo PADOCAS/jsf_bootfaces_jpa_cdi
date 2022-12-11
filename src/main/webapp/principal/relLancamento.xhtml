@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Relatório de Lançamentos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <body style="background: ghostwhite;">
+        <!--Menu Auxiliar-->
+        <!--Usando facelets para incluir um template pronto na página-->
+        <ui:include src="templates/menu.xhtml" />       
+
+        <b:messages id="messageRelLancamento" />
+
+        <h:form id="formRelLancamento" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <b:panel>
+                <h:panelGrid id="pnlGridRelLancamento" style="display: flex; flex-direction: column; align-items: center;" >
+                    <f:facet name="header">
+                        <h:outputText value="Filtro - Relatório de Lançamentos" />
+                    </f:facet>
+
+                    <b:row style="margin-top: 10px;">
+                        <b:column span="3">
+                            <h:outputLabel id="lblPeriodo" value="Período" for="txtPeriodoInicio" />     
+                        </b:column>
+                        <b:column span="4">
+                            <b:dateTimePicker id="txtPeriodoInicio" show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{relLancamentoController.dataInicio}"/>
+                        </b:column>    
+                        <b:column span="1">
+                            <h:outputLabel id="lblA" value="a" for="txtPeriodoFim" />     
+                        </b:column>    
+                        <b:column span="4">
+                            <b:dateTimePicker id="txtPeriodoFim" show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{relLancamentoController.dataFim}"/>
+                        </b:column>
+                    </b:row>
+
+                    <b:row style="margin-top: 10px;">
+                        <b:column span="3">
+                            <h:outputLabel id="lblNumeroNota" value="Número Nota" for="txtNumeroNota" />   
+                        </b:column>
+                        <b:column span="4">
+                            <b:inputText id="txtNumeroNota" value="#{relLancamentoController.numeroNota}" type="number" pt:placeholder="Informe o Número" style="width: 250px;" />
+                        </b:column>
+                    </b:row>
+
+                    <b:column style="display: flex; flex-direction: row; justify-content: center;">
+                        <b:commandButton id="btnPesquisar" action="#{relLancamentoController.pesquisarLancamentos()}" value="Pesquisar" title="Pesquisar" look="primary" style="width: 135px; margin-right: 5px;" >
+                            <b:image library="imagens" name="lupa.png" style="height: 32px; width: 32px;" />
+<!--                            <f:ajax execute="btnPesquisar" render="formTableRelLancamento messageRelLancamento"/>-->
+                        </b:commandButton>
+                        
+                        <b:commandButton id="btnLimpar" action="#{relLancamentoController.limpar()}" value="Limpar" title="Limpar" look="primary" style="width: 135px; margin-right: 5px;" >
+                            <b:image library="imagens" name="limpar.png" style="height: 32px; width: 32px;" />
+                            <f:ajax execute="btnLimpar" render="formRelLancamento formTableRelLancamento messageRelLancamento"/>
+                        </b:commandButton>
+                    </b:column>
+                </h:panelGrid>
+            </b:panel>
+        </h:form>
+
+        <h:form id="formTableRelLancamento" style="width: 100%;">
+            <b:panel>
+                <h:outputText value="** Lançamento(s) **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
+
+                <b:dataTable value="#{relLancamentoController.listLancamento}" var="lanc"  border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"
+                             custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}}]" >
+                    <b:dataTableColumn>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{lanc.id}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Data Emissão</f:facet>
+                        <h:outputText value="#{lanc.dataEmissao}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Número Nota</f:facet>
+                        <h:outputText value="#{lanc.numeroNota}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Empresa Origem</f:facet>
+                        <h:outputText value="#{lanc.empresaOrigem}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Empresa Destino</f:facet>
+                        <h:outputText value="#{lanc.empresaDestino}" />
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </b:panel>
+        </h:form>
+    </body>
+</html>

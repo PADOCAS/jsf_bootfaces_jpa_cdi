@@ -78,17 +78,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblCpf" value="* CPF" for="txtCpf"/>     
-                        <b:inputText id="txtCpf" value="#{pessoaController.pessoa.cpf}" style="width: 200px;" pt:placeholder="Informe o CPF" required="true" required-message="CPF é requerido!"/>
+                        <b:inputText id="txtCpf" type="number" value="#{pessoaController.pessoa.cpf}" style="width: 200px;" pt:placeholder="Informe o CPF" required="true" required-message="CPF é requerido!"/>
                     </b:column>
 
                     <b:column>
                         <h:outputLabel id="lblIdade" value="Idade" for="txtIdade"/>     
-                        <b:inputText id="txtIdade" value="#{pessoaController.pessoa.idade}" style="width: 200px;" pt:placeholder="Informe a Idade" />               
+                        <b:inputText id="txtIdade" type="number" value="#{pessoaController.pessoa.idade}" style="width: 200px;" pt:placeholder="Informe a Idade" />               
                     </b:column>
 
                     <b:column style="display: flex; flex-direction: row;">
                         <h:outputLabel id="lblSexo" value="* Sexo" for="selOneRadioSexo" style="margin-right: 5px;" />
-                        <h:selectOneRadio id="selOneRadioSexo" value="#{pessoaController.pessoa.sexo}" layout="lineDirection" required="true" requiredMessage="Sexo é requerido!">
+                        <h:selectOneRadio class="selOndeRadioClass" id="selOneRadioSexo" value="#{pessoaController.pessoa.sexo}" layout="lineDirection" required="true" requiredMessage="Sexo é requerido!">
                             <f:selectItem itemLabel="Masculino" itemValue="M"/>
                             <f:selectItem itemLabel="Feminino" itemValue="F"/>    
                         </h:selectOneRadio>
@@ -96,7 +96,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
-                        <b:dateTimePicker show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{pessoaController.pessoa.dataNascimento}" style="width: 250px;" required="true" required-message="Data Nascimento é requerida!" />
+                        <b:dateTimePicker id="txtDataNascimento" show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{pessoaController.pessoa.dataNascimento}" style="width: 250px;" required="true" required-message="Data Nascimento é requerida!" />
                     </b:column>
 
                     <b:column style="display: flex; flex-direction: column;">
@@ -132,7 +132,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblLinguagens" value="Linguagens Programação" for="selManyCheckLinguagens" />
-                        <h:selectManyCheckbox id="selManyCheckLinguagens" style="width: 490px;" value="#{pessoaController.pessoa.linguagensProgramacao}">
+                        <h:selectManyCheckbox class="selManyCheckBoxClass" id="selManyCheckLinguagens" style="width: 490px;" value="#{pessoaController.pessoa.linguagensProgramacao}">
                             <f:selectItem itemLabel="Java" itemValue="J" />
                             <f:selectItem itemLabel="C#" itemValue="C" />
                             <f:selectItem itemLabel="Phyton" itemValue="H" />
@@ -179,7 +179,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblCep" value="CEP" for="txtCep" />
-                        <b:inputText id="txtCep" value="#{pessoaController.pessoa.cep}" style="width: 250px;" pt:placeholder="Informe o CEP(Apenas número)">
+                        <b:inputText id="txtCep" type="number" value="#{pessoaController.pessoa.cep}" style="width: 250px;" pt:placeholder="Informe o CEP(Apenas número)">
                             <!--Ajax >> executar no campo txtCep, evento quando perder o foco e recarregando com o render alguns outros componentes da tela (endereco.. bairro.. etc..)-->
                             <!--Deve ter um metodo no managedBean para pesquisar o CEP no webService (pesquisaCep)-->
                             <!--Render separar por espaço apenas.. não por virgula que nao funciona no ajax do jsf padrão (f:ajax)-->
@@ -253,7 +253,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <f:facet name="header">Foto</f:facet>
                         <!--ActionListener nao redireciona a tela.. o action redireciona-->
                         <h:commandLink immediate="true" actionListener="#{pessoaController.downloadFoto()}" rendered="#{pes.fotoIconBase64 ne null}" style="display: flex; justify-content: center;">
-                            <h:graphicImage width="60" height="60" value="#{pes.fotoIconBase64}" />
+                            <h:graphicImage width="40" height="40" value="#{pes.fotoIconBase64}" />
                             <f:param name="fileDownloadImg" value="#{pes.id}" />
                         </h:commandLink>
                     </b:dataTableColumn>

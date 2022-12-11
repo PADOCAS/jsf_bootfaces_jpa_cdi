@@ -1,0 +1,23 @@
+.panel-body {
+    padding: 5px !important;
+}
+
+.form-group {
+    margin-bottom: 4px !important;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 2px !important;
+    line-height: 1.428571429 !important;
+    vertical-align: top !important;
+    border-top: 1px solid #ddd !important;
+}
+
+.selManyCheckBoxClass > tbody > tr > td > label {
+    margin-left: 4px !important;
+}
+
+.selOndeRadioClass > tbody > tr > td > label {
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+}
