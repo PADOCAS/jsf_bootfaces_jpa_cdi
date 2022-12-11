@@ -96,9 +96,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
-                        <b:inputText id="txtDataNascimento" value="#{pessoaController.pessoa.dataNascimento}" style="width: 300px;" pt:placeholder="Informe a Data Nascimento(dd/MM/yyyy)" converterMessage="Data de Nascimento inválida!!" >
-                            <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00" />
-                        </b:inputText>
+                        <b:dateTimePicker show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{pessoaController.pessoa.dataNascimento}" style="width: 250px;" required="true" required-message="Data Nascimento é requerida!" />
                     </b:column>
 
                     <b:column style="display: flex; flex-direction: column;">
