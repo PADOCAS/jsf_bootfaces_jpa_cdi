@@ -20,4 +20,5 @@ public interface IDaoLancamento {
     public List<Lancamento> listarLancamentosLimit10(Pessoa usuario) throws Exception;
     
     public List<Lancamento> buscarLancamentoRelatorio(Pessoa usuario, Map<String, Object> param) throws Exception;
+    
 }
