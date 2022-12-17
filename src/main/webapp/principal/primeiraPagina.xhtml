@@ -104,7 +104,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblCpf" value="* CPF" for="txtCpf"/>     
-                        <b:inputText id="txtCpf" type="number" value="#{pessoaController.pessoa.cpf}" style="width: 200px;" pt:placeholder="Informe o CPF" required="true" required-message="CPF é requerido!"/>
+                        <b:inputText id="txtCpf" mask="999.999.999-99" value="#{pessoaController.pessoa.cpf}" style="width: 200px;" pt:placeholder="Informe o CPF" required="true" required-message="CPF é requerido!"/>
                     </b:column>
 
                     <b:column>
@@ -121,7 +121,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </b:column>
 
                     <b:column>
-                        <h:outputLabel id="lblDataNascimento" value="Data Nascimento" for="txtDataNascimento" />
+                        <h:outputLabel id="lblDataNascimento" value="* Data Nascimento" for="txtDataNascimento" />
                         <b:dateTimePicker id="txtDataNascimento" show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{pessoaController.pessoa.dataNascimento}" style="width: 250px;" required="true" required-message="Data Nascimento é requerida!" />
                     </b:column>
 
