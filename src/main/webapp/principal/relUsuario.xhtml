@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Relatório de Usuários</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <style type="text/css">
+        .panel-body {
+            padding: 5px !important;
+        }
+
+        .form-group {
+            margin-bottom: 4px !important;
+        }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            padding: 2px !important;
+            line-height: 1.428571429 !important;
+            vertical-align: inherit !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        .selManyCheckBoxClass > tbody > tr > td > label {
+            margin-left: 4px !important;
+        }
+
+        .selOndeRadioClass > tbody > tr > td > label {
+            margin-left: 4px !important;
+            margin-right: 4px !important;
+        }
+    </style>
+
+    <body style="background: ghostwhite;">
+        <!--Menu Auxiliar-->
+        <!--Usando facelets para incluir um template pronto na página-->
+        <ui:include src="templates/menu.xhtml" />       
+
+        <b:messages id="messageRelUsuario" />
+
+        <h:form id="formRelUsuario" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <b:panel>
+                <h:panelGrid id="pnlGridRelUsuario" style="display: flex; flex-direction: column; align-items: center;" >
+                    <f:facet name="header">
+                        <h:outputText value="Filtro - Relatório de Usuários" />
+                    </f:facet>
+
+                    <b:row style="margin-top: 10px;">
+                        <b:column span="3">
+                            <h:outputLabel id="lblPeriodo" value="Período Nascimento" for="txtPeriodoInicio" />     
+                        </b:column>
+                        <b:column span="4">
+                            <b:dateTimePicker id="txtPeriodoInicio" show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{relUsuarioController.dataInicio}"/>
+                        </b:column>    
+                        <b:column span="1">
+                            <h:outputLabel id="lblA" value="a" for="txtPeriodoFim" />     
+                        </b:column>    
+                        <b:column span="4">
+                            <b:dateTimePicker id="txtPeriodoFim" show-time="false" show-date="true" format="DD/MM/YYYY" locale="en" value="#{relUsuarioController.dataFim}"/>
+                        </b:column>
+                    </b:row>
+
+                    <b:row style="margin-top: 10px;">
+                        <b:column span="3">
+                            <h:outputLabel id="lblNome" value="Nome" for="txtNome" />   
+                        </b:column>
+                        <b:column span="4">
+                            <b:inputText id="txtNome" value="#{relUsuarioController.nome}" pt:placeholder="Informe o Nome" style="width: 250px;" />
+                        </b:column>
+                    </b:row>
+
+                    <b:column style="display: flex; flex-direction: row; justify-content: center;">
+                        <b:commandButton id="btnPesquisar" action="#{relUsuarioController.pesquisarUsuario()}" value="Pesquisar" title="Pesquisar" look="primary" style="width: 135px; margin-right: 5px;" >
+                            <b:image library="imagens" name="lupa.png" style="height: 32px; width: 32px;" />
+                            <!--                            <f:ajax execute="btnPesquisar" render="formTableRelUsuario messageRelUsuario"/>-->
+                        </b:commandButton>
+
+                        <b:commandButton id="btnLimpar" action="#{relUsuarioController.limpar()}" value="Limpar" title="Limpar" look="primary" style="width: 135px; margin-right: 5px;" >
+                            <b:image library="imagens" name="limpar.png" style="height: 32px; width: 32px;" />
+                            <f:ajax execute="btnLimpar" render="formRelUsuario formTableRelUsuario messageRelUsuario"/>
+                        </b:commandButton>
+                    </b:column>
+                </h:panelGrid>
+            </b:panel>
+        </h:form>
+
+        <h:form id="formTableRelUsuario" style="width: 100%;">
+            <b:panel>
+                <h:outputText value="** Usuário(s) **" style="font-weight: bold; color: blue; display: flex; flex-direction: row; justify-content: center;" />
+
+                <b:dataTable value="#{relUsuarioController.listPessoa}" var="pes" border="true" page-length="5" page-length-menu="5, 10, 20" style="width: 100%;"                           
+                             custom-options="dom: 'lfrtiBp',buttons: [{extend: 'excelHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}},{extend: 'pdfHtml5', exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}}]" >
+                    <b:dataTableColumn>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{pes.id}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Nome</f:facet>
+                        <h:outputText value="#{pes.nome}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Sobrenome</f:facet>
+                        <h:outputText value="#{pes.sobrenome}" />
+                    </b:dataTableColumn>
+                    <b:dataTableColumn data-order="#{pes.dataNascimento}">
+                        <f:facet name="header">Data Nascimento</f:facet>
+                        <h:outputText value="#{pes.dataNascimento}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </b:dataTableColumn>
+                    <b:dataTableColumn>
+                        <f:facet name="header">Idade</f:facet>
+                        <h:outputText value="#{pes.idade}" />
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </b:panel>
+        </h:form>
+    </body>
+</html>

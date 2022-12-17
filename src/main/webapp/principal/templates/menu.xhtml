@@ -18,7 +18,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                 <b:dropMenu value="Relatórios" rendered="#{pessoaController.getRenderedUsuarioPerfilAdmin()}">
                     <b:navCommandLink value="Rel. Lançamentos" action="/principal/relLancamento" />
-                    <b:navCommandLink value="Rel. Usuários" />
+                    <b:navCommandLink value="Rel. Usuários" action="/principal/relUsuario"/>
                 </b:dropMenu>
 
                 <b:navCommandLink action="#{pessoaController.deslogar()}" value="Trocar Usuário"/>

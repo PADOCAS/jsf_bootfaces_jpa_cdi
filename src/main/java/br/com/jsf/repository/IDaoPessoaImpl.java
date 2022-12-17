@@ -8,8 +8,10 @@ import br.com.jsf.model.Cidades;
 import br.com.jsf.model.Estados;
 import br.com.jsf.model.Pessoa;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -162,5 +164,66 @@ public class IDaoPessoaImpl implements IDaoPessoa, Serializable {
                 //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
             }
         }
+    }
+
+    @Override
+    public List<Pessoa> buscarPessoaRelatorio(Map<String, Object> param) throws Exception {
+        List<Pessoa> listPessoa = null;
+
+        if (param != null) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+
+            entityTransaction.begin();
+
+            try {
+                StringBuilder sql = new StringBuilder();
+                //Quando é data, passar como java.util.date para o hibernate, então converte a data para string depois para java.util.date:
+                //new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat("yyyy-MM-dd").format(param.get("dataInicio")))
+
+                //Usamos o LOWER PARA IGNORAR CASE DA BUSCA POR NOME > PASSANDO PARAMETRO SEMPRE COM LOWERCASE AI BUSCA SEMPRE TUDO!
+                if (param.get("dataInicio") != null
+                        && param.get("dataFim") != null
+                        && param.get("nome") != null) {
+                    sql.append("SELECT p from Pessoa p WHERE datanascimento between :dataInicio and :dataFim and lower(nome) LIKE :nome ORDER BY nome");
+                    listPessoa = entityManager.createQuery(sql.toString())
+                            .setParameter("dataInicio", new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat("yyyy-MM-dd").format(param.get("dataInicio"))))
+                            .setParameter("dataFim", new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat("yyyy-MM-dd").format(param.get("dataFim"))))
+                            .setParameter("nome", param.get("nome"))
+                            .getResultList();
+                } else if (param.get("dataInicio") != null
+                        && param.get("dataFim") != null
+                        && param.get("nome") == null) {
+                    sql.append("SELECT p from Pessoa p WHERE datanascimento between :dataInicio and :dataFim ORDER BY nome");
+                    listPessoa = entityManager.createQuery(sql.toString())
+                            .setParameter("dataInicio", new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat("yyyy-MM-dd").format(param.get("dataInicio"))))
+                            .setParameter("dataFim", new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat("yyyy-MM-dd").format(param.get("dataFim"))))
+                            .getResultList();
+                } else if (param.get("dataInicio") == null
+                        && param.get("dataFim") == null
+                        && param.get("nome") != null) {
+                    sql.append("SELECT p from Pessoa p WHERE lower(nome) LIKE :nome ORDER BY nome");
+                    listPessoa = entityManager.createQuery(sql.toString())
+                            .setParameter("nome", param.get("nome"))
+                            .getResultList();
+                } else {
+                    sql.append("SELECT p from Pessoa p ORDER BY nome");
+                    listPessoa = entityManager.createQuery(sql.toString())
+                            .getResultList();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                entityTransaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
+                throw new Exception("Erro ao gerar Relatório!\n" + e.getMessage());
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.commit();
+                }
+                //Não vamos usar o close mais, deixar para o framework controlar isso automaticamente!!!
+                //Caso não fechar fica várias conexões abertas.. arrebentando com o banco!! Aguardar a aula onde ele mostra como ficará!
+                //entityManager.close(); como está injetado agora, não podemos dar o close assim mais!!
+            }
+        }
+
+        return listPessoa;
     }
 }

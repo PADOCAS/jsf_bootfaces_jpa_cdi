@@ -6,6 +6,7 @@ package br.com.jsf.repository;
 
 import br.com.jsf.model.Pessoa;
 import java.util.List;
+import java.util.Map;
 import javax.faces.model.SelectItem;
 
 /**
@@ -21,4 +22,6 @@ public interface IDaoPessoa {
     public List<SelectItem> listaCidades(Long estadoId) throws Exception;
 
     public void deletar(Pessoa pessoa) throws Exception;
+    
+    public List<Pessoa> buscarPessoaRelatorio(Map<String, Object> param) throws Exception;
 }
