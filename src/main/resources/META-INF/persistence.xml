@@ -21,18 +21,17 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
 
-            <!--Comentado esse c3po que está ficando monte de conexões abertas.. isso não está legal.. deixar sem por enquanto!-->
-<!--            c3p0 propriedades:
-            Minimo/Máximo de conexões ou portas disponiveis
+            <!--c3p0 propriedades:-->
+            <!--Minimo/Máximo de conexões ou portas disponiveis-->
             <property name="hibernate.c3p0.min_size" value="5" />
             <property name="hibernate.c3p0.max_size" value="100" />
-            Número de segundos que uma conexão inativa é mantida no Pool
+            <!--Número de segundos que uma conexão inativa é mantida no Pool-->
             <property name="hibernate.c3p0.timeout" value="300" />
-            Número total de transacoes no banco de dados mantidas em cache
-            Exemplo, um relatório que é chamado muitas vezes, é deixado em cache para deixar mais rapido
+            <!--Número total de transacoes no banco de dados mantidas em cache-->
+            <!--Exemplo, um relatório que é chamado muitas vezes, é deixado em cache para deixar mais rapido-->
             <property name="hibernate.c3p0.max_statements" value="50" />
-            Tempo ocioso em segundos antes de uma conexão ser validada automaticamente
-            <property name="hibernate.c3p0.idle_test_period" value="120" />            -->
+            <!--Tempo ocioso em segundos antes de uma conexão ser validada automaticamente-->
+            <property name="hibernate.c3p0.idle_test_period" value="120" />            
         </properties>
     </persistence-unit>
 </persistence>
