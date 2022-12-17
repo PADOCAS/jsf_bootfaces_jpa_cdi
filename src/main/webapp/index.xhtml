@@ -13,6 +13,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
 
+    <style type="text/css">
+        .panel-body {
+            padding: 5px !important;
+        }
+
+        .form-group {
+            margin-bottom: 4px !important;
+        }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            padding: 2px !important;
+            line-height: 1.428571429 !important;
+            vertical-align: inherit !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        .selManyCheckBoxClass > tbody > tr > td > label {
+            margin-left: 4px !important;
+        }
+
+        .selOndeRadioClass > tbody > tr > td > label {
+            margin-left: 4px !important;
+            margin-right: 4px !important;
+        }
+    </style>
+
     <h:body style="height: 100%; width: 100%; position: fixed; background: ghostwhite;">
         <b:messages id="msgGeralTelaLogin" />
 
@@ -36,6 +62,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </b:column>
                 </b:panel>
             </h:panelGrid>
-        </h:form>
+        </h:form>      
     </h:body>
 </html>
