@@ -39,6 +39,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             margin-left: 4px !important;
             margin-right: 4px !important;
         }
+        
+        @media only screen and (max-width: 550px) {
+            .txtCompInput {
+                width: 300px !important;
+            }
+        }
     </style>
 
     <body style="background: ghostwhite;">
@@ -88,12 +94,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblEmpresaOrigem" value="Empresa Origem" for="txtEmpresaOrigem" />     
-                        <b:inputText id="txtEmpresaOrigem" value="#{lancamentoController.lancamento.empresaOrigem}" pt:placeholder="Informe a Empresa Origem" style="width: 500px;" required="true" required-message="Empresa Origem é requerido!"/>
+                        <b:inputText id="txtEmpresaOrigem" class="txtCompInput" value="#{lancamentoController.lancamento.empresaOrigem}" pt:placeholder="Informe a Empresa Origem" style="width: 500px;" required="true" required-message="Empresa Origem é requerido!"/>
                     </b:column>
 
                     <b:column>
                         <h:outputLabel id="lblEmpresaDestino" value="Empresa Destino" for="txtEmpresaDestino" />     
-                        <b:inputText id="txtEmpresaDestino" value="#{lancamentoController.lancamento.empresaDestino}" pt:placeholder="Informe a Empresa Destino" style="width: 500px;" required="true" required-message="Empresa Destino é requerido!"/>
+                        <b:inputText id="txtEmpresaDestino" class="txtCompInput" value="#{lancamentoController.lancamento.empresaDestino}" pt:placeholder="Informe a Empresa Destino" style="width: 500px;" required="true" required-message="Empresa Destino é requerido!"/>
                     </b:column>
                 </h:panelGrid>
             </b:panel>

@@ -40,8 +40,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             margin-left: 4px !important;
             margin-right: 4px !important;
         }
+
+        @media only screen and (max-width: 550px) {
+            .txtCompInput {
+                width: 300px !important;
+            }
+
+            .selManyCheckBoxClass {
+                width: 315px !important;
+                font-size: 9px !important;
+            }
+
+            .selOndeRadioClass {
+                font-size: 9px !important;
+            }
+
+            .selOnePerfilUsuario {
+                width: 302px !important;
+            }
+        }
     </style>
-    
+
     <!-- Sempre tem o corpo da página (body) -->
     <h:body style="background: ghostwhite;">
         <!--Menu Auxiliar-->
@@ -138,7 +157,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column style="display: flex; flex-direction: column;">
                         <h:outputLabel id="lblSelOneMenuCidade" value="* Cidade Nascimento" for="selOneMenuCidade"/>     
-                        <b:selectOneMenu id="selOneMenuCidade" style="width: 350px;" required="true" required-message="Cidade é requerida!" value="#{pessoaController.pessoa.cidade}" converter="cidadesConverter" >
+                        <b:selectOneMenu id="selOneMenuCidade" class="txtCompInput" style="width: 350px;" required="true" required-message="Cidade é requerida!" value="#{pessoaController.pessoa.cidade}" converter="cidadesConverter" >
                             <f:selectItem itemLabel="..." noSelectionOption="true" itemValue=""/>
                             <f:selectItems value="#{pessoaController.getListSelectItemCidades()}" />
                         </b:selectOneMenu>
@@ -180,7 +199,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column style="display: flex; flex-direction: column;">
                         <h:outputLabel id="lblPerfil" value="Perfil Usuário" for="selOnePerfil" />
-                        <b:selectOneMenu id="selOnePerfil" style="width: 350px;" value="#{pessoaController.pessoa.perfil}">
+                        <b:selectOneMenu id="selOnePerfil" class="selOnePerfilUsuario" style="width: 350px;" value="#{pessoaController.pessoa.perfil}">
                             <f:selectItem itemLabel="..." itemValue="" noSelectionOption="true" />
                             <f:selectItem itemLabel="Administrador" itemValue="A"/>
                             <f:selectItem itemLabel="Secretário" itemValue="S"/>    
@@ -195,7 +214,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
 
                     <b:column>
                         <h:outputLabel id="lblObservacao" value="Observação" for="txtObservacao"/>     
-                        <b:inputTextarea id="txtObservacao" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
+                        <b:inputTextarea id="txtObservacao" class="txtCompInput" value="#{pessoaController.pessoa.observacao}" pt:placeholder="Informe as observações (se necessário)" rows="4" style="width: 500px;" />                          
                     </b:column>
 
                     <b:column>
