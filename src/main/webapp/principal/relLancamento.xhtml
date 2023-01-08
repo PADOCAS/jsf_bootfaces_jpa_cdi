@@ -104,7 +104,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <f:facet name="header">ID</f:facet>
                         <h:outputText value="#{lanc.id}" />
                     </b:dataTableColumn>
-                    <b:dataTableColumn>
+                    <b:dataTableColumn data-order="#{lanc.dataEmissao}">
                         <f:facet name="header">Data Emissão</f:facet>
                         <h:outputText value="#{lanc.dataEmissao}" >
                             <f:convertDateTime pattern="dd/MM/yyyy" />

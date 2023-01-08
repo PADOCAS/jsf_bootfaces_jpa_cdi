@@ -15,7 +15,7 @@
     </context-param>-->
     
     <!-- Configuração as páginas vão abrir com o JSF -->
-    <!--Para logar no sistema, usar http://localhost:8080/jsf_bootfaces/index.jsf   -->
+    <!--Para logar no sistema, usar http://localhost:8080/jsf_bootsfaces/index.jsf   -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
