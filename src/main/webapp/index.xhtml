@@ -22,6 +22,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             margin-bottom: 4px !important;
         }
 
+        footer {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+        }
+
+        .rodape {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
         .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
             padding: 2px !important;
             line-height: 1.428571429 !important;
@@ -37,10 +49,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             margin-left: 4px !important;
             margin-right: 4px !important;
         }
-        
+
         @media only screen and (max-width: 991px) {
             h1 {
                 font-size: 21px !important;
+            }
+
+            .rodape {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .rodape {
+                font-size: 10px;
             }
         }
     </style>
@@ -69,5 +91,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                 </b:panel>
             </h:panelGrid>
         </h:form>      
+
+        <footer>
+            <!-- RODAPE -->
+            <section class="rodape" >
+                <div>
+                    <div style="display: flex; width: 100%;">
+                        <div style="flex: 1;">
+                            <label style="display: flex; flex: 1; justify-content: center; font-weight: bold;">
+                                Usuário e Senha padrão: admin/admin
+                            </label>
+                            <label style="display: flex; flex: 1; justify-content: center;">
+                                <a href="https://github.com/PADOCAS/JSF-Bootfaces-JPA-CDI" target="blank">Projeto GitHub</a>
+                            </label>                            
+                        </div>
+                    </div>
+                </div>
+            </section>            
+        </footer>
     </h:body>
 </html>
