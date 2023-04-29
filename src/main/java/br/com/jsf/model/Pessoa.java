@@ -86,6 +86,8 @@ public class Pessoa implements Serializable {
 
     private String[] linguagensProgramacao;
 
+    private Boolean admin;
+
     @CPF(message = "CPF inválido")
     private String cpf;
 
@@ -114,6 +116,7 @@ public class Pessoa implements Serializable {
     private byte[] fotoIconBase64Original;
 
     public Pessoa() {
+        this.admin = false;
     }
 
     public Long getId() {
@@ -338,6 +341,14 @@ public class Pessoa implements Serializable {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     @Override

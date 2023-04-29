@@ -114,6 +114,11 @@ public class PessoaController implements Serializable {
     public String salvar() {
         try {
             if (getPessoa() != null) {
+                if(getPessoa().getAdmin() != null
+                        && getPessoa().getAdmin()) {
+                    throw new Exception("Administrador do sistema não pode ser alterado!");
+                }
+                
                 //Processar Imagem:
                 if (arquivoFoto != null
                         && arquivoFoto.getContentType() != null) {
@@ -224,7 +229,7 @@ public class PessoaController implements Serializable {
             setArquivoFoto(null);
         } catch (Exception ex) {
             ex.printStackTrace();
-            mostrarMsg("Erro ao carregar editar!/n" + ex.getMessage());
+            mostrarMsg("Erro ao carregar editar!\n" + ex.getMessage());
         }
     }
 
@@ -232,23 +237,29 @@ public class PessoaController implements Serializable {
         try {
             if (getPessoa() != null
                     && getPessoa().getId() != null) {
-                //Deletar os lançamentos da Pessoa antes de excluir a Pessoa:
-                iDaoPessoa.deletar(pessoa);
+                //Só deixa deletar usuário não admin (testes gerais do sistema)
+                if (getPessoa().getAdmin() == null
+                        || !getPessoa().getAdmin()) {
+                    //Deletar os lançamentos da Pessoa antes de excluir a Pessoa:
+                    iDaoPessoa.deletar(pessoa);
 
-                if (getPessoa().getId() != null
-                        && getPessoa().getNome() != null
-                        && getPessoa().getSobrenome() != null) {
-                    //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
-                    setPessoa(new Pessoa());
+                    if (getPessoa().getId() != null
+                            && getPessoa().getNome() != null
+                            && getPessoa().getSobrenome() != null) {
+                        //Instancia nova Pessoa após salvar - Tras na tela os campos em branco, nova pessoa:
+                        setPessoa(new Pessoa());
+                    }
+
+                    mostrarMsg("Registro removido com sucesso!");
+                } else {
+                    throw new Exception("Não é permitido excluir o administrador do sistema!");
                 }
-
-                mostrarMsg("Registro removido com sucesso!");
             } else {
                 mostrarMsg("Selecione um usuário já cadastrado para excluir.");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            mostrarMsg("Erro ao excluir registro!/n" + ex.getMessage());
+            mostrarMsg("Erro ao excluir registro!\n" + ex.getMessage());
         }
 
         //Atualiza Lista Pessoas:
