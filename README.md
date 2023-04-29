@@ -20,9 +20,11 @@
 <br/>
 
 <h3 align="left">Resumo do Projeto:</h3>
+- Utilizado o Hibernate em conjunto com o JPA
+<br/>
 - Formulário com validação de Login/senha.
 <br/>
-- Cadastro de Usuários, criando vários componentes do bootfaces, componentes relacionados (Estado/Cidade de Nascimento), opção de acessar API VIACEP para consulta de CEP por ajax e upload/download de imagens, conversão JSON.
+- Cadastro de Usuários, utilizando vários componentes do bootfaces, componentes relacionados (Estado/Cidade de Nascimento), opção de acessar API VIACEP para consulta de CEP por ajax e upload/download de imagens, conversão JSON.
 <br/>
 - Lançamento de notas para o usuário
 <br/>
