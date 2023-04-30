@@ -419,7 +419,7 @@ public class PessoaController implements Serializable {
             if (inputStream instanceof ByteArrayInputStream) {
                 size = inputStream.available();
                 buff = new byte[size];
-                len = inputStream.read(buff, 0, size);
+//                len = inputStream.read(buff, 0, size);
             } else {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 buff = new byte[size];
