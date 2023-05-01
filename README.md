@@ -10,8 +10,6 @@
 <br/>
 - Java 18
 <br/>
-- TIBCO Jaspersoft Studio-6.20.0
-<br/>
 - Hibernate 5.6.11.Final
 <br/>
 - bootsfaces 1.5.0
