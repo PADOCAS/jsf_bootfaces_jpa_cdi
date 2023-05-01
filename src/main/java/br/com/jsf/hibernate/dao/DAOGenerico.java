@@ -74,10 +74,19 @@ public class DAOGenerico<E> implements Serializable {
             //Retorna a entidade salva no banco
             entitySave = entityManager.merge(entity);
             entityManager.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch(javax.persistence.PersistenceException ex) {
+            ex.printStackTrace();
+            if(ex.getCause() != null
+                    && ex.getCause().getCause() != null
+                    && ex.getCause().getCause().toString().contains("uk_login")) {
+                throw new Exception("Erro ao Salvar!\nJá existe esse mesmo login registrado no sistema! Não é permitido criar um login duplicado!\nVerifique!");
+            } else {
+                throw new Exception("Erro ao Salvar!\n" + ex.getMessage());
+            }
+        } catch (Exception ex1) {
+            ex1.printStackTrace();
             transaction.rollback(); // desfaz transacao se ocorrer erro ao persitir
-            throw new Exception("Erro ao Salvar!\n" + e.getMessage());
+            throw new Exception("Erro ao Salvar!\n" + ex1.getMessage());
         } finally {
             //Comita:
             if (transaction.isActive()) {

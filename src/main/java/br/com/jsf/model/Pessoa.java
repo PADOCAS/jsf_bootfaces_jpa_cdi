@@ -50,6 +50,7 @@ public class Pessoa implements Serializable {
     @NotEmpty(message = "Login é requerido")
     @NotNull(message = "Login é requerido")
     @Size(min = 3, max = 20, message = "Login deve ter de 3 a 20 caracteres")
+    @Column(unique = true)
     private String login;
 
     @NotEmpty(message = "Senha é requerida")
