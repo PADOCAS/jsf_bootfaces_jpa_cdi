@@ -27,7 +27,12 @@
 - Utilizado o Hibernate em conjunto com o JPA
 <br/>
 
+<h3 align="left">Configuração banco de dados para testes:</h3>
+- Atualize a classe 'persistence.xml', configurando de acordo com seu banco de dados para rodar a aplicação.
+<br/>
+- Modelagem de dados está dentro da pasta raiz: modelagem_jsf_bootfaces.sql
+
 <h3 align="left">Servidor para testes:</h3>
 <p align="left">
-<a href="http://localhost:8080/jsf_bootsfaces/index.jsf" target="blank">Projeto JSF + Bootfaces + JPA + CDI</a>
+<a href="http://198.38.86.119:8080/jsf_bootsfaces/index.jsf" target="blank">JSP/Servlets/JDBC</a>
 </p>
