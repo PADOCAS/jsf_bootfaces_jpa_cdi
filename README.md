@@ -34,5 +34,5 @@
 
 <h3 align="left">Servidor para testes:</h3>
 <p align="left">
-<a href="http://198.38.86.119:8080/jsf_bootsfaces/index.jsf" target="blank">Projeto JSF/BOOTFACES/JPA/CDI</a>
+<a href="https://www.ldsystems.com.br/jsf_bootsfaces/index.jsf" target="blank">Projeto JSF/BOOTFACES/JPA/CDI</a>
 </p>
